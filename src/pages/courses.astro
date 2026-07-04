@@ -1,0 +1,149 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { site } from '../data/site.js';
+
+// EDIT ME: add/remove courses or change details in this list.
+const courses = [
+  {
+    name: 'NISHTA',
+    duration: 'Two Weeks',
+    tagline: 'Holistic Development for Young Minds (Ages 7–12)',
+    intro: 'A transformational program designed to strengthen focus, discipline, and positive life habits during a child’s most formative years.',
+    sections: [
+      { heading: 'Why NISHTA?', items: [
+        'Sharpen Focus & Concentration — guided practices help children develop sustained attention for academic and daily success.',
+        'Build Positive Habits — instill discipline, structure, and balanced routines early in life.',
+        'Enhance Memory & Learning — practical techniques improve comprehension, retention, and cognitive performance.',
+      ]},
+      { heading: 'Proven Results', items: [
+        'Academic scores exceeding 90%',
+        'Noticeable behavioural improvements',
+        'Better study habits & family interactions',
+      ]},
+    ],
+    note: 'NISHTA is more than a course — it is a foundation for clarity, confidence, and lifelong success.',
+  },
+  {
+    name: 'AAKAARA',
+    duration: '15-Day Intensive',
+    tagline: 'Yoga Foundation — Classical Ashtanga',
+    intro: 'A structured immersion into the philosophy and practice of classical Ashtanga Yoga.',
+    sections: [
+      { heading: 'Program Highlights', items: [
+        'Understanding the Eight Limbs of Yoga',
+        'Traditional Cleansing Techniques (Shatkriyas)',
+        'Essential Asanas & Alignment Principles',
+        'Powerful Pranayama Practices',
+        'Meditation & Concentration Training',
+      ]},
+      { heading: 'Daily Structure', items: [
+        'Lecture — conceptual clarity',
+        'Practice — direct experience',
+        'Q&A — personalized guidance',
+      ]},
+    ],
+    note: 'Outcome: develop strength, discipline, breath control, and inner awareness.',
+  },
+  {
+    name: 'APARA',
+    duration: 'Two Weeks',
+    tagline: 'Yoga for Beginners & Self-Discovery',
+    intro: 'A gentle yet profound introduction to yogic living.',
+    sections: [
+      { heading: 'Core Focus', items: [
+        'Foundations of Yoga Philosophy',
+        'Shatkriyas (Kapalbhati, Jala Neti)',
+        'Understanding the Seven Chakras',
+        'Establishing Personal Practice',
+      ]},
+    ],
+    note: 'Experience: move from external learning to inner awareness, balance, and clarity.',
+  },
+  {
+    name: 'AKASHA',
+    duration: 'Experiential Journey',
+    tagline: 'Akashic Studies — The Path Beyond the Mind',
+    intro: 'Akasha represents the boundless field of consciousness within. This is not a conventional course — it is an experiential journey into deeper awareness guided by authentic Tantric wisdom. Ideal for practitioners ready to move beyond techniques into transformation.',
+    sections: [
+      { heading: 'Areas of Exploration', items: [
+        'Deep Meditation & Awareness',
+        'Subtle Yogic Practices',
+        'Inquiry into Consciousness',
+        'Inner Purification & Clarity',
+      ]},
+    ],
+    note: 'Dissolve mental conditioning. Awaken inner intelligence. Stabilize presence. For those seeking depth, purpose, and direct inner realization.',
+  },
+];
+---
+
+<BaseLayout title="Courses" description="Spiritual and yogic courses offered by the Mahapeetham — NISHTA, AAKAARA, APARA and AKASHA.">
+  <PageHeader
+    eyebrow="Learn & Practice"
+    title="Courses"
+    lead="Structured programs of sadhana and study, offered under the grace of the lineage."
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="course-list">
+        {courses.map((c) => (
+          <article class="course-card">
+            <header class="course-card__head">
+              <h2>{c.name}</h2>
+              <span class="course-card__duration">{c.duration}</span>
+            </header>
+            <p class="course-card__tagline">{c.tagline}</p>
+            <p class="muted">{c.intro}</p>
+            {c.sections.map((s) => (
+              <div>
+                <h3>{s.heading}</h3>
+                <ul>{s.items.map((i) => <li>{i}</li>)}</ul>
+              </div>
+            ))}
+            <p class="course-card__note">{c.note}</p>
+          </article>
+        ))}
+      </div>
+
+      <div class="text-center" style="margin-top:2.5rem;">
+        <p class="lead">To enquire about schedules and enrolment, please reach out.</p>
+        <a href={`mailto:${site.contact.email}`} class="btn">Enquire Now</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .course-list { display: grid; gap: 1.8rem; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); }
+  .course-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.8rem;
+    box-shadow: var(--shadow);
+  }
+  .course-card__head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .course-card__head h2 { margin: 0; letter-spacing: 0.04em; }
+  .course-card__duration {
+    background: var(--cream-2);
+    color: var(--saffron-dark);
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .course-card__tagline { font-family: var(--font-head); font-size: 1.2rem; color: var(--saffron-dark); margin: 0.2rem 0 0.8rem; }
+  .course-card h3 { font-size: 1.05rem; margin: 1.1rem 0 0.4rem; color: var(--maroon); }
+  .course-card ul { margin: 0; padding-left: 1.2rem; }
+  .course-card li { margin-bottom: 0.35rem; color: var(--ink-soft); }
+  .course-card__note {
+    margin: 1.2rem 0 0;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+    font-style: italic;
+    color: var(--ink-soft);
+  }
+</style>

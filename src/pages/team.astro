@@ -1,0 +1,235 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+
+// ── TEAM ────────────────────────────────────────────────────────────────
+// Edit members below. To add a photo: put the file in /public/images/team/
+// and set photo: '/images/team/name.jpg' (leave '' for the ॐ placeholder).
+const founder = {
+  name: 'Sri Sri Sri Yogishwara Swami',
+  title: 'Founder & Peethadhishwar',
+  honorific: 'His Holiness Srimath Paramahamsa Parivrajakacharya',
+  photo: '/images/team/founder.jpg',
+  body: 'The soul, vision, and spiritual foundation of SSYSM NGO. As the Founder and Peethadhishwar, His Holiness is the guiding light of the organization — shaping it into a living institution of spiritual awakening, social upliftment, and humanitarian service.',
+  list: [
+    'Inspires selfless service',
+    'Guides all initiatives with clarity and purpose',
+    'Aligns social action with spiritual growth',
+  ],
+};
+
+const team = [
+  {
+    name: 'Smt. Godha Shanmukha', role: 'Manager', photo: '/images/team/godha-shanmukha.jpg',
+    body: 'The operational backbone of SSYSM NGO, transforming vision into action.',
+    list: [
+      'Overseeing daily operations and programs',
+      'Coordinating teams and ensuring smooth execution of projects',
+      'Managing logistics, resources, and financial planning',
+      'Building strong relationships with donors, stakeholders, and communities',
+    ],
+  },
+  {
+    name: 'Sri Mohan Dharwadker', role: 'Head of Administration & PA to His Holiness', photo: '/images/team/mohan-dharwadker.jpg',
+    body: 'Ensures harmony between spiritual leadership and organizational execution.',
+    list: [
+      'Managing administrative systems and institutional workflows',
+      'Coordinating events, darshans, and official activities',
+      'Organizing the schedule, travel, and engagements of His Holiness',
+      'Acting as a vital link between His Holiness and the organization',
+    ],
+  },
+  {
+    name: 'Smt. Dr. Gayatri Y S', role: 'Secretary', photo: '/images/team/gayatri.jpg',
+    body: 'The custodian of structure, communication, and continuity.',
+    list: [
+      'Managing official records and documentation',
+      'Overseeing communication and coordination',
+      'Organizing meetings and follow-ups',
+      'Ensuring all activities align with the Founder’s vision and mission',
+    ],
+  },
+  {
+    name: 'Sri Vikas Hegde', role: 'Treasurer', photo: '/images/team/vikas-hegde.jpg',
+    body: 'The guardian of financial integrity and transparency.',
+    list: [
+      'Maintaining accurate financial records',
+      'Preparing budgets and financial statements',
+      'Ensuring ethical and effective use of funds',
+      'Supporting fundraising and long-term sustainability',
+    ],
+  },
+  {
+    name: 'Sri Manish Dharwadker', role: 'Head of IT Department', photo: '/images/team/manish-dharwadker.jpg',
+    body: 'The force behind the NGO’s digital strength and technological reach.',
+    list: [
+      'Managing websites, databases, and digital systems',
+      'Ensuring data security and system reliability',
+      'Providing technical support to all departments',
+      'Using technology to expand outreach and efficiency',
+    ],
+  },
+  {
+    name: 'Kum. Soudhamini', role: 'Director of Communication', photo: '/images/team/soudhamini.jpg',
+    body: 'The voice and image of SSYSM NGO.',
+    list: [
+      'Designing and executing communication strategies',
+      'Managing social media, website content, and publications',
+      'Handling public relations and media outreach',
+      'Ensuring consistent messaging aligned with spiritual values',
+    ],
+  },
+  {
+    name: 'Sri Sunku Narendranath', role: 'Personal Relationship Officer', photo: '/images/team/sunku-narendranath.jpg',
+    body: 'The bridge between the organization and its supporters.',
+    list: [
+      'Nurturing relationships with donors, volunteers, and well-wishers',
+      'Ensuring transparent and compassionate communication',
+      'Addressing concerns and building long-term trust',
+      'Strengthening the NGO’s support network',
+    ],
+  },
+];
+
+const coordinators = [
+  { region: 'Karnataka', names: 'Smt. Mokshitha' },
+  { region: 'Pune', names: 'Sri Chandrashekar Hulamani & Smt. Supriya Rawal' },
+  { region: 'Kerala & Tamil Nadu', names: 'Sri Sujith Narayanan' },
+  { region: 'Andhra Pradesh', names: 'Kum. Shilpa' },
+];
+---
+
+<BaseLayout title="Our Team" description="The dedicated team behind Sri Sahasrara Yogishwara Swami Mahapeetham (SSYSM) NGO — leadership, administration and regional coordinators.">
+  <PageHeader
+    eyebrow="The People Behind the Mission"
+    title="Our Team"
+    lead="The living strength of SSYSM NGO — inspired by spirituality, driven by compassion, united by service to humanity as service to the Divine."
+  />
+
+  <!-- FOUNDER -->
+  <section class="section">
+    <div class="container">
+      <div class="founder-card">
+        <div class="avatar avatar--lg">
+          {founder.photo ? <img src={founder.photo} alt={founder.name} /> : <span>ॐ</span>}
+        </div>
+        <div>
+          <span class="eyebrow">{founder.title}</span>
+          <h2 style="margin:.2rem 0 0;">{founder.name}</h2>
+          <p class="muted" style="margin:.2rem 0 1rem;">{founder.honorific}</p>
+          <p>{founder.body}</p>
+          <ul>{founder.list.map((i) => <li>{i}</li>)}</ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEADERSHIP -->
+  <section class="section section--tint">
+    <div class="container">
+      <div class="text-center">
+        <span class="eyebrow">Leadership & Administration</span>
+        <h2>The Core Team</h2>
+        <hr class="divider divider--center" />
+      </div>
+      <div class="team-grid">
+        {team.map((m) => (
+          <article class="team-card">
+            <div class="avatar">
+              {m.photo ? <img src={m.photo} alt={m.name} /> : <span>ॐ</span>}
+            </div>
+            <h3>{m.name}</h3>
+            <p class="team-card__role">{m.role}</p>
+            <p class="muted">{m.body}</p>
+            <ul>{m.list.map((i) => <li>{i}</li>)}</ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- REGIONAL COORDINATORS -->
+  <section class="section">
+    <div class="container text-center">
+      <span class="eyebrow">The Grassroots Pillars</span>
+      <h2>Regional Coordinators</h2>
+      <hr class="divider divider--center" />
+      <p class="lead" style="max-width:680px;margin:0 auto 1.5rem;">
+        They transform vision into action at the community level — coordinating
+        regional programs, engaging local volunteers, and linking headquarters to
+        the grassroots.
+      </p>
+      <div class="grid">
+        {coordinators.map((c) => (
+          <div class="card">
+            <span class="eyebrow">{c.region}</span>
+            <p style="margin:.3rem 0 0;font-weight:600;">{c.names}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CALL TO SERVE -->
+  <section class="section section--tint">
+    <div class="container text-center">
+      <span class="eyebrow">A Call to Serve</span>
+      <h2>A Living Movement of Conscious Service</h2>
+      <hr class="divider divider--center" />
+      <p class="lead" style="max-width:680px;margin:0 auto;">
+        Every role, every responsibility, and every effort is guided by devotion,
+        discipline, and the desire to uplift humanity. If you seek purpose, service,
+        and spiritual growth — SSYSM NGO invites you to walk this path with us.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .avatar {
+    width: 96px; height: 96px;
+    border-radius: 50%;
+    background: var(--cream-2);
+    border: 2px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    font-size: 2.4rem; color: var(--saffron);
+    flex-shrink: 0;
+  }
+  .avatar img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+  .avatar--lg { width: 140px; height: 140px; font-size: 3.4rem; }
+
+  .founder-card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2rem;
+    align-items: start;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 2rem;
+    box-shadow: var(--shadow);
+  }
+  .founder-card ul { margin: 0.6rem 0 0; padding-left: 1.2rem; }
+  .founder-card li { margin-bottom: 0.35rem; color: var(--ink-soft); }
+
+  .team-grid { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-top: 2rem; }
+  .team-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.6rem;
+    box-shadow: var(--shadow);
+    text-align: center;
+  }
+  .team-card .avatar { margin: 0 auto 1rem; }
+  .team-card h3 { margin: 0; }
+  .team-card__role { color: var(--saffron-dark); font-weight: 600; margin: 0.2rem 0 0.8rem; }
+  .team-card ul { margin: 0.6rem 0 0; padding-left: 1.2rem; text-align: left; }
+  .team-card li { margin-bottom: 0.35rem; color: var(--ink-soft); font-size: 0.92rem; }
+
+  @media (max-width: 640px) {
+    .founder-card { grid-template-columns: 1fr; text-align: center; justify-items: center; }
+    .founder-card ul { text-align: left; }
+  }
+</style>

@@ -1,0 +1,596 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site.js';
+
+// ─────────────────────────────────────────────────────────────────────────
+//  EVENT DETAILS — edit here and they update across this page.
+//  (Guru Purnima 2026 falls on 29 July 2026. Change year/date/venue as needed.)
+// ─────────────────────────────────────────────────────────────────────────
+const event = {
+  year: 2026,
+  title: 'Guru Purnima',
+  date: 'Wednesday, 29 July 2026',
+  // Event start, in IST (+05:30) — drives the live countdown.
+  startISO: '2026-07-29T07:00:00+05:30',
+  time: '7:00 AM – 3:00 PM',
+  venue: 'Sri Kuchalamba Kalyana Mahal',
+  city: 'Behind Madhavan Park Circle, 2nd Block, Jayanagar, Bengaluru, Karnataka 560011',
+  map: 'https://www.google.com/maps/search/?api=1&query=Sri%20Kuchalamba%20Kalyana%20Mahal%2C%202nd%20Block%2C%20Jayanagar%2C%20Bengaluru%20560011',
+};
+
+// Sharing — used by the WhatsApp / copy-link buttons.
+const pageUrl = 'https://www.sriyogi.site/guru-purnima/';
+const shareMsg = `Join us for ${event.title} ${event.year} on ${event.date} at ${event.venue}, ${event.city}. Register here: ${pageUrl}`;
+const waShare = `https://wa.me/?text=${encodeURIComponent(shareMsg)}`;
+---
+
+<BaseLayout
+  title={`${event.title} ${event.year}`}
+  description={`Join us for ${event.title} ${event.year} — a sacred day of gratitude to the Guru, with darshan, discourse and blessings. Register to attend.`}
+>
+
+  <!-- HERO -->
+  <section class="gp-hero">
+    <div class="container">
+      <span class="eyebrow">{event.date}</span>
+      <h1>{event.title} {event.year}</h1>
+      <p class="lead">A sacred day of gratitude — darshan, discourse &amp; the blessings of the Guru.</p>
+      <div class="gp-countdown" data-countdown hidden>
+        <div class="gp-cd-unit"><span class="gp-cd-num" data-days>--</span><span class="gp-cd-label">Days</span></div>
+        <div class="gp-cd-unit"><span class="gp-cd-num" data-hours>--</span><span class="gp-cd-label">Hours</span></div>
+        <div class="gp-cd-unit"><span class="gp-cd-num" data-mins>--</span><span class="gp-cd-label">Minutes</span></div>
+        <div class="gp-cd-unit"><span class="gp-cd-num" data-secs>--</span><span class="gp-cd-label">Seconds</span></div>
+      </div>
+      <p class="gp-cd-done" data-countdown-done hidden>The day is here — welcome to {event.title} {event.year} 🙏</p>
+
+      <p style="margin-top:1.6rem;">
+        <a href="#register" class="btn">Register to Attend</a>
+        <a href="#about" class="btn btn--ghost" style="margin-left:.6rem;color:#fff;border-color:var(--gold);">Learn More</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- FEATURE POSTERS (story-style lead visuals) -->
+  <section class="section" style="padding-top:2.5rem;padding-bottom:2.5rem;">
+    <div class="container">
+      <div class="text-center">
+        <span class="eyebrow">A Glimpse of the Day</span>
+        <h2>What Awaits You</h2>
+        <hr class="divider divider--center" />
+      </div>
+      <div class="gp-carousel" data-carousel>
+        <div class="gp-track" data-track>
+          <figure class="gp-slide card">
+            <img src="/images/guru-purnima/poster-sacred-calling.jpg" alt="Something Sacred is Calling — Sri Yogi in procession" />
+          </figure>
+          <figure class="gp-slide card">
+            <img src="/images/guru-purnima/poster-devotion.jpg" alt="Devotion Takes the Stage — soulful dance offerings" />
+          </figure>
+          <figure class="gp-slide card">
+            <img src="/images/guru-purnima/poster-padapuja.jpg" alt="Receive Grace & Wisdom — witness the sacred Padapuja" />
+          </figure>
+          <figure class="gp-slide card">
+            <img src="/images/guru-purnima/poster-ashirvachana.jpg" alt="Receive Ashirvachana — the blessings of the Guru" />
+          </figure>
+        </div>
+        <button class="gp-arrow gp-arrow--prev" type="button" data-prev aria-label="Previous poster">&#8249;</button>
+        <button class="gp-arrow gp-arrow--next" type="button" data-next aria-label="Next poster">&#8250;</button>
+        <div class="gp-dots" data-dots></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EVENT DETAILS STRIP -->
+  <section class="section section--tint" id="about">
+    <div class="container">
+      <div class="gp-details">
+        <div class="gp-detail">
+          <span class="gp-detail__label">Date</span>
+          <strong>{event.date}</strong>
+        </div>
+        <div class="gp-detail">
+          <span class="gp-detail__label">Time</span>
+          <strong>{event.time}</strong>
+        </div>
+        <div class="gp-detail">
+          <span class="gp-detail__label">Venue</span>
+          <a href={event.map} target="_blank" rel="noopener" class="gp-venue">
+            <strong>{event.venue}</strong>
+            <span class="muted">{event.city}</span>
+            <span class="gp-map-cta">View on Google Maps &rarr;</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT THE OCCASION -->
+  <section class="section">
+    <div class="container prose" style="margin:0 auto;text-align:center;max-width:820px;">
+      <span class="eyebrow">The Occasion</span>
+      <h2>Honouring the Guru</h2>
+      <hr class="divider divider--center" />
+      <p class="lead">
+        Guru Purnima is the day devotees offer their deepest gratitude to the Guru — the
+        light that dispels darkness. Seekers gather in the divine presence of His Holiness
+        Sri Sri Sri Yogishwara Swami for darshan, discourse and blessings.
+      </p>
+      <p class="lead">
+        All sincere seekers and their families are warmly welcome. Kindly register below
+        so we can prepare to receive you.
+      </p>
+    </div>
+  </section>
+
+  <!-- WHAT TO EXPECT -->
+  <section class="section section--tint">
+    <div class="container">
+      <div class="text-center">
+        <span class="eyebrow">The Day</span>
+        <h2>What to Expect</h2>
+        <hr class="divider divider--center" />
+      </div>
+      <div class="grid" style="margin-top:2rem;">
+        <div class="card">
+          <h3>Darshan &amp; Blessings</h3>
+          <p class="muted">Receive the grace and blessings of Sri Yogi in person on this auspicious day.</p>
+        </div>
+        <div class="card">
+          <h3>Discourse &amp; Satsang</h3>
+          <p class="muted">Spiritual discourse and collective practice to nourish the seeker within.</p>
+        </div>
+        <div class="card">
+          <h3>Prasadam &amp; Fellowship</h3>
+          <p class="muted">Share in the warmth of the community with prasadam and devotional gathering.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REGISTRATION FORM -->
+  <section class="section section--tint" id="register">
+    <div class="container" style="max-width:680px;">
+      <div class="text-center">
+        <span class="eyebrow">Registration</span>
+        <h2>{event.title} {event.year} Registration</h2>
+        <hr class="divider divider--center" />
+        <p class="lead">Click below to open the registration form and reserve your place. We look forward to welcoming you.</p>
+      </div>
+
+      <div class="gp-register-cta text-center">
+        <a href={site.forms.guruPurnimaFormLink} class="btn gp-register-btn" target="_blank" rel="noopener">
+          Register Now &rarr;
+        </a>
+        <p class="muted" style="margin-top:0.9rem;">Opens the registration form in a new tab.</p>
+
+        <div class="gp-share" data-share data-url={pageUrl}>
+          <span class="gp-share__label">Help spread the word</span>
+          <div class="gp-share__btns">
+            <a class="gp-share__btn gp-share__btn--wa" href={waShare} target="_blank" rel="noopener" aria-label="Share on WhatsApp">
+              Share on WhatsApp
+            </a>
+            <button type="button" class="gp-share__btn gp-share__btn--copy" data-copy>Copy link</button>
+          </div>
+        </div>
+      </div>
+
+      <p class="muted text-center" style="margin-top:1.5rem;">
+        Questions? Message us on WhatsApp at{' '}
+        <a href={`https://wa.me/${site.contact.whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noopener" style="font-weight:600;">{site.contact.whatsapp}</a>
+        {' '}or email{' '}
+        <a href={`mailto:${site.contact.email}`} style="font-weight:600;">{site.contact.email}</a>.
+      </p>
+    </div>
+  </section>
+
+
+  <script define:vars={{ startISO: event.startISO }}>
+    // Live countdown to the event start.
+    const target = new Date(startISO).getTime();
+    const cd = document.querySelector('[data-countdown]');
+    const done = document.querySelector('[data-countdown-done]');
+    if (cd && done && !Number.isNaN(target)) {
+      const elDays = cd.querySelector('[data-days]');
+      const elHours = cd.querySelector('[data-hours]');
+      const elMins = cd.querySelector('[data-mins]');
+      const elSecs = cd.querySelector('[data-secs]');
+      const pad = (n) => String(n).padStart(2, '0');
+
+      function tick() {
+        const diff = target - Date.now();
+        if (diff <= 0) {
+          cd.hidden = true;
+          done.hidden = false;
+          clearInterval(timer);
+          return;
+        }
+        const s = Math.floor(diff / 1000);
+        elDays.textContent = Math.floor(s / 86400);
+        elHours.textContent = pad(Math.floor((s % 86400) / 3600));
+        elMins.textContent = pad(Math.floor((s % 3600) / 60));
+        elSecs.textContent = pad(s % 60);
+        cd.hidden = false;
+      }
+      tick();
+      const timer = setInterval(tick, 1000);
+    }
+  </script>
+
+  <script>
+    // Copy-link share button.
+    const shareBox = document.querySelector('[data-share]');
+    if (shareBox) {
+      const copyBtn = shareBox.querySelector('[data-copy]');
+      const url = shareBox.getAttribute('data-url') || window.location.href;
+      copyBtn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(url);
+          const original = copyBtn.textContent;
+          copyBtn.textContent = 'Link copied ✓';
+          setTimeout(() => { copyBtn.textContent = original; }, 2000);
+        } catch (err) {
+          window.prompt('Copy this link:', url);
+        }
+      });
+    }
+  </script>
+
+  <script>
+    // Autoscroll carousel for the "Glimpse of the Day" posters.
+    const carousel = document.querySelector('[data-carousel]');
+    if (carousel) {
+      const track = carousel.querySelector('[data-track]');
+      const slides = Array.from(track.children);
+      const prevBtn = carousel.querySelector('[data-prev]');
+      const nextBtn = carousel.querySelector('[data-next]');
+      const dotsWrap = carousel.querySelector('[data-dots]');
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let index = 0, timer = null, dots = [];
+
+      const perView = () => {
+        return window.innerWidth <= 760 ? 1 : 2;
+      };
+      const pages = () => Math.max(1, slides.length - perView() + 1);
+
+      function buildDots() {
+        dotsWrap.innerHTML = '';
+        dots = [];
+        for (let i = 0; i < pages(); i++) {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+          b.addEventListener('click', () => { go(i); restart(); });
+          dotsWrap.appendChild(b);
+          dots.push(b);
+        }
+        if (index > pages() - 1) index = 0;
+        update();
+      }
+      function go(i) {
+        const p = pages();
+        index = ((i % p) + p) % p;   // wrap around
+        track.scrollTo({ left: slides[index].offsetLeft, behavior: 'smooth' });
+        update();
+      }
+      function update() {
+        dots.forEach((d, i) => d.setAttribute('aria-current', i === index ? 'true' : 'false'));
+      }
+      function start() { if (reduce) return; stop(); timer = setInterval(() => go(index + 1), 4000); }
+      function stop() { if (timer) { clearInterval(timer); timer = null; } }
+      function restart() { stop(); start(); }
+
+      prevBtn.addEventListener('click', () => { go(index - 1); restart(); });
+      nextBtn.addEventListener('click', () => { go(index + 1); restart(); });
+      carousel.addEventListener('mouseenter', stop);
+      carousel.addEventListener('mouseleave', start);
+      track.addEventListener('touchstart', stop, { passive: true });
+      track.addEventListener('touchend', () => setTimeout(start, 3500), { passive: true });
+      document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
+
+      let rt;
+      window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(buildDots, 200); });
+
+      buildDots();
+      start();
+    }
+  </script>
+
+</BaseLayout>
+
+<style>
+  /* Hero — uses the throne portrait, falls back to the charcoal gradient */
+  .gp-hero {
+    background:
+      linear-gradient(180deg,
+        color-mix(in srgb, var(--maroon) 88%, transparent),
+        color-mix(in srgb, var(--maroon) 62%, transparent)),
+      radial-gradient(circle at 50% 0%, var(--saffron-dark), var(--maroon));
+    color: #fff;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    padding: 4.5rem 0 4rem;
+  }
+  .gp-hero h1 { color: #fff; }
+  .gp-hero .lead { color: #f6e7cf; max-width: 620px; margin-left: auto; margin-right: auto; }
+  .gp-hero .eyebrow { color: var(--gold); }
+  .gp-hero .eyebrow, .gp-hero h1, .gp-hero .lead {
+    text-shadow: 0 2px 16px rgba(0,0,0,0.7);
+  }
+
+  /* Event details strip */
+  .gp-details {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    text-align: center;
+  }
+  .gp-detail { display: flex; flex-direction: column; gap: 0.25rem; }
+  .gp-detail__label {
+    font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+    font-weight: 700; color: var(--saffron-dark);
+  }
+  .gp-detail strong { font-family: var(--font-head); font-size: 1.25rem; color: var(--maroon); }
+  .gp-venue {
+    display: flex; flex-direction: column; gap: 0.25rem;
+    color: inherit; text-decoration: none;
+  }
+  .gp-venue:hover { text-decoration: none; }
+  .gp-venue:hover strong { color: var(--saffron-dark); }
+  .gp-map-cta {
+    margin-top: 0.35rem;
+    font-size: 0.82rem; font-weight: 600;
+    color: var(--saffron-dark);
+    letter-spacing: 0.02em;
+  }
+  .gp-venue:hover .gp-map-cta { text-decoration: underline; }
+
+  /* Countdown (in hero) */
+  .gp-countdown {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.8rem;
+    flex-wrap: wrap;
+  }
+  .gp-cd-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 74px;
+    padding: 0.7rem 0.4rem;
+    background: rgba(0, 0, 0, 0.28);
+    border: 1px solid color-mix(in srgb, var(--gold) 45%, transparent);
+    border-radius: 12px;
+    backdrop-filter: blur(2px);
+  }
+  .gp-cd-num {
+    font-family: var(--font-head);
+    font-size: 2rem;
+    line-height: 1;
+    color: var(--gold);
+    font-variant-numeric: tabular-nums;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+  }
+  .gp-cd-label {
+    margin-top: 0.35rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #f6e7cf;
+  }
+  .gp-cd-done {
+    margin-top: 1.8rem;
+    font-family: var(--font-head);
+    font-size: 1.3rem;
+    color: var(--gold);
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+  }
+  @media (max-width: 480px) {
+    .gp-countdown { gap: 0.6rem; }
+    .gp-cd-unit { min-width: 62px; padding: 0.6rem 0.3rem; }
+    .gp-cd-num { font-size: 1.6rem; }
+  }
+
+  /* Glimpses carousel */
+  .gp-carousel { position: relative; margin-top: 2rem; }
+  .gp-track {
+    position: relative;
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 0.25rem;
+  }
+  .gp-track::-webkit-scrollbar { display: none; }
+  .gp-slide {
+    flex: 0 0 calc((100% - 1.5rem) / 2);   /* 2 visible on desktop (larger) */
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    scroll-snap-align: start;
+  }
+  .gp-slide img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    display: block;
+  }
+  .gp-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 999px;
+    border: 0;
+    cursor: pointer;
+    background: var(--maroon);
+    color: #fff;
+    font-size: 1.7rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.28);
+    opacity: 0.92;
+    transition: opacity 0.2s ease, background 0.2s ease;
+    z-index: 2;
+  }
+  .gp-arrow:hover { opacity: 1; background: var(--saffron-dark); }
+  .gp-arrow--prev { left: -6px; }
+  .gp-arrow--next { right: -6px; }
+  .gp-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.2rem;
+  }
+  .gp-dots button {
+    width: 9px;
+    height: 9px;
+    border-radius: 999px;
+    border: 0;
+    padding: 0;
+    background: var(--line);
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .gp-dots button[aria-current="true"] { background: var(--saffron); transform: scale(1.35); }
+  @media (max-width: 760px) {
+    .gp-slide { flex-basis: 85%; }                        /* 1 visible + peek */
+    .gp-arrow { width: 38px; height: 38px; font-size: 1.4rem; }
+  }
+
+  /* Registration call-to-action */
+  .gp-register-cta { margin-top: 1.5rem; }
+  .gp-register-btn {
+    font-size: 1.15rem;
+    padding: 1rem 2.4rem;
+  }
+
+  /* Share this event */
+  .gp-share {
+    margin-top: 2.2rem;
+    padding-top: 1.6rem;
+    border-top: 1px solid var(--line);
+  }
+  .gp-share__label {
+    display: block;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--saffron-dark);
+    margin-bottom: 0.8rem;
+  }
+  .gp-share__btns {
+    display: flex;
+    gap: 0.7rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .gp-share__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.6rem 1.3rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    border: 1px solid var(--line);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  }
+  .gp-share__btn--wa {
+    background: #25D366;
+    color: #0a2e16;
+    border-color: #25D366;
+    text-decoration: none;
+  }
+  .gp-share__btn--wa:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(37,211,102,0.4); text-decoration: none; }
+  .gp-share__btn--copy {
+    background: #fff;
+    color: var(--maroon);
+  }
+  .gp-share__btn--copy:hover { background: var(--cream-2); transform: translateY(-2px); }
+
+  /* Form */
+  .gp-form { text-align: left; }
+  .gp-row {
+    display: grid;
+    gap: 1.2rem;
+    grid-template-columns: 1fr 1fr;
+  }
+  .gp-field { margin-bottom: 1.2rem; }
+  .gp-field label,
+  .gp-fieldset legend {
+    display: block;
+    font-weight: 600;
+    color: var(--maroon);
+    margin-bottom: 0.4rem;
+    font-size: 0.95rem;
+  }
+  .req { color: var(--saffron-dark); }
+  .gp-field input[type="text"],
+  .gp-field input[type="email"],
+  .gp-field input[type="tel"],
+  .gp-field input[type="number"],
+  .gp-field select {
+    width: 100%;
+    padding: 0.7rem 0.85rem;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--ink);
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .gp-field input:focus,
+  .gp-field select:focus {
+    outline: none;
+    border-color: var(--saffron);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--saffron) 22%, transparent);
+  }
+  .gp-fieldset { border: 0; padding: 0; margin-inline: 0; }
+  .gp-fieldset legend { padding: 0; }
+  .gp-radio {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-right: 1.5rem;
+  }
+  .gp-radio input { accent-color: var(--saffron); }
+
+  .gp-submit {
+    width: 100%;
+    margin-top: 0.5rem;
+    background: var(--maroon);
+    color: #fff;
+    border: 0;
+    padding: 0.95rem 1.6rem;
+    border-radius: 999px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .gp-submit:hover {
+    background: var(--saffron-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px rgba(110, 20, 20, 0.22);
+  }
+
+  @media (max-width: 560px) {
+    .gp-row { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,96 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/site.js';
+
+const {
+  title,
+  description = 'Sri Sahasrara Yogishwara Swami Mahapeetham — a living lineage of divine consciousness, yoga and spiritual practice.',
+  // Per-page social-share image (defaults to the branded cover).
+  ogImage = '/images/og-cover.png',
+} = Astro.props;
+
+const fullTitle = title ? `${title} · ${site.shortName}` : site.name;
+const canonicalUrl = new URL(Astro.url.pathname, 'https://www.sriyogi.site').href;
+const ogImageUrl = new URL(ogImage, 'https://www.sriyogi.site').href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="theme-color" content="#211e1a" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon-180.png" />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+
+    <!-- Netlify Identity: handles CMS invite/login links, then opens /admin -->
+    <script is:inline src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script is:inline>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on('init', (user) => {
+          if (!user) {
+            window.netlifyIdentity.on('login', () => { document.location.href = '/admin/'; });
+          }
+        });
+      }
+    </script>
+
+    <script>
+      // Subtle on-scroll reveal. Skips entirely if the visitor prefers reduced motion.
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!reduce) {
+        const selector = [
+          'main section .eyebrow', 'main section > .container > h2',
+          'main .card', 'main .team-card', 'main .branch-card', 'main .course-card',
+          'main .news-item', 'main .stat', 'main .quote',
+          'main .founder-card', 'main .book-layout', 'main .book-teaser',
+          'main .prose > img', 'main .prose > p.lead',
+        ].join(', ');
+        const els = Array.from(document.querySelectorAll(selector));
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+          });
+        }, { threshold: 0.1, rootMargin: '0px 0px -6% 0px' });
+
+        els.forEach((el, i) => {
+          el.setAttribute('data-reveal', '');
+          // small stagger for grouped items
+          el.style.setProperty('--reveal-delay', `${(i % 4) * 0.06}s`);
+          const r = el.getBoundingClientRect();
+          if (r.top < window.innerHeight * 0.94) {
+            el.classList.add('is-visible');   // already in view on load → no flash
+          } else {
+            io.observe(el);
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

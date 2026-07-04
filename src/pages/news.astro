@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { getCollection } from 'astro:content';
+
+// ── NEWS ────────────────────────────────────────────────────────────────
+// Managed through the CMS at /admin (each post is a file in src/content/news).
+// Newest first; drafts are hidden.
+const news = (await getCollection('news', ({ data }) => !data.draft))
+  .map((entry) => entry.data)
+  .sort((a, b) => b.date.valueOf() - a.date.valueOf());
+
+
+const fmt = (d) => new Date(d).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+---
+
+<BaseLayout title="News" description="Latest news, darshans, book events and happenings from Sri Sahasrara Yogishwara Swami Mahapeetham.">
+  <PageHeader
+    eyebrow="Updates"
+    title="Latest News"
+    lead="Darshans, gatherings, book events and happenings across the Mahapeetham."
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="news-list">
+        {news.map((n) => (
+          <article class="news-item">
+            <time>{fmt(n.date)}</time>
+            <div>
+              {n.photo && <img src={n.photo} alt={n.title} class="news-photo" />}
+              <h3>{n.title}</h3>
+              <p class="muted">{n.summary}</p>
+              {n.url && <a href={n.url} class="news-more">Read More →</a>}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .news-list { max-width: 860px; margin: 0 auto; display: grid; gap: 0; }
+  .news-item {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 1.5rem;
+    padding: 1.6rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .news-item:first-child { padding-top: 0; }
+  .news-item time {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--saffron-dark);
+    padding-top: 0.3rem;
+  }
+  .news-photo {
+    width: 100%;
+    max-height: 320px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 0.8rem;
+    border: 1px solid var(--line);
+  }
+  .news-item h3 { color: var(--maroon); margin-bottom: 0.4rem; font-size: 1.25rem; }
+  .news-more { font-weight: 600; font-size: 0.9rem; }
+  @media (max-width: 600px) {
+    .news-item { grid-template-columns: 1fr; gap: 0.4rem; }
+  }
+</style>
