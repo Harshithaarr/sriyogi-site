@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+
+// EDIT ME: add a testimonial by copying a block. `date` is optional.
+const testimonials = [
+  {
+    quote: `I was exposed to Sri Yogi’s teachings through a colleague, and I honestly found them empowering and motivating. It feels as though his light shines through his disciples in many areas of life. I can especially point out that in a working environment, the sense of ownership, responsibility, integrity, strong adherence to professional ethics, and kindness toward one’s surroundings can contribute greatly to every team member.
+
+The overall message feels grounded in inner growth, compassion, and discipline — not just “feel-good spirituality.” What I especially appreciate is that it encourages people to take control of their lives, rather than waiting for external help or blaming circumstances. It sets people on a path of kindness, responsibility, and genuine personal growth.`,
+    name: 'Yehuda Tsimanis',
+    date: 'February 3, 2026',
+  },
+];
+---
+
+<BaseLayout title="Testimonials" description="Experiences and reflections shared by those touched by Sri Yogi’s teachings.">
+  <PageHeader
+    eyebrow="Devotee Experiences"
+    title="Testimonials"
+    lead="Words of grace shared by those touched by the lineage."
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="testimonial-list">
+        {testimonials.map((t) => (
+          <figure class="quote">
+            <div class="quote__mark">“</div>
+            <blockquote>
+              {t.quote.split('\n\n').map((para) => <p>{para}</p>)}
+            </blockquote>
+            <figcaption>
+              <strong>{t.name}</strong>
+              {t.date && <span class="quote__date">{t.date}</span>}
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .testimonial-list { display: grid; gap: 1.8rem; max-width: 820px; margin: 0 auto; }
+  .quote {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 2rem 2.2rem 1.8rem;
+    box-shadow: var(--shadow);
+    position: relative;
+    margin: 0;
+  }
+  .quote__mark {
+    font-family: var(--font-head);
+    font-size: 4rem;
+    color: var(--gold);
+    line-height: 0.6;
+    height: 2rem;
+  }
+  .quote blockquote { margin: 0 0 1rem; }
+  .quote blockquote p { color: var(--ink); margin-bottom: 0.9rem; }
+  .quote figcaption {
+    border-top: 1px solid var(--line);
+    padding-top: 0.9rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .quote figcaption strong { color: var(--maroon); font-family: var(--font-head); font-size: 1.2rem; }
+  .quote__date { color: var(--ink-soft); font-size: 0.88rem; }
+</style>

@@ -1,0 +1,17 @@
+{
+  "name": "sriyogi-site",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sri Sahasrara Yogishwara Swami Mahapeetham — devotional website",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^4.16.0"
+  }
+}

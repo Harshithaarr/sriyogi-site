@@ -1,0 +1,120 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { site } from '../data/site.js';
+
+// ─────────────────────────────────────────────────────────────────────────
+//  OFFERINGS & CONTRIBUTIONS
+//  Each card links to its Razorpay Payment Page. Paste the URLs into the
+//  `payments` block in src/data/site.js. While a URL is empty (''), the card
+//  shows as "Coming soon" with the button disabled — the page is safe to
+//  publish before Razorpay is live. Add more offerings by adding to the list
+//  below (and, if it takes a payment, a matching key in site.payments).
+// ─────────────────────────────────────────────────────────────────────────
+const offerings = [
+  {
+    key: 'mantropadesham',
+    name: 'Mantropadesham',
+    occasion: 'During Guru Purnima',
+    description:
+      'Sacred initiation into mantra from His Holiness Sri Yogi — a personal step on the path of sadhana. Enrol and offer your contribution below; the mutt will share the details and timing.',
+    cta: 'Contribute & Enrol',
+  },
+  {
+    key: 'shivaratriPoojas',
+    name: 'Poojas — Maha Shivaratri',
+    occasion: 'During Maha Shivaratri',
+    description:
+      'Sponsor abhishekam, archana and special poojas performed on the auspicious night of Maha Shivaratri. Your sankalpa details are collected at the time of contribution.',
+    cta: 'Sponsor a Pooja',
+  },
+  {
+    key: 'donation',
+    name: 'Donation',
+    occasion: 'Anytime',
+    description:
+      'Support the seva, upkeep and spiritual activities of the Mahapeetham. Every contribution, of any amount, is received with gratitude.',
+    cta: 'Donate',
+  },
+];
+
+// Attach the configured Razorpay link (if any) to each offering.
+const items = offerings.map((o) => ({ ...o, link: site.payments?.[o.key] || '' }));
+---
+
+<BaseLayout
+  title="Offerings & Contributions"
+  description="Contribute towards Mantropadesham, Maha Shivaratri poojas, and support the seva of the Mahapeetham through your donation."
+>
+  <PageHeader
+    eyebrow="Seva & Contribution"
+    title="Offerings & Contributions"
+    lead="Participate in the sacred programs of the lineage and support its seva. Event registration remains free — these offerings are for those who wish to enrol or contribute."
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="offering-list">
+        {items.map((o) => (
+          <article class="offering-card">
+            <span class="offering-card__occasion">{o.occasion}</span>
+            <h2>{o.name}</h2>
+            <p class="muted">{o.description}</p>
+            <div class="offering-card__action">
+              {o.link ? (
+                <a href={o.link} class="btn" target="_blank" rel="noopener">{o.cta}</a>
+              ) : (
+                <span class="btn btn--soon" aria-disabled="true" title="Available soon">Coming soon</span>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <p class="muted text-center" style="margin-top:2.5rem;">
+        Contributions are processed securely via Razorpay. For assistance, message us on WhatsApp at{' '}
+        <a href={`https://wa.me/${site.contact.whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noopener" style="font-weight:600;">{site.contact.whatsapp}</a>
+        {' '}or email{' '}
+        <a href={`mailto:${site.contact.email}`} style="font-weight:600;">{site.contact.email}</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .offering-list {
+    display: grid;
+    gap: 1.8rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  }
+  .offering-card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.8rem;
+    box-shadow: var(--shadow);
+  }
+  .offering-card__occasion {
+    align-self: flex-start;
+    background: var(--cream-2);
+    color: var(--saffron-dark);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 0.28rem 0.75rem;
+    border-radius: 999px;
+    margin-bottom: 0.9rem;
+  }
+  .offering-card h2 { margin: 0 0 0.6rem; color: var(--maroon); letter-spacing: 0.02em; }
+  .offering-card .muted { flex: 1; }
+  .offering-card__action { margin-top: 1.4rem; }
+  .btn--soon {
+    background: var(--cream-2);
+    color: var(--saffron-dark);
+    cursor: not-allowed;
+    opacity: 0.8;
+  }
+</style>

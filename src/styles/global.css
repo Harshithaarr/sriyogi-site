@@ -1,0 +1,259 @@
+/* ───────────────────────────────────────────────────────────────────────
+   Sri Yogi — global styles
+   Devotional palette: saffron, gold, deep maroon on a warm cream ground.
+   Edit the CSS variables below to re-skin the whole site at once.
+   ─────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* ── THEME: Charcoal & Saffron ─────────────────────────────────────────
+     (Swap this whole block to change the site theme. --maroon is the dark
+      base used for headings, hero and footer.) */
+  --saffron: #e08a1e;
+  --saffron-dark: #b96d10;
+  --maroon: #23201c;        /* charcoal base */
+  --gold: #cba256;
+  --cream: #f6f3ee;
+  --cream-2: #e7e2d8;
+  --ink: #2b2824;
+  --ink-soft: #5f574c;
+  --line: #e2dccf;
+
+  --maxw: 1080px;
+  --radius: 14px;
+  --shadow: 0 10px 30px rgba(20, 18, 16, 0.10);
+
+  --font-head: 'Cormorant Garamond', 'Georgia', 'Times New Roman', serif;
+  --font-body: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+/* Self-contained fonts via Google Fonts. Replace with self-hosted if you prefer. */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--cream);
+  line-height: 1.7;
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-head);
+  color: var(--maroon);
+  line-height: 1.2;
+  font-weight: 600;
+  margin: 0 0 0.5em;
+}
+
+h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); }
+h2 { font-size: clamp(1.7rem, 3.5vw, 2.3rem); }
+h3 { font-size: 1.35rem; }
+
+p { margin: 0 0 1.1em; }
+
+a { color: var(--saffron-dark); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+img { max-width: 100%; height: auto; display: block; }
+
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+/* Section rhythm */
+.section { padding: 4rem 0; }
+.section--tint { background: var(--cream-2); }
+
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  color: var(--saffron-dark);
+  margin-bottom: 0.6rem;
+}
+
+.lead { font-size: 1.18rem; color: var(--ink-soft); }
+
+.divider {
+  width: 64px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--saffron), var(--gold));
+  border: 0;
+  border-radius: 3px;
+  margin: 1rem 0 1.6rem;
+}
+.divider--center { margin-left: auto; margin-right: auto; }
+
+.text-center { text-align: center; }
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  background: var(--saffron);
+  color: #fff;
+  padding: 0.8rem 1.6rem;
+  border-radius: 999px;
+  font-weight: 600;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.btn:hover { background: var(--saffron-dark); text-decoration: none; transform: translateY(-1px); }
+.btn--ghost {
+  background: transparent;
+  color: var(--maroon);
+  border: 1.5px solid var(--gold);
+}
+.btn--ghost:hover { background: var(--cream-2); }
+
+/* Card grid */
+.grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+.card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.6rem;
+  box-shadow: var(--shadow);
+}
+.card h3 { color: var(--saffron-dark); }
+
+/* Prose blocks (long-form content pages) */
+.prose { max-width: 760px; }
+.prose h2 { margin-top: 2.2rem; }
+.prose h3 { margin-top: 1.6rem; color: var(--saffron-dark); }
+
+/* Hero */
+.hero {
+  background:
+    linear-gradient(180deg,
+      color-mix(in srgb, var(--maroon) 80%, transparent),
+      color-mix(in srgb, var(--maroon) 58%, transparent)),
+    radial-gradient(circle at 50% 0%, var(--saffron-dark), var(--maroon));
+  color: #fff;
+  text-align: center;
+  padding: 6rem 0 5rem;
+}
+.hero h1 { color: #fff; }
+.hero .lead { color: #f6e7cf; }
+.hero .eyebrow { color: var(--gold); }
+
+/* Page header (interior pages) */
+.page-head {
+  background: var(--cream-2);
+  border-bottom: 1px solid var(--line);
+  padding: 3rem 0 2.4rem;
+  text-align: center;
+}
+
+/* Utility */
+.muted { color: var(--ink-soft); }
+.stack > * + * { margin-top: 1rem; }
+
+/* ── Reader reviews (shared by Home & Book pages) ───────────────────────── */
+.rating-badge {
+  display: inline-flex; align-items: baseline; gap: 0.5rem;
+  margin-top: 0.4rem; font-size: 1.05rem;
+}
+.rating-badge__stars { color: var(--saffron); letter-spacing: 2px; font-size: 1.15rem; }
+.rating-badge strong { color: var(--maroon); font-size: 1.3rem; }
+.review-grid {
+  display: grid; gap: 1.4rem; margin-top: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+.review-card {
+  background: #fff; border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 1.6rem 1.7rem;
+  box-shadow: var(--shadow); margin: 0; text-align: left;
+}
+.review-card__stars { color: var(--saffron); letter-spacing: 2px; font-size: 0.95rem; margin-bottom: 0.5rem; }
+.review-card__source {
+  display: inline-block; margin-bottom: 0.5rem;
+  font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+  font-weight: 700; color: var(--saffron-dark);
+}
+.review-card h3 { color: var(--maroon); font-size: 1.12rem; margin: 0 0 0.6rem; }
+.review-card blockquote { margin: 0 0 0.9rem; color: var(--ink-soft); font-style: italic; line-height: 1.55; }
+.review-card figcaption { font-weight: 600; color: var(--saffron-dark); }
+
+/* Featured endorsement (e.g. a dignitary) */
+.endorsement {
+  max-width: 860px; margin: 1.4rem auto 0;
+  background: var(--maroon); color: #f6e7cf;
+  border-radius: var(--radius); box-shadow: var(--shadow);
+  padding: 2.4rem 2.6rem; text-align: center; position: relative;
+}
+.endorsement__mark {
+  font-family: var(--font-head); font-size: 4rem; color: var(--gold);
+  line-height: 0.5; height: 1.6rem; display: block;
+}
+.endorsement blockquote {
+  margin: 0 0 1.2rem; font-size: 1.18rem; line-height: 1.6;
+  font-style: italic; color: #fbf6ec;
+}
+.endorsement__name { font-family: var(--font-head); font-size: 1.2rem; color: var(--gold); }
+.endorsement__source { display: block; font-size: 0.9rem; color: #e3c9a6; margin-top: 0.2rem; }
+@media (max-width: 640px) { .endorsement { padding: 1.8rem 1.4rem; } }
+
+@media (max-width: 640px) {
+  .section { padding: 2.8rem 0; }
+}
+
+/* ───────────────────────────────────────────────────────────────────────
+   Motion & hover effects (all disabled under prefers-reduced-motion)
+   ─────────────────────────────────────────────────────────────────────── */
+
+/* Hover lift on every card-like surface */
+.card, .team-card, .branch-card, .course-card, .quote, .review-card {
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
+}
+.card:hover, .team-card:hover, .branch-card:hover,
+.course-card:hover, .quote:hover, .review-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 44px rgba(110, 20, 20, 0.16);
+}
+
+/* Gentle zoom on content images when hovered */
+.branch-card__photo, .news-photo, .book-cover img, .book-teaser__cover img {
+  transition: transform 0.4s ease;
+}
+.book-teaser__cover:hover img,
+.branch-card:hover .branch-card__photo,
+.news-item:hover .news-photo { transform: scale(1.03); }
+
+@media (prefers-reduced-motion: no-preference) {
+  /* On-scroll reveal — JS adds [data-reveal], then .is-visible when in view */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0s);
+  }
+  [data-reveal].is-visible { opacity: 1; transform: none; }
+
+  /* Soft fade-up of the hero contents on load */
+  .hero .eyebrow, .hero h1, .hero .lead, .hero p {
+    animation: hero-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .hero h1 { animation-delay: 0.08s; }
+  .hero .lead { animation-delay: 0.16s; }
+  .hero p:last-child { animation-delay: 0.24s; }
+}
+
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: none; }
+}

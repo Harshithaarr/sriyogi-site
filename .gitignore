@@ -1,0 +1,24 @@
+# build output
+dist/
+# dependencies
+node_modules/
+# astro
+.astro/
+# environment / secrets
+.env
+.env.production
+# macOS
+.DS_Store
+# logs
+npm-debug.log*
+
+# original source images (not part of the built site)
+Site Files/
+
+# netlify CLI state
+.netlify/
+
+# local dev artifacts (screenshots, deploy zips)
+preview-*.png
+preview-*.jpg
+sriyogi-site-dist.zip

@@ -1,0 +1,197 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { site } from '../data/site.js';
+
+// Impact stats and service areas — edit freely.
+const stats = [
+  { value: '2009', label: 'Established' },
+  { value: '7,400+', label: 'Healthcare beneficiaries' },
+  { value: '500+', label: 'Students supported' },
+  { value: '~100', label: 'Committed volunteers' },
+];
+
+const services = [
+  { title: 'Spiritual Discourses', body: 'Illuminating wisdom for clarity, balance, and purpose.' },
+  { title: 'Healing & Wellness', body: 'Nurturing emotional resilience and inner strength.' },
+  { title: 'Educational Support', body: 'Empowering deserving students through scholarships & grants.' },
+  { title: 'Healthcare Services', body: 'Delivering accessible medical care to underserved communities.' },
+  { title: 'Yoga & Meditation', body: 'Promoting holistic well-being for all age groups.' },
+];
+---
+
+<BaseLayout title="Objective" description="The mission and humanitarian objectives of Sri Sahasrara Yogishwara Swami Mahapeetham — service, education, healthcare, healing and spiritual guidance.">
+  <PageHeader
+    eyebrow="Sri Sahasrara Yogishwara Swami Mahapeetham"
+    title="Our Objective"
+    lead="Rooted in Compassion · Guided by Wisdom · Committed to Service"
+  />
+
+  <!-- INTRO -->
+  <section class="section">
+    <div class="container prose" style="margin:0 auto;max-width:820px;text-align:center;">
+      <p class="lead">
+        Sri Sahasrara Yogishwara Swami Mahapeetham stands as a living embodiment of
+        selfless service, spiritual guidance, and social responsibility. Established
+        in 2009, the Mahapeetham has emerged as a trusted centre for holistic
+        upliftment — nurturing individuals, strengthening communities, and fostering
+        inner transformation.
+      </p>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="section section--tint">
+    <div class="container">
+      <div class="stats">
+        {stats.map((s) => (
+          <div class="stat">
+            <span class="stat__value">{s.value}</span>
+            <span class="stat__label">{s.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- PILLARS -->
+  <section class="section">
+    <div class="container prose" style="margin:0 auto;max-width:820px;">
+      <div class="text-center">
+        <span class="eyebrow">The Pillars of Service</span>
+        <h2>Leadership &amp; Strength in Service</h2>
+        <hr class="divider divider--center" />
+      </div>
+      <p>
+        The Mahapeetham’s initiatives are powered by the unwavering dedication of its
+        trustees and volunteers, whose integrity, compassion, and commitment form the
+        foundation of every outreach effort.
+      </p>
+      <h3>Leadership with Vision</h3>
+      <p>Guided by distinguished professionals and scholars, the trustees ensure:</p>
+      <ul>
+        <li>Ethical governance &amp; transparency</li>
+        <li>Sustainable growth &amp; accountability</li>
+        <li>Strategic expansion of humanitarian initiatives</li>
+        <li>Preservation of spiritual values with societal impact</li>
+      </ul>
+      <p>Their leadership is driven not by authority, but by responsibility and service.</p>
+      <h3>Strength in Service</h3>
+      <p>
+        Nearly 100 committed volunteers from diverse backgrounds contribute their time,
+        skills, expertise, and compassion — united by the belief that service is the
+        highest form of devotion, transforming vision into meaningful action.
+      </p>
+    </div>
+  </section>
+
+  <!-- SERVICE AREAS -->
+  <section class="section section--tint">
+    <div class="container">
+      <div class="text-center">
+        <span class="eyebrow">A Legacy of Compassionate Impact</span>
+        <h2>Integrated Initiatives</h2>
+        <hr class="divider divider--center" />
+        <p class="lead" style="max-width:720px;margin:0 auto;">
+          For over a decade, the Mahapeetham has pursued a holistic path to social
+          upliftment. True impact is measured in lives transformed, hope restored,
+          and dignity preserved.
+        </p>
+      </div>
+      <div class="grid" style="margin-top:2rem;">
+        {services.map((s) => (
+          <div class="card">
+            <h3>{s.title}</h3>
+            <p class="muted">{s.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- DETAIL SECTIONS -->
+  <section class="section">
+    <div class="container prose" style="margin:0 auto;max-width:820px;">
+
+      <h2>Healthcare &amp; Medical Support</h2>
+      <p>Compassion extends beyond spiritual guidance into sustained healthcare outreach.</p>
+      <ul>
+        <li>Regular medical camps in rural &amp; underserved regions</li>
+        <li>Blood donation drives supporting lifesaving care</li>
+        <li>Distribution of essential medical kits &amp; medicines</li>
+        <li>Free access to both modern and traditional treatments</li>
+      </ul>
+      <p>
+        More than <strong>7,400 individuals</strong> have benefitted from the
+        Mahapeetham’s healthcare services. During the COVID-19 crisis, the Mahapeetham
+        played a critical role by delivering timely medical relief and essential
+        medicines to vulnerable communities.
+      </p>
+
+      <h2>Education &amp; Scholarships</h2>
+      <p>The Mahapeetham views education as a catalyst for personal empowerment and societal progress.</p>
+      <p>Through the <strong>Yogishwara Swami Scholarship Initiative</strong>:</p>
+      <ul>
+        <li>Over 500 meritorious students supported</li>
+        <li>Financial assistance reducing educational barriers</li>
+        <li>Encouragement of academic excellence</li>
+      </ul>
+      <p>Grants for school children include uniforms &amp; learning materials, school &amp; examination fees, and assistance for traditional Gurukula education — ensuring no deserving child is limited by financial hardship.</p>
+
+      <h2>Yoga &amp; Meditation</h2>
+      <p>
+        Structured programs designed for inner balance, clarity, and self-development —
+        NISHTA (ages 7–12) for focus, discipline and emotional stability, and AAKAARA ·
+        APARA · AKASHA for adults seeking self-awareness and inner transformation.
+        <a href="/courses/">See all courses →</a>
+      </p>
+
+      <h2>Darshan &amp; Spiritual Guidance</h2>
+      <p>
+        Devotees experience profound moments of peace, clarity, and reassurance through
+        darshan and blessings — deep emotional calm, renewed inner strength, and clarity
+        amidst life’s challenges.
+      </p>
+
+      <h2>Healing &amp; Inner Support</h2>
+      <p>
+        The Mahapeetham provides a compassionate space for individuals navigating
+        emotional stress, long-term physical challenges, and mental unrest. Spiritual
+        healing is embraced as a complementary support, encouraging harmony between
+        inner well-being and professional medical care.
+      </p>
+
+      <h2>Spiritual Discourses</h2>
+      <img src="/images/swami-discourse.jpg" alt="His Holiness Sri Sri Sri Yogishwara Swami"
+           style="width:100%;border-radius:var(--radius);box-shadow:var(--shadow);margin:0.5rem 0 1.5rem;" />
+      <p>
+        Through profound teachings, timeless wisdom is presented with modern relevance —
+        discourses across India and global online sessions, bridging ancient knowledge
+        with contemporary challenges, especially impactful for youth seeking direction.
+      </p>
+    </div>
+  </section>
+
+  <!-- JOIN -->
+  <section class="section section--tint">
+    <div class="container text-center">
+      <span class="eyebrow">Join the Mission</span>
+      <h2>Together, Let Us Serve. Together, Let Us Uplift.</h2>
+      <hr class="divider divider--center" />
+      <p class="lead" style="max-width:680px;margin:0 auto 1.4rem;">
+        We warmly invite those who resonate with compassion, service, spiritual growth,
+        and social responsibility to contribute through volunteering, donations,
+        partnerships, and community collaboration.
+      </p>
+      <a href={`mailto:${site.contact.email}`} class="btn">Get Involved</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; text-align: center; }
+  .stat { display: flex; flex-direction: column; }
+  .stat__value { font-family: var(--font-head); font-size: 2.6rem; color: var(--saffron-dark); line-height: 1; }
+  .stat__label { color: var(--ink-soft); font-size: 0.92rem; margin-top: 0.4rem; }
+  @media (max-width: 640px) { .stats { grid-template-columns: repeat(2, 1fr); gap: 1.8rem; } }
+</style>

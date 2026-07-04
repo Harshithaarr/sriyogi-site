@@ -1,0 +1,30 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# Uploaded photos are saved here and referenced from posts.
+media_folder: "public/images/news"
+public_folder: "/images/news"
+
+# Nicer wording in the editor.
+site_url: https://www.sriyogi.site
+display_url: https://www.sriyogi.site
+logo_url: https://www.sriyogi.site/images/logo-trim.png
+
+collections:
+  - name: "news"
+    label: "News / Darshan Updates"
+    label_singular: "News Post"
+    description: "Add a post after each Darshan. Newest posts appear first on the News page."
+    folder: "src/content/news"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    sortable_fields: ["date", "title"]
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+      - { label: "Summary", name: "summary", widget: "text", hint: "A short paragraph shown on the News page." }
+      - { label: "Photo (optional)", name: "photo", widget: "image", required: false }
+      - { label: "Read-more link (optional)", name: "url", widget: "string", required: false, hint: "Leave blank if there is no full article to link to." }
+      - { label: "Hide this post (draft)", name: "draft", widget: "boolean", required: false, default: false }
+      - { label: "Full article (optional)", name: "body", widget: "markdown", required: false }

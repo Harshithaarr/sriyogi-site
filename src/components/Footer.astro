@@ -1,0 +1,124 @@
+---
+import { site, nav, legalNav } from '../data/site.js';
+const year = new Date().getFullYear();
+const socials = Object.entries(site.social).filter(([, url]) => url);
+
+// Inline brand icons (24×24, use currentColor so they inherit footer colours)
+const icons = {
+  instagram: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>',
+  facebook: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z"/></svg>',
+  twitter: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.657l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>',
+  youtube: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.5a3 3 0 0 0-2.12-2.12C19.5 3.87 12 3.87 12 3.87s-7.5 0-9.38.51A3 3 0 0 0 .5 6.5 31.3 31.3 0 0 0 0 12a31.3 31.3 0 0 0 .5 5.5 3 3 0 0 0 2.12 2.12c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51a3 3 0 0 0 2.12-2.12A31.3 31.3 0 0 0 24 12a31.3 31.3 0 0 0-.5-5.5zM9.6 15.6V8.4l6.2 3.6z"/></svg>',
+  whatsapp: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.512 5.26l-.999 3.648 3.476-.912zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.521.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.074-.149-.669-1.612-.916-2.207-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>',
+};
+const labels = { instagram: 'Instagram', facebook: 'Facebook', twitter: 'X', youtube: 'YouTube' };
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <div class="f-brand"><span class="brand-mark">ॐ</span> {site.shortName}</div>
+      <p class="muted">{site.tagline}</p>
+      {socials.length > 0 && (
+        <div class="socials">
+          {socials.map(([name, url]) => (
+            <a href={url} target="_blank" rel="noopener" aria-label={labels[name] || name} title={labels[name] || name}>
+              <Fragment set:html={icons[name] || ''} />
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+
+    <div>
+      <h4>Explore</h4>
+      <ul>
+        {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </div>
+
+    <div>
+      <h4>Contact</h4>
+      <ul class="muted">
+        <li>{site.contact.headOffice}</li>
+        <li><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></li>
+        <li><a href={`tel:${site.contact.phone.replace(/\s/g, '')}`}>{site.contact.phone}</a></li>
+        {site.contact.whatsapp && (
+          <li>
+            <a href={`https://wa.me/${site.contact.whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noopener">
+              WhatsApp enquiries: {site.contact.whatsapp}
+            </a>
+          </li>
+        )}
+      </ul>
+      {site.whatsappCommunity && (
+        <a class="wa-join" href={site.whatsappCommunity} target="_blank" rel="noopener">
+          <Fragment set:html={icons.whatsapp} /> Join us on WhatsApp
+        </a>
+      )}
+      <ul class="legal">
+        {legalNav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </div>
+  </div>
+
+  <div class="container copyright">
+    © 2009–{year} {site.name}. All rights reserved.
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--maroon);
+    color: #f6e7cf;
+    padding: 3rem 0 1.5rem;
+    margin-top: 2rem;
+  }
+  .footer-grid {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: 1.4fr 1fr 1.2fr;
+  }
+  .site-footer h4 { color: var(--gold); margin-bottom: 0.8rem; font-size: 1.1rem; }
+  .site-footer ul { list-style: none; margin: 0 0 1rem; padding: 0; }
+  .site-footer li { margin-bottom: 0.4rem; }
+  .site-footer a { color: #f6e7cf; }
+  .site-footer a:hover { color: #fff; }
+  .site-footer .muted { color: #e3c9a6; }
+  .f-brand { font-family: var(--font-head); font-size: 1.4rem; color: #fff; margin-bottom: 0.4rem; }
+  .f-brand .brand-mark { color: var(--gold); }
+  .socials { display: flex; gap: 0.6rem; margin-top: 0.4rem; }
+  .socials a {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #f6e7cf;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  }
+  .socials a:hover { background: var(--gold); color: var(--maroon); transform: translateY(-2px); }
+  .socials a :global(svg) { width: 19px; height: 19px; }
+  .wa-join {
+    display: inline-flex; align-items: center; gap: 0.45rem;
+    margin: 0.3rem 0 1.3rem;
+    padding: 0.45rem 0.9rem;
+    background: #25D366; color: #0a2e16;
+    border-radius: 999px;
+    font-weight: 600; font-size: 0.85rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .wa-join:hover { color: #0a2e16; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(37,211,102,0.35); }
+  .wa-join :global(svg) { width: 17px; height: 17px; flex-shrink: 0; }
+  .legal a { font-size: 0.85rem; opacity: 0.85; }
+  .copyright {
+    border-top: 1px solid rgba(255,255,255,0.15);
+    margin-top: 1.5rem;
+    padding-top: 1.2rem;
+    font-size: 0.85rem;
+    color: #e3c9a6;
+  }
+  @media (max-width: 720px) {
+    .footer-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  }
+</style>

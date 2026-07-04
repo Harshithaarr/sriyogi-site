@@ -1,0 +1,256 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+
+// ── BRANCHES ────────────────────────────────────────────────────────────
+// Edit/add/remove locations in this list. Each location renders as a card.
+// To add a photo: put the file in /public/images/branches/ and set
+// photo: '/images/branches/yourfile.jpg' (leave '' to show no image).
+const locations = [
+  {
+    type: 'Head Office',
+    name: 'Basavanagudi, Bengaluru',
+    address: 'Sri Sahasrara Yogishwara Swami Mahapeetham, #148, 3rd Floor, Omshree Plaza, DVG Road, Basavanagudi, Bengaluru, Karnataka 560004',
+    tagline: 'A Haven of Spiritual Wisdom',
+    body: 'Located in the spiritual heart of Bengaluru near Gandhi Bazaar, the Mahapeetham is a power centre of divine knowledge. This is where doubts dissolve, faith awakens, and seekers find direction.',
+    list: [
+      'Divine Discourses every Thursday & Saturday',
+      'Sacred Prasadam Seva feeding hundreds weekly',
+      'Spiritual counselling, blessings, and inner clarity',
+      'Outreach support to local vendors and communities',
+    ],
+    photo: '',
+  },
+  {
+    type: 'Residence & Spiritual Nucleus',
+    name: 'Gubbalala, Bengaluru',
+    address: '#405, 3rd Floor, Gubbalaala Main Rd, Raghavendra Layout, Gubbalala, Uttarahalli Hobli, Bengaluru, Karnataka 560061',
+    tagline: 'The Birthplace of the Mutt’s Journey',
+    body: 'The residence of His Holiness since 2012, this sacred space is a silent powerhouse where vision transforms into action.',
+    list: [
+      'The official registration of SSYSM',
+      'The foundation of its spiritual and NGO activities',
+      'A living hub for guidance, planning, and expansion',
+    ],
+    photo: '',
+  },
+  {
+    type: 'Branch Office',
+    name: 'Hubballi, Karnataka',
+    address: '#136, 4th Cross, Vishweshwar Nagar, Hubballi 580032',
+    tagline: 'Darshan, Healing, and Social Service',
+    body: 'Every two months, thousands gather here for divine darshan — a centre where spiritual grace meets social responsibility.',
+    list: [
+      'Spiritual solutions and blessings',
+      'Free medicines for the needy',
+      'Free education initiatives',
+    ],
+    photo: '',
+  },
+  {
+    type: 'Branch Office',
+    name: 'Sirsi, Karnataka — Dashavidya Mahapeetham',
+    address: 'Hulekal Road, Sirsi, Karnataka 581402 (near the Shalmali River)',
+    tagline: 'A Global Spiritual Marvel',
+    body: 'A one-of-its-kind temple rising near the Shalmali River, dedicated to the Ten Mahavidyas. Destined to become a global pilgrimage for Tantric Shakti worship and self-realization.',
+    list: [
+      'Underground Nilavara housing all Ten Mahavidyas in one Garbha Graha',
+      'Maha Shakti Adi Parashakti Sundari enshrined above',
+      'Capacity for 10,000–15,000 devotees',
+      'Meditation halls, dining halls, Vedic & Sanskrit learning centres',
+    ],
+    photo: '',
+  },
+  {
+    type: 'Branch Office',
+    name: 'Lepakshi (Somaghatta), Andhra Pradesh',
+    address: 'Sri Yogishwara Swami Kaliyan, 4-79 Roddhamvaripalli, S. Kotthapalli, Somaghatta, Sri Sathya Sai District, Andhra Pradesh 515601',
+    tagline: 'Divine Darshan & Community Upliftment',
+    body: 'Empowering lives through grace, care, and knowledge during the periodic residence of His Holiness.',
+    list: [
+      'Periodic residence of His Holiness',
+      'Spiritual guidance and blessings',
+      'Free medicine and education programs',
+    ],
+    photo: '',
+  },
+  {
+    type: 'Branch Office',
+    name: 'Pune, Maharashtra — Sri Yogi Mutt',
+    address: 'Flat No. 707, Rajyog Phase 2, Rajadhiraj Developers, Vishnupuram Colony, Vadgaon Budruk, Pune, Maharashtra',
+    tagline: 'Divine Grace Through Darshan',
+    body: 'Every four months, Pune witnesses divine grace through Darshan — quiet yet powerful transformations.',
+    list: [
+      'Spiritual counselling',
+      'Free medical support',
+    ],
+    photo: '',
+  },
+  {
+    type: 'Guest House',
+    name: 'Srivaikuntam Guest House, Thiruvananthapuram',
+    address: 'Pothencode–Murukkumpuzha Road, NH 66, Mangalapuram, Thiruvananthapuram, Kerala 695317 (near Mangalapuram Police Station)',
+    tagline: 'A Sacred Haven of Grace & Service',
+    body: 'The spiritual anchor of the Thiruvananthapuram region. Once every four months, the arrival of Sri Sri Sri Yogishwara Swami transforms this space into a vibrant centre of faith, guidance, and quiet inner change. Compassion here flows beyond prayer — free laptops and financial support are provided to deserving government school children.',
+    list: [],
+    photo: '',
+  },
+  {
+    type: 'Branch Office',
+    name: 'Thiruvananthapuram, Kerala — Sri Bhadrakali Yogishwara Temple, Kaliyil',
+    address: 'Murukupuzha, Thiruvananthapuram District, Kerala 695302',
+    tagline: 'A Sacred Portal of Ancient Lineage (Since 596 AD)',
+    body: 'This powerful Shakti Kshetra is the spiritual birthplace of Sri Yogishwara Swami, consecrated by His Holiness in 2003 — a centre of Tantric Shakti, Kali, Durga and Yogishwara worship, known for deep transformation where fear dissolves, ego melts, and inner Shakti awakens.',
+    list: [
+      'Free laptops for government school children',
+      'Financial aid and educational support',
+    ],
+    photo: '',
+  },
+  {
+    type: 'Branch Office',
+    name: 'Idukki, Kerala — Sri Illam',
+    address: 'Nestled in the Western Ghats, Idukki, Kerala',
+    tagline: 'A Heaven of Peace in Nature',
+    body: 'A retreat where nature itself becomes the Guru — offering deep meditative silence and natural rejuvenation.',
+    list: [
+      'Aahi Kuteera — traditional Kerala accommodation for seekers',
+      'Esha Goshala with 21+ cows',
+      'Gayatri Sarovara — sacred hilltop pond',
+    ],
+    photo: '',
+  },
+  {
+    type: 'Branch Office',
+    name: 'Marundhuvazh Malai, Tamil Nadu — Sri Yogishwara Kalidasa Peetham',
+    address: 'Potraiyai Post, Kanyakumari District, Tamil Nadu 629703',
+    tagline: 'The Abode of Samadhi',
+    body: 'A sacred land of medicinal herbs and Tantric energy, marking the Mahasamadhi of Sri Aananda Kalidasa Swami and a divine vision of the Dasha Mahavidyas — stewardship now lovingly carried forward by Sri Yogishwara Swami. A site vibrating with healing, silence, and transcendence.',
+    list: [],
+    photo: '',
+  },
+];
+---
+
+<BaseLayout title="Branches" description="The branches, temples and sacred centres of Sri Sahasrara Yogishwara Swami Mahapeetham across India — and the living Yatra of His Holiness.">
+  <PageHeader
+    eyebrow="Sri Sahasrara Yogishwara Swami Mahapeetham (SSYSM) — NGO"
+    title="Branches & Sacred Centres"
+    lead="A living legacy of spiritual awakening, compassion, and service across India."
+  />
+
+  <!-- THE YATRA -->
+  <section class="section">
+    <div class="container prose" style="margin:0 auto;max-width:820px;text-align:center;">
+      <span class="eyebrow">His Holiness’ Yatra</span>
+      <h2>A Moving Sanctuary of Grace</h2>
+      <hr class="divider divider--center" />
+      <img src="/images/swami-darshan.jpg" alt="His Holiness Sri Sri Sri Yogishwara Swami"
+           style="display:block;width:100%;max-width:430px;border-radius:var(--radius);box-shadow:var(--shadow);margin:0 auto 1.5rem;" />
+      <p>
+        Across the length and breadth of India, the divine footsteps of Sri Sri Sri
+        Yogishwara Swami weave a living tapestry of spirituality, healing, and
+        transformation. Every month, His Holiness journeys 4,000–5,000 kilometres —
+        not for comfort, not for rest, but for compassion.
+      </p>
+      <p>
+        Wherever His Holiness resides — even if only briefly — that place is instantly
+        transformed into a Mahapeetham: a radiant centre of spiritual awakening, deep
+        solace, and inner realignment. The Yatra is not merely travel; it is a moving
+        sanctuary, carrying grace, wisdom, and transformation to every corner it touches.
+      </p>
+    </div>
+  </section>
+
+  <!-- LOCATIONS -->
+  <section class="section section--tint">
+    <div class="container">
+      <div class="branch-list">
+        {locations.map((loc) => (
+          <article class="branch-card">
+            {loc.photo && <img src={loc.photo} alt={loc.name} class="branch-card__photo" />}
+            <span class="eyebrow">{loc.type}</span>
+            <h3>{loc.name}</h3>
+            {loc.tagline && <p class="branch-card__tagline">{loc.tagline}</p>}
+            <p class="branch-card__address">{loc.address}</p>
+            <p class="muted">{loc.body}</p>
+            {loc.list.length > 0 && (
+              <ul>
+                {loc.list.map((item) => <li>{item}</li>)}
+              </ul>
+            )}
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY VISIT -->
+  <section class="section">
+    <div class="container text-center">
+      <span class="eyebrow">Why Visit During His Holiness’ Yatra?</span>
+      <h2>Step Into a Field of Grace</h2>
+      <hr class="divider divider--center" />
+      <div class="prose" style="max-width:680px;margin:0 auto;text-align:left;">
+        <ul>
+          <li>Experience direct Darshan &amp; interaction</li>
+          <li>Receive guidance rooted in Tantra, Yoga &amp; Vedantic wisdom</li>
+          <li>Witness spirituality expressed as service, compassion, and healing</li>
+          <li>Visit sacred spaces personally energised by His Holiness’ presence</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- INVITATION -->
+  <section class="section section--tint">
+    <div class="container text-center">
+      <span class="eyebrow">A Personal Invitation</span>
+      <h2>Come Not Just to See — Come to Transform</h2>
+      <hr class="divider divider--center" />
+      <p class="lead" style="max-width:680px;margin:0 auto;">
+        The Yatra of Sri Sri Sri Yogishwara Swami is not a tour — it is a living
+        spiritual current. To visit these places during His Holiness’ stay is to step
+        into a field of grace where faith deepens, suffering softens, and life realigns.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .branch-list {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  }
+  .branch-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.8rem;
+    box-shadow: var(--shadow);
+  }
+  .branch-card__photo {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+  }
+  .branch-card h3 { color: var(--maroon); margin-bottom: 0.3rem; }
+  .branch-card__tagline {
+    font-family: var(--font-head);
+    font-size: 1.15rem;
+    color: var(--saffron-dark);
+    margin: 0 0 0.6rem;
+  }
+  .branch-card__address {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    border-left: 3px solid var(--gold);
+    padding-left: 0.8rem;
+    margin-bottom: 0.9rem;
+  }
+  .branch-card ul { margin: 0.6rem 0 0; padding-left: 1.2rem; }
+  .branch-card li { margin-bottom: 0.35rem; color: var(--ink-soft); }
+</style>
