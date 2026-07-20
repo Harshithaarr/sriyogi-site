@@ -18,6 +18,52 @@ const event = {
   map: 'https://www.google.com/maps/search/?api=1&query=Sri%20Kuchalamba%20Kalyana%20Mahal%2C%202nd%20Block%2C%20Jayanagar%2C%20Bengaluru%20560011',
 };
 
+// ─────────────────────────────────────────────────────────────────────────
+//  SEVA OPPORTUNITIES — each seva has its own Google Form (links in site.js).
+//  Posters live in /public/images/guru-purnima/. Edit copy below as needed.
+// ─────────────────────────────────────────────────────────────────────────
+const sevas = [
+  {
+    title: 'Guru Padukapuja Sankalpa Seva',
+    kn: 'ಗುರು ಪಾದಪೂಜಾ ಸಂಕಲ್ಪ ಸೇವೆ',
+    poster: '/images/guru-purnima/seva-paadapuja.jpg',
+    form: site.forms.guruPadukapuja,
+    intro: 'With the divine blessings of Sri Mutt, participate in the sacred Guru Padukapuja Sankalpa Seva performed on Guru Purnima — a blessed opportunity to express your devotion and gratitude at the lotus feet of the Guru.',
+    introKn: 'ಶ್ರೀ ಮಠದ ದಿವ್ಯ ಆಶೀರ್ವಾದದೊಂದಿಗೆ, ಗುರು ಪೂರ್ಣಿಮೆಯಂದು ನಡೆಯುವ ಪವಿತ್ರ ಗುರು ಪಾದಪೂಜಾ ಸಂಕಲ್ಪ ಸೇವೆಯಲ್ಲಿ ಭಾಗವಹಿಸಿ.',
+    note: 'Seva offering: ₹3001 per family (up to 5 members per family).',
+    items: [],
+  },
+  {
+    title: 'Our Sacred Sevas',
+    kn: 'ಗುರುಪೂರ್ಣಿಮಾ ಸೇವಾ ಮಹೋತ್ಸವ',
+    poster: '/images/guru-purnima/seva-sacred-sevas.jpg',
+    form: site.forms.sacredSevas,
+    intro: 'On this auspicious occasion of Guru Purnima, all devotees are lovingly invited to participate in these forms of Seva — offered not merely as a duty, but as a blessed opportunity to receive the Guru’s grace.',
+    introKn: 'ಗುರುಪೂರ್ಣಿಮೆಯ ಈ ಪವಿತ್ರ ದಿನದಂದು, ನಿಮ್ಮ ಹೃದಯಪೂರ್ವಕ ಕೃತಜ್ಞತೆಯನ್ನು ಗುರುಗಳ ಚರಣಗಳಿಗೆ ಸಮರ್ಪಿಸಲು ಸುಸಂದರ್ಭ.',
+    note: '',
+    items: [
+      { name: 'Guru Seva', desc: 'Dedicated service to the Guru who illuminates our lives.' },
+      { name: 'Gou Seva', desc: 'Loving care for cows, who symbolize all living beings.' },
+      { name: 'Guru Vastra Kanike', desc: 'An offering of devotion, symbolizing our surrender to the Guru.' },
+      { name: 'Annadanam Seva', desc: 'The supremely virtuous act of offering food to the hungry.' },
+    ],
+  },
+  {
+    title: 'Bimba Samarpana for Dosha Nivarane',
+    kn: 'ದೋಷ ನಿವಾರಣೆಗಾಗಿ ಬಿಂಬ ಸಮರ್ಪಣೆ',
+    poster: '/images/guru-purnima/seva-bimba-samarpana.jpg',
+    form: site.forms.bimbaSamarpana,
+    intro: 'Offer a sacred Bimba for the removal of specific doshas, ancestral blessings, and divine protection.',
+    introKn: 'ದೋಷ ನಿವಾರಣೆ, ಪೂರ್ವಜರ ಆಶೀರ್ವಾದ ಮತ್ತು ದಿವ್ಯ ರಕ್ಷಣೆಗಾಗಿ ಪವಿತ್ರ ಬಿಂಬವನ್ನು ಸಮರ್ಪಿಸಿ.',
+    note: '',
+    items: [
+      { name: 'Paduka Bimba Samarpana', desc: 'Guru Droha & Pitr Dosha Nivaran, absolute surrender of all karmas, dissolution of karmic burdens, and boundless Guru Kripa.' },
+      { name: 'Gau Bimba Samarpana', desc: 'Gau Droha & Gau Hatya Dosha Nivaran, profound ancestral blessings, cleansing of all transgressions, and unwavering prosperity for children.' },
+      { name: 'Naga Bimba Samarpana', desc: 'Naga Dosha Nivaran (incl. Kaala Sarpa Dosha), Pitr Dosha Nivaran, eradication of chronic skin afflictions including psoriasis, blessings for fertility and progeny, and invincible protection.' },
+    ],
+  },
+];
+
 // Sharing — used by the WhatsApp / copy-link buttons.
 const pageUrl = 'https://www.sriyogi.site/guru-purnima/';
 const shareMsg = `Join us for ${event.title} ${event.year} on ${event.date} at ${event.venue}, ${event.city}. Register here: ${pageUrl}`;
@@ -47,6 +93,84 @@ const waShare = `https://wa.me/?text=${encodeURIComponent(shareMsg)}`;
         <a href="#register" class="btn">Register to Attend</a>
         <a href="#about" class="btn btn--ghost" style="margin-left:.6rem;color:#fff;border-color:var(--gold);">Learn More</a>
       </p>
+    </div>
+  </section>
+
+  <!-- REGISTRATION FORM -->
+  <section class="section section--tint" id="register">
+    <div class="container" style="max-width:680px;">
+      <div class="text-center">
+        <span class="eyebrow">Registration</span>
+        <h2>{event.title} {event.year} Registration</h2>
+        <hr class="divider divider--center" />
+        <p class="lead">Click below to open the registration form and reserve your place. We look forward to welcoming you.</p>
+      </div>
+
+      <div class="gp-register-cta text-center">
+        <a href={site.forms.guruPurnimaFormLink} class="btn gp-register-btn" target="_blank" rel="noopener">
+          Register Now &rarr;
+        </a>
+        <p class="muted" style="margin-top:0.9rem;">Opens the registration form in a new tab.</p>
+
+        <div class="gp-share" data-share data-url={pageUrl}>
+          <span class="gp-share__label">Help spread the word</span>
+          <div class="gp-share__btns">
+            <a class="gp-share__btn gp-share__btn--wa" href={waShare} target="_blank" rel="noopener" aria-label="Share on WhatsApp">
+              Share on WhatsApp
+            </a>
+            <button type="button" class="gp-share__btn gp-share__btn--copy" data-copy>Copy link</button>
+          </div>
+        </div>
+      </div>
+
+      <p class="muted text-center" style="margin-top:1.5rem;">
+        Questions? Message us on WhatsApp at{' '}
+        <a href={`https://wa.me/${site.contact.whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noopener" style="font-weight:600;">{site.contact.whatsapp}</a>
+        {' '}or email{' '}
+        <a href={`mailto:${site.contact.email}`} style="font-weight:600;">{site.contact.email}</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- SEVA OPPORTUNITIES -->
+  <section class="section" id="sevas">
+    <div class="container">
+      <div class="text-center">
+        <span class="eyebrow">Offer Your Seva</span>
+        <h2>Guru Purnima Seva Opportunities</h2>
+        <hr class="divider divider--center" />
+        <p class="lead" style="max-width:760px;margin:0 auto;">
+          Express your gratitude at the lotus feet of the Guru. Choose a seva below
+          and register through its form — offered with full hearts and complete devotion. 🙏
+        </p>
+      </div>
+
+      <div class="gp-sevas">
+        {sevas.map((s) => (
+          <article class="gp-seva card">
+            <div class="gp-seva__media">
+              <img src={s.poster} alt={s.title} loading="lazy" />
+            </div>
+            <div class="gp-seva__body">
+              <h3>{s.title}</h3>
+              <p class="gp-seva__kn">{s.kn}</p>
+              <p class="muted">{s.intro}</p>
+              <p class="gp-seva__kn-body">{s.introKn}</p>
+              {s.items.length > 0 && (
+                <ul class="gp-seva__list">
+                  {s.items.map((it) => (
+                    <li><strong>{it.name}:</strong> {it.desc}</li>
+                  ))}
+                </ul>
+              )}
+              {s.note && <p class="gp-seva__note">{s.note}</p>}
+              <a href={s.form} class="btn gp-seva__btn" target="_blank" rel="noopener">
+                Register Now &rarr;
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -116,7 +240,7 @@ const waShare = `https://wa.me/?text=${encodeURIComponent(shareMsg)}`;
         Sri Sri Sri Yogishwara Swami for darshan, discourse and blessings.
       </p>
       <p class="lead">
-        All sincere seekers and their families are warmly welcome. Kindly register below
+        All sincere seekers and their families are warmly welcome. Kindly register
         so we can prepare to receive you.
       </p>
     </div>
@@ -146,43 +270,6 @@ const waShare = `https://wa.me/?text=${encodeURIComponent(shareMsg)}`;
       </div>
     </div>
   </section>
-
-  <!-- REGISTRATION FORM -->
-  <section class="section section--tint" id="register">
-    <div class="container" style="max-width:680px;">
-      <div class="text-center">
-        <span class="eyebrow">Registration</span>
-        <h2>{event.title} {event.year} Registration</h2>
-        <hr class="divider divider--center" />
-        <p class="lead">Click below to open the registration form and reserve your place. We look forward to welcoming you.</p>
-      </div>
-
-      <div class="gp-register-cta text-center">
-        <a href={site.forms.guruPurnimaFormLink} class="btn gp-register-btn" target="_blank" rel="noopener">
-          Register Now &rarr;
-        </a>
-        <p class="muted" style="margin-top:0.9rem;">Opens the registration form in a new tab.</p>
-
-        <div class="gp-share" data-share data-url={pageUrl}>
-          <span class="gp-share__label">Help spread the word</span>
-          <div class="gp-share__btns">
-            <a class="gp-share__btn gp-share__btn--wa" href={waShare} target="_blank" rel="noopener" aria-label="Share on WhatsApp">
-              Share on WhatsApp
-            </a>
-            <button type="button" class="gp-share__btn gp-share__btn--copy" data-copy>Copy link</button>
-          </div>
-        </div>
-      </div>
-
-      <p class="muted text-center" style="margin-top:1.5rem;">
-        Questions? Message us on WhatsApp at{' '}
-        <a href={`https://wa.me/${site.contact.whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noopener" style="font-weight:600;">{site.contact.whatsapp}</a>
-        {' '}or email{' '}
-        <a href={`mailto:${site.contact.email}`} style="font-weight:600;">{site.contact.email}</a>.
-      </p>
-    </div>
-  </section>
-
 
   <script define:vars={{ startISO: event.startISO }}>
     // Live countdown to the event start.
@@ -464,6 +551,50 @@ const waShare = `https://wa.me/?text=${encodeURIComponent(shareMsg)}`;
   @media (max-width: 760px) {
     .gp-slide { flex-basis: 85%; }                        /* 1 visible + peek */
     .gp-arrow { width: 38px; height: 38px; font-size: 1.4rem; }
+  }
+
+  /* Seva opportunities */
+  .gp-sevas { display: flex; flex-direction: column; gap: 2rem; margin-top: 2.5rem; }
+  .gp-seva {
+    display: grid;
+    grid-template-columns: minmax(0, 40%) 1fr;
+    gap: 2rem;
+    align-items: center;
+    padding: 1.6rem;
+  }
+  .gp-seva:nth-child(even) .gp-seva__media { order: 2; }
+  .gp-seva__media img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+  }
+  .gp-seva__body h3 { margin: 0; color: var(--maroon); }
+  .gp-seva__kn {
+    margin: 0.25rem 0 0.9rem;
+    font-family: var(--font-head);
+    font-size: 1.15rem;
+    color: var(--saffron-dark);
+  }
+  .gp-seva__kn-body { margin: 0.6rem 0 0; color: var(--ink-soft); font-size: 0.95rem; }
+  .gp-seva__list { margin: 1rem 0 0; padding-left: 1.2rem; }
+  .gp-seva__list li { margin-bottom: 0.55rem; color: var(--ink-soft); }
+  .gp-seva__list strong { color: var(--maroon); }
+  .gp-seva__note {
+    margin: 1rem 0 0;
+    padding: 0.7rem 1rem;
+    background: var(--cream-2);
+    border-left: 3px solid var(--saffron);
+    border-radius: 8px;
+    font-weight: 600;
+    color: var(--maroon);
+  }
+  .gp-seva__btn { margin-top: 1.4rem; }
+  @media (max-width: 760px) {
+    .gp-seva { grid-template-columns: 1fr; gap: 1.4rem; }
+    .gp-seva:nth-child(even) .gp-seva__media { order: 0; }
+    .gp-seva__media { max-width: 420px; margin: 0 auto; }
   }
 
   /* Registration call-to-action */

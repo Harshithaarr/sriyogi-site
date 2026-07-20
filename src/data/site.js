@@ -17,6 +17,10 @@ export const site = {
     // Shareable Google Form link for Guru Purnima registration (opens in a new
     // tab). To change the form, paste the new form's share link (Send → 🔗).
     guruPurnimaFormLink: 'https://forms.gle/jgVLNd9wwSKVAVZy6',
+    // Guru Purnima seva registration forms (one Google Form each).
+    guruPadukapuja: 'https://forms.gle/hP3bMxBhyazFrSYa8',
+    sacredSevas: 'https://forms.gle/4GbQs3wKA8gFP7rV7',
+    bimbaSamarpana: 'https://forms.gle/Zh6bE2pvdURm97SV7',
   },
 
   // Featured event banner shown near the top of the home page.
