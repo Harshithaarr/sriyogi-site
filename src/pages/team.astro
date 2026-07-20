@@ -89,13 +89,24 @@ const team = [
       'Strengthening the NGO’s support network',
     ],
   },
+  {
+    name: 'Sri Sujith Narayanan', role: 'Personal Relationship Officer (Kerala & Tamil Nadu)', photo: '/images/team/sujith-narayanan.jpg',
+    body: 'The bridge between the organization and its supporters.',
+    list: [
+      'Nurturing relationships with donors, volunteers, and well-wishers',
+      'Ensuring transparent and compassionate communication',
+      'Addressing concerns and building long-term trust',
+      'Strengthening the NGO’s support network',
+    ],
+  },
 ];
 
 const coordinators = [
-  { region: 'Karnataka', names: 'Smt. Mokshitha' },
-  { region: 'Pune', names: 'Sri Chandrashekar Hulamani & Smt. Supriya Rawal' },
-  { region: 'Kerala & Tamil Nadu', names: 'Sri Sujith Narayanan' },
-  { region: 'Andhra Pradesh', names: 'Kum. Shilpa' },
+  { region: 'Bengaluru', names: 'Sri Shashi Koushik', photo: '/images/team/shashi-koushik.jpg' },
+  { region: 'Karnataka', names: 'Smt. Mokshitha', photo: '/images/team/mokshitha.jpg' },
+  { region: 'Pune', names: 'Sri Chandrashekar Hulamani & Smt. Supriya Rawal', photo: '' },
+  { region: 'Kerala', names: 'Smt. Preetha Kumari', photo: '' },
+  { region: 'Andhra Pradesh', names: 'Kum. Shilpa', photo: '/images/team/shilpa.jpg' },
 ];
 ---
 
@@ -161,7 +172,10 @@ const coordinators = [
       </p>
       <div class="grid">
         {coordinators.map((c) => (
-          <div class="card">
+          <div class="card coord-card">
+            <div class="avatar">
+              {c.photo ? <img src={c.photo} alt={c.names} /> : <span>ॐ</span>}
+            </div>
             <span class="eyebrow">{c.region}</span>
             <p style="margin:.3rem 0 0;font-weight:600;">{c.names}</p>
           </div>
@@ -212,6 +226,9 @@ const coordinators = [
   }
   .founder-card ul { margin: 0.6rem 0 0; padding-left: 1.2rem; }
   .founder-card li { margin-bottom: 0.35rem; color: var(--ink-soft); }
+
+  .coord-card { display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .coord-card .avatar { margin-bottom: 0.9rem; }
 
   .team-grid { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-top: 2rem; }
   .team-card {
