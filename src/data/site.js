@@ -167,6 +167,12 @@ export const biography = {
     'At its heart, the book is about the essential wisdom of searching for the Self and experiencing the ultimate reality of human life. It depicts the extraordinary journey of a saint — from birth to the emergence of an Avadhoota — whose sole purpose is to guide people from a painful materialistic life to a blissful spiritual existence, even in this era of Kaliyuga.',
     'The journey chronicles the pivotal moments in the life of a simple man of the world who was destined to lead an ascetic life — a transition from luxury to sacrifice and selflessness. It draws on vital teachings from Sri Guruji that help readers realise their true potential, offering direction on the path to enlightenment even for those who have faced innumerable failures in their pursuit of the spiritual.',
   ],
+  // Kannada-edition description (ಯಜ್ಞದಾಳದ ಹಾದಿ), shown verbatim.
+  introKn: [
+    'ಈ ಪುಸ್ತಕವು ಮಾನವ ಜೀವನದಲ್ಲಿ ಆತ್ಮವನ್ನು ಅರಸಿ, ಪರಮಾತ್ಮ ಸಾಕ್ಷಾತ್ಕಾರವನ್ನು ಪಡೆಯುವ ಸಾರಭೂತ ಜ್ಞಾನವನ್ನು ಒಳಗೊಂಡಿದೆ.',
+    'ಈ ಪುಸ್ತಕವು ಒಬ್ಬ ಸಂತನ ಅಲೌಕಿಕ ಜೀವನಗಾಥೆಯನ್ನು ಜನನದಿಂದ ಅವಧೂತನಾಗುವವರೆಗಿನ ದಿವ್ಯ ಪರಿವರ್ತನೆಯನ್ನು ನಿರೂಪಿಸುತ್ತದೆ. ಈ ಅವಧೂತನ ಏಕೈಕ ಉದ್ದೇಶ, ದುಃಖಮಯ ಭೌತಿಕ ಬಂಧನದಿಂದ ಆಧ್ಯಾತ್ಮಿಕ ಆನಂದದ ಪರಮಪದವನ್ನು ತಲುಪಲು ಜನರಿಗೆ ಸಹಾಯ ಮಾಡುವುದು ಮತ್ತು ಮಾರ್ಗದರ್ಶನ ನೀಡುವುದು, ವಿಶೇಷವಾಗಿ ಈ ಕಲಿಯುಗದ ಕಠಿಣ ಪರೀಕ್ಷಾ ಸಮಯದಲ್ಲಿ.',
+    'ಐಹಿಕ ಸುಖಗಳ ಮೋಹಜಾಲದಿಂದ ಹೊರಬಂದು, ತ್ಯಾಗ ಮತ್ತು ನಿಸ್ವಾರ್ಥತೆಯ ಪವಿತ್ರ ಮಾರ್ಗದಲ್ಲಿ ಸನ್ಯಾಸಿಯಾಗಿ ಬದುಕಲು ದೈವಿಕ ಚೋದನೆ ಪಡೆದ ಮಹಾತ್ಮಾರ ಕಥೆಯನ್ನು ಇದು ಹೇಳುತ್ತದೆ. ಶ್ರೀ ಗುರುಗಳ ದಿವ್ಯವಾಣಿಗಳು ಓದುಗರನ್ನು ಆತ್ಮ ಶೋಧನೆಯತ್ತ ಒಯ್ಯುತ್ತವೆ. ಅವರ ನಿಜವಾದ ಸಾಮರ್ಥ್ಯವನ್ನು ಅರಿಯುವಂತೆ ಮಾಡುತ್ತವೆ. ಆಧ್ಯಾತ್ಮಿಕ ಜ್ಞಾನದ ಹುಡುಕಾಟದಲ್ಲಿ ಎಷ್ಟೇ ಅಡೆತಡೆಗಳನ್ನು ಎದುರಿಸಿದರೂ, ಈ ಕಥೆ ಮೋಕ್ಷದ ಮಾರ್ಗದತ್ತ ಬೆಳಕು ಚೆಲ್ಲುತ್ತದೆ, ಆತ್ಮದ ಪರಿಶುದ್ಧತೆಯತ್ತ ಕೈಹಿಡಿದು ನಡೆಸುತ್ತದೆ.',
+  ],
 };
 
 // Endorsements for the biography. The third is from the Kannada edition,
@@ -183,9 +189,9 @@ export const biographyEndorsements = [
     source: 'Journalist and author',
   },
   {
-    quote: 'Men born of a divine essence live a worldly life like everyone else, yet, through rare spiritual practice, strive for the welfare of the world and shine as saints. Though outwardly an ordinary oil-lamp, they burn within as a spiritual flame for the people — and the concise life story of Srimath Paramahamsa Parivrajakacharya Sri Sri Sri Yogishwara Swami stands as an illustration of this. Along with giving devotees ample insight, the fascinating episodes of Sri Guruji’s life are portrayed simply in this book, tracing step by step how a seeker ascends the spiritual peak. Reading his biography, one understands him to be a soul who moves along both tracks at once — outwardly a successful, prosperous being of the world, and inwardly a rare adept and spiritual seeker, a saint labouring for the welfare of all.',
-    name: 'Prof. G. Ashwath Narayana',
-    source: 'From the Kannada edition · translated',
+    quote: 'ದೈವಂಶ ಸಂಭೂತ ಪುರುಷರು ಎಲ್ಲರ ಹಾಗೆ ಲೌಕಿಕ ಬದುಕನ್ನು ಬಾಳುತ್ತಲೇ ಅಪೂರ್ವ ಆಧ್ಯಾತ್ಮಿಕ ಸಾಧನೆಯಿಂದ ಲೋಕಕಲ್ಯಾಣಕ್ಕೆ ಶ್ರಮಿಸುತ್ತಾ ಸಂತರಾಗಿ ವಿರಾಜಿಸುತ್ತಾರೆ. ಬಹಿರಂಗದಲ್ಲಿ ಎಣ್ಣೆಯ ಬತ್ತಿಯಾದರೂ ಜನರಿಗೆ ಅಂತರಂಗದ ಆಧ್ಯಾತ್ಮಿಕ ಜ್ಯೋತಿಯಾಗಿ ಬೆಳಗುತ್ತಾರೆ ಎಂಬುದಕ್ಕೆ ಶ್ರೀಮತ್ ಪರಮಹಂಸ ಪರಿವ್ರಾಜಕಾಚಾರ್ಯ ಶ್ರೀ ಶ್ರೀ ಶ್ರೀ ಯೋಗೀಶ್ವರ ಸ್ವಾಮಿಯವರ ಸಂಕ್ಷಿಪ್ತ ಜೀವನ ಚರಿತ್ರೆ ಒಂದು ನಿದರ್ಶನವಾಗಿದೆ. ಭಕ್ತರಿಗೆ ಸಾಕಷ್ಟು ಮಾಹಿತಿಯನ್ನು ನೀಡುವುದರ ಜೊತೆಗೆ ಶ್ರೀ ಗುರುಗಳ ಬದುಕಿನ ರೋಚಕ ಸಂಗತಿಗಳನ್ನು ಈ ಗ್ರಂಥದಲ್ಲಿ ಸರಳವಾಗಿ ಚಿತ್ರಿಸಲಾಗಿದೆ. ಒಬ್ಬ ಸಾಧಕನು ಆಧ್ಯಾತ್ಮಿಕ ಶಿಖರವನ್ನು ಹೇಗೆ ಏರುತ್ತಾನೆ ಎಂಬುದನ್ನು ಹಂತ ಹಂತವಾಗಿ ಚಿತ್ರಿಸಲಾಗಿದೆ. ಇವರ ಜೀವನ ಚರಿತ್ರೆಯನ್ನು ಓದಿದಾಗ ಬಹಿರಂಗದಲ್ಲಿ ಒಂದು ಕಡೆ ಲೌಕಿಕರಾಗಿ ಯಶಸ್ವಿ ಶ್ರೀಮಂತ ಜೀವಿಗಳಾಗಿ ಅದೇ ಕಾಲದಲ್ಲಿ ಅಂತರಂಗದಲ್ಲಿ ಅಪೂರ್ವಸಾಧಕರಾಗಿ ಆಧ್ಯಾತ್ಮಿಕಸಾಧಕರಾಗಿ ಲೋಕಕಲ್ಯಾಣಕಾರ್ಯವೆಸಗುತ್ತಿರುವ ಸಂತರಾಗಿ ವಿರಾಜಸುತ್ತ ಆಧ್ಯಾತ್ಮ-ಲೌಕಿಕ ಹಳಿಗಳ ಮೇಲೆ ಚಲಿಸುವ ಜೀವಥರು ಇವರಾಗಿದ್ದಾರೆ ಎಂದು ತಿಳಿಯುತ್ತದೆ.',
+    name: 'ಪ್ರೊ. ಜಿ. ಅಶ್ವತ್ಥ ನಾರಾಯಣ',
+    source: 'From the Kannada edition · ಕನ್ನಡ ಆವೃತ್ತಿಯಿಂದ',
   },
 ];
 

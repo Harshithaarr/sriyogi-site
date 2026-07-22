@@ -236,6 +236,13 @@ const comparativeTitles = 'Braiding Sweetgrass by Robin Wall Kimmerer · The Pro
         </div>
       </div>
 
+      <div class="bio-kannada">
+        <h3 lang="kn">ಕನ್ನಡ ಆವೃತ್ತಿ · Kannada Edition — {biography.kannadaTitle}</h3>
+        <div class="prose" lang="kn">
+          {biography.introKn.map((p) => <p>{p}</p>)}
+        </div>
+      </div>
+
       {biographyEndorsements.map((e) => (
         <figure class="endorsement">
           <span class="endorsement__mark" aria-hidden="true">“</span>
@@ -357,6 +364,14 @@ const comparativeTitles = 'Braiding Sweetgrass by Robin Wall Kimmerer · The Pro
   .bio-order h3 { margin: 0 0 0.4rem; }
   .bio-order p { margin: 0; color: var(--ink-soft); }
   .bio-order__cta { margin-top: 1rem !important; }
+  .bio-kannada {
+    max-width: 820px;
+    margin: 2.5rem auto 0;
+    padding-top: 2rem;
+    border-top: 1px solid var(--line);
+  }
+  .bio-kannada h3 { margin: 0 0 1rem; color: var(--saffron-dark); }
+  .bio-kannada [lang="kn"] { line-height: 1.75; }
 
   @media (max-width: 720px) {
     .book-layout { grid-template-columns: 1fr; gap: 1.8rem; }
