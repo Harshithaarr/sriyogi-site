@@ -206,6 +206,7 @@ export const nav = [
   { label: 'Offerings', href: '/offerings/' },
   { label: 'Our Team', href: '/team/' },
   { label: 'Objective', href: '/objective/' },
+  { label: 'Seva', href: '/seva/' },
   { label: 'Testimonials', href: '/testimonials/' },
   { label: 'News', href: '/news/' },
 ];
