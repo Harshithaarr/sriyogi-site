@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
-import { book, bookRating, bookReviews, bookReviewsUrl, bookEndorsements } from '../data/site.js';
+import { site, book, bookRating, bookReviews, bookReviewsUrl, bookEndorsements, biography, biographyEndorsements } from '../data/site.js';
 
 // Book page shows a brief set; the Home page leads with the fuller set.
 const rating = bookRating;
@@ -188,6 +188,66 @@ const comparativeTitles = 'Braiding Sweetgrass by Robin Wall Kimmerer · The Pro
       </p>
     </div>
   </section>
+
+  <!-- BIOGRAPHY: THE WALK WITHIN THE FIRE -->
+  <section class="section">
+    <div class="container">
+      <div class="text-center">
+        <span class="eyebrow">Also About Sri Yogi — The Biography</span>
+        <h2>{biography.title}</h2>
+        <p class="muted" style="max-width:720px;margin:0.4rem auto 0;">by {biography.author}</p>
+        <hr class="divider divider--center" />
+        <p class="lead" style="max-width:720px;margin:0 auto;">{biography.subtitle}</p>
+      </div>
+
+      <div class="bio-layout">
+        <div class="bio-covers">
+          <figure>
+            <img src={biography.coverEn} alt={`Cover of ${biography.title} (English edition)`} />
+            <figcaption>English</figcaption>
+          </figure>
+          <figure>
+            <img src={biography.coverKn} alt={`Cover of the Kannada edition, ${biography.kannadaTitleRoman}`} />
+            <figcaption>ಕನ್ನಡ · {biography.kannadaTitleRoman}</figcaption>
+          </figure>
+        </div>
+
+        <div class="bio-info">
+          <p class="bio-epigraph">{biography.epigraph}</p>
+          <div class="prose">
+            {biography.intro.map((p) => <p>{p}</p>)}
+          </div>
+          <dl class="book-meta">
+            <div><dt>Author</dt><dd>{biography.author}</dd></div>
+            <div><dt>Editions</dt><dd>English · Kannada ({biography.kannadaTitleRoman})</dd></div>
+            <div><dt>Publisher</dt><dd>{biography.publisher}</dd></div>
+            <div><dt>Price</dt><dd>{biography.price}</dd></div>
+            <div><dt>ISBN</dt><dd>{biography.isbnEn} (EN) · {biography.isbnKn} (KN)</dd></div>
+          </dl>
+
+          <div class="bio-order">
+            <h3>How to get a copy</h3>
+            <p>{biography.availability}</p>
+            <p class="bio-order__cta">
+              <a class="btn" href={`https://wa.me/${site.contact.whatsapp.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Namaste 🙏 I would like to order a copy of “The Walk Within the Fire”.')}`} target="_blank" rel="noopener">Enquire on WhatsApp</a>
+              <a class="btn btn--ghost" href={`mailto:${site.contact.email}?subject=${encodeURIComponent('Order: The Walk Within the Fire')}`} style="margin-left:.6rem;">Email us</a>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {biographyEndorsements.map((e) => (
+        <figure class="endorsement">
+          <span class="endorsement__mark" aria-hidden="true">“</span>
+          <blockquote>{e.quote}</blockquote>
+          <figcaption>
+            <span class="endorsement__name">{e.name}</span>
+            <span class="endorsement__source">{e.source}</span>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </section>
 </BaseLayout>
 
 <style>
@@ -248,8 +308,60 @@ const comparativeTitles = 'Braiding Sweetgrass by Robin Wall Kimmerer · The Pro
   .book-meta div { display: flex; gap: 0.6rem; }
   .book-meta dt { font-weight: 600; color: var(--saffron-dark); min-width: 90px; }
   .book-meta dd { margin: 0; color: var(--ink-soft); }
+
+  /* Biography section */
+  .bio-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 3rem;
+    align-items: start;
+    margin-top: 2.5rem;
+  }
+  .bio-covers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    position: sticky;
+    top: 1.5rem;
+  }
+  .bio-covers figure { margin: 0; text-align: center; }
+  .bio-covers img {
+    width: 100%;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--line);
+  }
+  .bio-covers figcaption {
+    margin-top: 0.5rem;
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+  }
+  .bio-epigraph {
+    font-family: var(--font-head);
+    font-style: italic;
+    font-size: 1.15rem;
+    line-height: 1.5;
+    color: var(--saffron-dark);
+    border-left: 3px solid var(--saffron);
+    padding-left: 1.1rem;
+    margin: 0 0 1.5rem;
+  }
+  .bio-info .book-meta { margin-top: 1.8rem; }
+  .bio-order {
+    margin-top: 1.8rem;
+    background: var(--tint, #faf6ef);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.3rem 1.5rem;
+  }
+  .bio-order h3 { margin: 0 0 0.4rem; }
+  .bio-order p { margin: 0; color: var(--ink-soft); }
+  .bio-order__cta { margin-top: 1rem !important; }
+
   @media (max-width: 720px) {
     .book-layout { grid-template-columns: 1fr; gap: 1.8rem; }
     .book-cover { max-width: 280px; margin: 0 auto; }
+    .bio-layout { grid-template-columns: 1fr; gap: 1.8rem; }
+    .bio-covers { position: static; max-width: 360px; margin: 0 auto; }
   }
 </style>
