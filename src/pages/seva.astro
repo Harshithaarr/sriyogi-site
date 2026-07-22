@@ -1,0 +1,185 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { site } from '../data/site.js';
+
+// Impact-at-a-glance figures.
+const stats = [
+  { value: '100–150', label: 'Fed every Thursday' },
+  { value: '₹2–3 lakh', label: 'Monthly free medicines' },
+  { value: '22', label: 'Cows sheltered' },
+  { value: 'Since 2021', label: 'Ongoing monthly support' },
+];
+
+// Programme overview cards.
+const programs = [
+  { title: 'Anna Prasadam', body: 'Feeding the hungry and homeless every Thursday.' },
+  { title: 'Financial & Essentials', body: 'Monthly monetary and commodity support for the destitute.' },
+  { title: 'Medical Assistance', body: 'Free medicines for those in need, every month.' },
+  { title: 'Education & Technology', body: 'Computers and free technical training for gurukul students.' },
+  { title: 'Job Support', body: 'Helping graduates find employment across fields.' },
+  { title: 'Student Scholarships', body: 'Uniforms, materials and support for underprivileged children.' },
+  { title: 'Honouring Ceremony', body: 'Felicitating scholars, writers and social workers.' },
+  { title: 'Goshala', body: 'A caring shelter for cows, goats and sheep.' },
+];
+---
+
+<BaseLayout title="Social Service (Seva)" description="Seva and social service by Sri Sahasrara Yogishwara Swami Mahapeetham — feeding the hungry, medical and financial support, education, job training, and a goshala.">
+  <PageHeader
+    eyebrow="Seva · Service to Society"
+    title="Social Service"
+    lead="Service is the highest form of devotion — feeding the hungry, healing the sick, educating the young, and sheltering the voiceless."
+  />
+
+  <!-- ANNA PRASADAM HIGHLIGHT -->
+  <section class="section">
+    <div class="container prose" style="margin:0 auto;max-width:820px;text-align:center;">
+      <span class="eyebrow">Zero Hunger</span>
+      <h2>Anna Prasadam — Feeding the Hungry</h2>
+      <hr class="divider divider--center" />
+      <p class="lead">
+        Many street vendors and people who cannot afford a meal are fed in the form of
+        Anna Prasadam every Thursday from the mutt.
+      </p>
+      <p>
+        As part of a Zero Hunger mission, the Mahapeetham feeds the hungry and homeless —
+        the elderly, women, children and the differently-abled living on the streets.
+        Every Thursday, approximately 100 to 150 people receive a lunch with fruits.
+        Many of them live in public places along highways, railway stations and bus
+        stops. Our aim is to reach the destitute, abandoned senior citizens and migrant
+        workers. This service has continued since 2022.
+      </p>
+    </div>
+  </section>
+
+  <!-- IMPACT STATS -->
+  <section class="section section--tint">
+    <div class="container">
+      <div class="stats">
+        {stats.map((s) => (
+          <div class="stat">
+            <span class="stat__value">{s.value}</span>
+            <span class="stat__label">{s.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRAMME OVERVIEW -->
+  <section class="section">
+    <div class="container">
+      <div class="text-center">
+        <span class="eyebrow">Our Work</span>
+        <h2>Ways We Serve</h2>
+        <hr class="divider divider--center" />
+      </div>
+      <div class="grid" style="margin-top:2rem;">
+        {programs.map((p) => (
+          <div class="card">
+            <h3>{p.title}</h3>
+            <p class="muted">{p.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- DETAIL SECTIONS -->
+  <section class="section section--tint">
+    <div class="container prose" style="margin:0 auto;max-width:820px;">
+
+      <h2>Financial &amp; Commodities Support</h2>
+      <p>
+        Several homeless and elderly people are supported by the Mahapeetham with food,
+        clothes, medicines and finance on the 5th of every month, including ongoing
+        monthly monetary support for a heart patient in Shimoga toward treatment.
+      </p>
+      <p>
+        At Maruthuvamalai, near Kanyakumari, homeless and aged people who cannot afford
+        even the basic essentials are provided with monetary support and daily
+        necessities — rice, pulses, salt, sugar, soap, oil, clothes and more — on the
+        15th of every month, since 2021.
+      </p>
+
+      <h2>Medical Support &amp; Assistance</h2>
+      <p>
+        During the pandemic, the Mahapeetham provided free medicines worth ₹2–3 lakh
+        every month. Several individuals have received free medicines every month from
+        2021 to date, and since January 2023 many more people receive free medicines
+        worth ₹50,000 to ₹1,50,000 each month, on an as-needed basis.
+      </p>
+
+      <h2>Education &amp; Technology Support</h2>
+      <p>
+        In December 2022, the Mahapeetham provided computer systems to gurukuls in South
+        India, so that students there can combine technical education with the study of
+        ancient science. The Mahapeetham also provides free basic computer education and
+        technical training — including Microsoft Office and programming languages such as
+        Java — to these students every month.
+      </p>
+
+      <h2>Education Support for Students</h2>
+      <p>
+        In 2021, 2022 and 2023, the Mahapeetham supported a rural development foundation
+        that runs schools for underprivileged children through scholarships. Each unit of
+        donation covers the cost of a child’s uniforms, sports and craft activities.
+        Rooted in the belief that education is the vehicle to lift families out of
+        poverty, the programme equips children with literacy and skills to gain
+        employment and bring financial relief to their families.
+      </p>
+
+      <h2>Job Support &amp; Training Solutions</h2>
+      <p>
+        The Mahapeetham helps young graduates find employment across a wide range of
+        fields — including IT, accounting, auditing, tax and financial services, business
+        management, communication, transportation, commercial and international banking,
+        insurance, telecommunications, manufacturing and distribution, warehousing and
+        government.
+      </p>
+
+      <h2>Honouring Ceremony</h2>
+      <p>
+        In 2021 and 2022, the Mahapeetham felicitated and honoured many scholars, writers
+        and social workers for their esteemed contributions to society.
+      </p>
+
+      <h2>Goshala — Adoption &amp; Animal Shelter</h2>
+      <p>
+        The Mahapeetham shelters around 22 cows and is also home to goats and sheep, with
+        the intention of adopting more cows and buffaloes — a sacred activity. The cattle
+        are cared for with real passion: adequate nutrition, clean drinking water, free
+        movement in open pastures, regular bathing, and periodic cleaning of the sheds.
+      </p>
+      <p>
+        Regular health checks and treatment of unwell animals by veterinary
+        professionals, along with preventive measures against infectious diseases, are
+        provided in the cow sheds. Above all, the cows are cared for by a team of
+        devoted caretakers who share a genuine emotional connection with them.
+      </p>
+    </div>
+  </section>
+
+  <!-- JOIN -->
+  <section class="section">
+    <div class="container text-center">
+      <span class="eyebrow">Join the Mission</span>
+      <h2>Support This Seva</h2>
+      <hr class="divider divider--center" />
+      <p class="lead" style="max-width:680px;margin:0 auto 1.4rem;">
+        Every contribution helps us feed one more person, heal one more patient, and
+        educate one more child. To volunteer, donate or partner with us, please reach out.
+      </p>
+      <a href={`mailto:${site.contact.email}`} class="btn">Get Involved</a>
+      <a href="/objective/" class="btn btn--ghost" style="margin-left:.6rem;">Our Objective</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; text-align: center; }
+  .stat { display: flex; flex-direction: column; }
+  .stat__value { font-family: var(--font-head); font-size: 2.4rem; color: var(--saffron-dark); line-height: 1.1; }
+  .stat__label { color: var(--ink-soft); font-size: 0.92rem; margin-top: 0.4rem; }
+  @media (max-width: 640px) { .stats { grid-template-columns: repeat(2, 1fr); gap: 1.8rem; } }
+</style>
