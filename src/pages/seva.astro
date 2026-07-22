@@ -22,6 +22,38 @@ const programs = [
   { title: 'Honouring Ceremony', body: 'Felicitating scholars, writers and social workers.' },
   { title: 'Goshala', body: 'A caring shelter for cows, goats and sheep.' },
 ];
+
+// Photo galleries, grouped by programme.
+const gAnna = [
+  { src: '/images/seva/feed-1.jpg', alt: 'A meal being served to a woman on the street' },
+  { src: '/images/seva/feed-2.jpg', alt: 'Food being offered to a young woman' },
+  { src: '/images/seva/feed-3.jpg', alt: 'Rows of meals served on banana leaves at the mutt' },
+];
+const gFinance = [
+  { src: '/images/seva/finance-1.jpg', alt: 'Essentials being handed to an elderly man on the street' },
+  { src: '/images/seva/finance-2.jpg', alt: 'A commodity kit being given to an elderly woman' },
+];
+const gEduTech = [
+  { src: '/images/seva/edutech-1.jpg', alt: 'A computer being handed over to a gurukul' },
+  { src: '/images/seva/edutech-2.jpg', alt: 'Computer systems donated to gurukul students' },
+];
+const gStudent = [
+  { src: '/images/seva/student-1.jpg', alt: 'A student receiving a scholarship from Sri Yogi' },
+  { src: '/images/seva/student-2.jpg', alt: 'A schoolgirl receiving a scholarship from Sri Yogi' },
+  { src: '/images/seva/student-3.jpg', alt: 'A student being honoured with a scholarship' },
+  { src: '/images/seva/student-4.jpg', alt: 'A student receiving a scholarship from Sri Yogi' },
+];
+const gJob = [
+  { src: '/images/seva/job-1.jpg', alt: 'A young graduate receiving blessings from Sri Yogi' },
+  { src: '/images/seva/job-2.jpg', alt: 'A young graduate receiving blessings from Sri Yogi' },
+];
+const gHonour = [
+  { src: '/images/seva/honour-1.jpg', alt: 'Sri Yogi felicitating a scholar' },
+  { src: '/images/seva/honour-2.jpg', alt: 'Sri Yogi honouring a writer' },
+  { src: '/images/seva/honour-3.jpg', alt: 'Sri Yogi honouring a social worker' },
+  { src: '/images/seva/honour-4.jpg', alt: 'A citation being presented at a honouring ceremony' },
+  { src: '/images/seva/honour-5.jpg', alt: 'A distinguished guest being felicitated' },
+];
 ---
 
 <BaseLayout title="Social Service (Seva)" description="Seva and social service by Sri Sahasrara Yogishwara Swami Mahapeetham — feeding the hungry, medical and financial support, education, job training, and a goshala.">
@@ -49,6 +81,13 @@ const programs = [
         stops. Our aim is to reach the destitute, abandoned senior citizens and migrant
         workers. This service has continued since 2022.
       </p>
+    </div>
+    <div class="container" style="max-width:960px;">
+      <div class="seva-gallery">
+        {gAnna.map((im) => (
+          <figure class="seva-shot"><img src={im.src} alt={im.alt} loading="lazy" /></figure>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -101,6 +140,11 @@ const programs = [
         necessities — rice, pulses, salt, sugar, soap, oil, clothes and more — on the
         15th of every month, since 2021.
       </p>
+      <div class="seva-gallery">
+        {gFinance.map((im) => (
+          <figure class="seva-shot"><img src={im.src} alt={im.alt} loading="lazy" /></figure>
+        ))}
+      </div>
 
       <h2>Medical Support &amp; Assistance</h2>
       <p>
@@ -118,6 +162,11 @@ const programs = [
         technical training — including Microsoft Office and programming languages such as
         Java — to these students every month.
       </p>
+      <div class="seva-gallery">
+        {gEduTech.map((im) => (
+          <figure class="seva-shot"><img src={im.src} alt={im.alt} loading="lazy" /></figure>
+        ))}
+      </div>
 
       <h2>Education Support for Students</h2>
       <p>
@@ -128,6 +177,11 @@ const programs = [
         poverty, the programme equips children with literacy and skills to gain
         employment and bring financial relief to their families.
       </p>
+      <div class="seva-gallery">
+        {gStudent.map((im) => (
+          <figure class="seva-shot"><img src={im.src} alt={im.alt} loading="lazy" /></figure>
+        ))}
+      </div>
 
       <h2>Job Support &amp; Training Solutions</h2>
       <p>
@@ -137,12 +191,22 @@ const programs = [
         insurance, telecommunications, manufacturing and distribution, warehousing and
         government.
       </p>
+      <div class="seva-gallery">
+        {gJob.map((im) => (
+          <figure class="seva-shot"><img src={im.src} alt={im.alt} loading="lazy" /></figure>
+        ))}
+      </div>
 
       <h2>Honouring Ceremony</h2>
       <p>
         In 2021 and 2022, the Mahapeetham felicitated and honoured many scholars, writers
         and social workers for their esteemed contributions to society.
       </p>
+      <div class="seva-gallery">
+        {gHonour.map((im) => (
+          <figure class="seva-shot"><img src={im.src} alt={im.alt} loading="lazy" /></figure>
+        ))}
+      </div>
 
       <h2>Goshala — Adoption &amp; Animal Shelter</h2>
       <p>
@@ -157,6 +221,9 @@ const programs = [
         provided in the cow sheds. Above all, the cows are cared for by a team of
         devoted caretakers who share a genuine emotional connection with them.
       </p>
+      <figure class="seva-shot seva-shot--wide">
+        <img src="/images/seva/goshala-1.jpg" alt="Sri Yogi feeding the cows at the mutt's goshala" loading="lazy" />
+      </figure>
     </div>
   </section>
 
@@ -182,4 +249,25 @@ const programs = [
   .stat__value { font-family: var(--font-head); font-size: 2.4rem; color: var(--saffron-dark); line-height: 1.1; }
   .stat__label { color: var(--ink-soft); font-size: 0.92rem; margin-top: 0.4rem; }
   @media (max-width: 640px) { .stats { grid-template-columns: repeat(2, 1fr); gap: 1.8rem; } }
+
+  .seva-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0 0.5rem;
+    align-items: start;
+  }
+  .seva-shot { margin: 0; }
+  .seva-shot img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--line);
+    display: block;
+  }
+  .seva-shot--wide {
+    max-width: 720px;
+    margin: 1.5rem auto 0;
+  }
 </style>
