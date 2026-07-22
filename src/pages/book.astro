@@ -200,46 +200,52 @@ const comparativeTitles = 'Braiding Sweetgrass by Robin Wall Kimmerer · The Pro
         <p class="lead" style="max-width:720px;margin:0 auto;">{biography.subtitle}</p>
       </div>
 
-      <div class="bio-layout">
-        <div class="bio-covers">
-          <figure>
-            <img src={biography.coverEn} alt={`Cover of ${biography.title} (English edition)`} />
-            <figcaption>English</figcaption>
-          </figure>
-          <figure>
-            <img src={biography.coverKn} alt={`Cover of the Kannada edition, ${biography.kannadaTitleRoman}`} />
-            <figcaption>ಕನ್ನಡ · {biography.kannadaTitleRoman}</figcaption>
-          </figure>
-        </div>
-
-        <div class="bio-info">
+      <!-- English edition: cover paired with English text -->
+      <div class="bio-edition">
+        <figure class="bio-edition__cover">
+          <img src={biography.coverEn} alt={`Cover of ${biography.title} (English edition)`} />
+          <figcaption>English · {biography.title}</figcaption>
+        </figure>
+        <div class="bio-edition__text">
+          <span class="eyebrow">English Edition</span>
           <p class="bio-epigraph">{biography.epigraph}</p>
           <div class="prose">
             {biography.intro.map((p) => <p>{p}</p>)}
           </div>
-          <dl class="book-meta">
-            <div><dt>Author</dt><dd>{biography.author}</dd></div>
-            <div><dt>Editions</dt><dd>English · Kannada ({biography.kannadaTitleRoman})</dd></div>
-            <div><dt>Publisher</dt><dd>{biography.publisher}</dd></div>
-            <div><dt>Price</dt><dd>{biography.price}</dd></div>
-            <div><dt>ISBN</dt><dd>{biography.isbnEn} (EN) · {biography.isbnKn} (KN)</dd></div>
-          </dl>
+        </div>
+      </div>
 
-          <div class="bio-order">
-            <h3>How to get a copy</h3>
-            <p>{biography.availability}</p>
-            <p class="bio-order__cta">
-              <a class="btn" href={`https://wa.me/${site.contact.whatsapp.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Namaste 🙏 I would like to order a copy of “The Walk Within the Fire”.')}`} target="_blank" rel="noopener">Enquire on WhatsApp</a>
-              <a class="btn btn--ghost" href={`mailto:${site.contact.email}?subject=${encodeURIComponent('Order: The Walk Within the Fire')}`} style="margin-left:.6rem;">Email us</a>
-            </p>
+      <!-- Kannada edition: cover paired with Kannada text -->
+      <div class="bio-edition bio-edition--alt">
+        <figure class="bio-edition__cover">
+          <img src={biography.coverKn} alt={`Cover of the Kannada edition, ${biography.kannadaTitleRoman}`} />
+          <figcaption lang="kn">ಕನ್ನಡ · {biography.kannadaTitle}</figcaption>
+        </figure>
+        <div class="bio-edition__text">
+          <span class="eyebrow" lang="kn">ಕನ್ನಡ ಆವೃತ್ತಿ · Kannada Edition</span>
+          <div class="prose" lang="kn">
+            {biography.introKn.map((p) => <p>{p}</p>)}
           </div>
         </div>
       </div>
 
-      <div class="bio-kannada">
-        <h3 lang="kn">ಕನ್ನಡ ಆವೃತ್ತಿ · Kannada Edition — {biography.kannadaTitle}</h3>
-        <div class="prose" lang="kn">
-          {biography.introKn.map((p) => <p>{p}</p>)}
+      <!-- Shared publication details & ordering -->
+      <div class="bio-shared">
+        <dl class="book-meta">
+          <div><dt>Author</dt><dd>{biography.author}</dd></div>
+          <div><dt>Editions</dt><dd>English · Kannada ({biography.kannadaTitleRoman})</dd></div>
+          <div><dt>Publisher</dt><dd>{biography.publisher}</dd></div>
+          <div><dt>Price</dt><dd>{biography.price}</dd></div>
+          <div><dt>ISBN</dt><dd>{biography.isbnEn} (EN) · {biography.isbnKn} (KN)</dd></div>
+        </dl>
+
+        <div class="bio-order">
+          <h3>How to get a copy</h3>
+          <p>{biography.availability}</p>
+          <p class="bio-order__cta">
+            <a class="btn" href={`https://wa.me/${site.contact.whatsapp.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Namaste 🙏 I would like to order a copy of “The Walk Within the Fire”.')}`} target="_blank" rel="noopener">Enquire on WhatsApp</a>
+            <a class="btn btn--ghost" href={`mailto:${site.contact.email}?subject=${encodeURIComponent('Order: The Walk Within the Fire')}`} style="margin-left:.6rem;">Email us</a>
+          </p>
         </div>
       </div>
 
@@ -316,33 +322,39 @@ const comparativeTitles = 'Braiding Sweetgrass by Robin Wall Kimmerer · The Pro
   .book-meta dt { font-weight: 600; color: var(--saffron-dark); min-width: 90px; }
   .book-meta dd { margin: 0; color: var(--ink-soft); }
 
-  /* Biography section */
-  .bio-layout {
+  /* Biography section — one row per language edition */
+  .bio-edition {
     display: grid;
     grid-template-columns: 300px 1fr;
     gap: 3rem;
-    align-items: start;
-    margin-top: 2.5rem;
+    align-items: center;
+    max-width: 960px;
+    margin: 2.5rem auto 0;
   }
-  .bio-covers {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    position: sticky;
-    top: 1.5rem;
+  .bio-edition + .bio-edition {
+    margin-top: 3rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--line);
   }
-  .bio-covers figure { margin: 0; text-align: center; }
-  .bio-covers img {
+  /* Kannada row mirrors the layout: text left, cover right */
+  .bio-edition--alt { grid-template-columns: 1fr 300px; }
+  .bio-edition--alt .bio-edition__cover { order: 2; }
+  .bio-edition__cover { margin: 0; text-align: center; }
+  .bio-edition__cover img {
     width: 100%;
+    max-width: 300px;
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     border: 1px solid var(--line);
   }
-  .bio-covers figcaption {
-    margin-top: 0.5rem;
-    font-size: 0.82rem;
+  .bio-edition__cover figcaption {
+    margin-top: 0.6rem;
+    font-size: 0.85rem;
     color: var(--ink-soft);
   }
+  .bio-edition__text .eyebrow { display: inline-block; margin-bottom: 0.9rem; }
+  .bio-edition__text [lang="kn"],
+  .bio-edition__text.prose[lang="kn"] { line-height: 1.8; }
   .bio-epigraph {
     font-family: var(--font-head);
     font-style: italic;
@@ -353,7 +365,13 @@ const comparativeTitles = 'Braiding Sweetgrass by Robin Wall Kimmerer · The Pro
     padding-left: 1.1rem;
     margin: 0 0 1.5rem;
   }
-  .bio-info .book-meta { margin-top: 1.8rem; }
+  .bio-shared {
+    max-width: 820px;
+    margin: 3rem auto 0;
+    padding-top: 2rem;
+    border-top: 1px solid var(--line);
+  }
+  .bio-shared .book-meta { margin-top: 0; }
   .bio-order {
     margin-top: 1.8rem;
     background: var(--tint, #faf6ef);
@@ -364,19 +382,14 @@ const comparativeTitles = 'Braiding Sweetgrass by Robin Wall Kimmerer · The Pro
   .bio-order h3 { margin: 0 0 0.4rem; }
   .bio-order p { margin: 0; color: var(--ink-soft); }
   .bio-order__cta { margin-top: 1rem !important; }
-  .bio-kannada {
-    max-width: 820px;
-    margin: 2.5rem auto 0;
-    padding-top: 2rem;
-    border-top: 1px solid var(--line);
-  }
-  .bio-kannada h3 { margin: 0 0 1rem; color: var(--saffron-dark); }
-  .bio-kannada [lang="kn"] { line-height: 1.75; }
 
   @media (max-width: 720px) {
     .book-layout { grid-template-columns: 1fr; gap: 1.8rem; }
     .book-cover { max-width: 280px; margin: 0 auto; }
-    .bio-layout { grid-template-columns: 1fr; gap: 1.8rem; }
-    .bio-covers { position: static; max-width: 360px; margin: 0 auto; }
+    .bio-edition,
+    .bio-edition--alt { grid-template-columns: 1fr; gap: 1.5rem; }
+    .bio-edition__cover { max-width: 260px; margin: 0 auto; }
+    /* Keep the cover above its text on mobile for both editions */
+    .bio-edition--alt .bio-edition__cover { order: 0; }
   }
 </style>
