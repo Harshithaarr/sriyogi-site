@@ -117,7 +117,7 @@ const endpoint = site.forms.sevaConfirmations || '';
         return String(s || '')
           .replace(/\s*[-–—]\s*(₹.*|as per.*|rs\.?\s*\d.*)$/i, '')  // drop " - ₹ 1001", " – As per your wish"
           .replace(/\s*₹\s*[\d,]+.*$/, '')                          // drop a bare trailing "₹ 1001"
-          .replace(/\(\s+/g, '(').replace(/\s+\)/g, ')')            // tidy "( text )" → "(text)"
+          .replace(/\s*\([^)]*[ಀ-೿][^)]*\)/g, '')         // drop Kannada "(…)" translation
           .replace(/\s{2,}/g, ' ')
           .trim();
       }
