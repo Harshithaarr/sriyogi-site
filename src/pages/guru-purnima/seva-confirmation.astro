@@ -110,13 +110,27 @@ const endpoint = site.forms.sevaConfirmations || '';
       const norm = (s) => String(s || '').trim().toLowerCase().replace(/\s+/g, ' ');
       const hasLetter = (s) => /\p{L}/u.test(s);
 
+      // Strips the price/amount tail and tidies spacing so each seva reads
+      // the same everywhere (e.g. "Guru Seva - ₹ 1001" → "Guru Seva",
+      // "Annadanam - As per your wish" → "Annadanam").
+      function normalizeItem(s) {
+        return String(s || '')
+          .replace(/\s*[-–—]\s*(₹.*|as per.*|rs\.?\s*\d.*)$/i, '')  // drop " - ₹ 1001", " – As per your wish"
+          .replace(/\s*₹\s*[\d,]+.*$/, '')                          // drop a bare trailing "₹ 1001"
+          .replace(/\(\s+/g, '(').replace(/\s+\)/g, ')')            // tidy "( text )" → "(text)"
+          .replace(/\s{2,}/g, ' ')
+          .trim();
+      }
+
       // Splits "<Category> — sel1, sel2" into a friendly category + item list.
       function parseSeva(seva) {
         const parts = String(seva || '').split(' — ');
         const rawCat = (parts[0] || '').trim();
         const category = CATEGORY_LABELS[rawCat] || rawCat;
         const rest = parts.slice(1).join(' — ').trim();
-        const items = rest ? rest.split(',').map((s) => s.trim()).filter(Boolean) : [];
+        const items = rest
+          ? [...new Set(rest.split(',').map((s) => normalizeItem(s)).filter(Boolean))]
+          : [];
         return { category, items };
       }
       const esc = (s) => String(s).replace(/[&<>"']/g, (c) => (
