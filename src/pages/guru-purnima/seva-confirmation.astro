@@ -201,22 +201,24 @@ const endpoint = site.forms.sevaConfirmations || '';
           ? `Showing ${matches.length} of ${groups.length} devotee${groups.length === 1 ? '' : 's'}`
           : `${groups.length} devotee${groups.length === 1 ? '' : 's'} registered`;
 
-        listEl.innerHTML = matches.map((g) => `
-          <article class="sc-card">
-            <h3 class="sc-name">${esc(g.name)}</h3>
-            <div class="sc-groups">
-              ${g.cats.map((c) => c.items.length
-                ? `<div class="sc-group">
-                     <span class="sc-cat">${esc(c.category)}</span>
-                     <ul class="sc-sevas">${c.items.map((it) => `<li class="sc-chip">${esc(it)}</li>`).join('')}</ul>
-                   </div>`
-                : `<div class="sc-group">
-                     <ul class="sc-sevas"><li class="sc-chip">${esc(c.category)}</li></ul>
-                   </div>`
-              ).join('')}
-            </div>
-          </article>
-        `).join('');
+        listEl.innerHTML = matches.map((g) => {
+          // Flatten to a single list of sevas. Categories with sub-items
+          // contribute their items; a category with none (e.g. Mantra
+          // Saadhana) contributes its own name.
+          const chips = [];
+          for (const c of g.cats) {
+            if (c.items.length) chips.push(...c.items);
+            else chips.push(c.category);
+          }
+          const sevas = [...new Set(chips)].sort();
+          return `
+            <article class="sc-card">
+              <h3 class="sc-name">${esc(g.name)}</h3>
+              <ul class="sc-sevas">
+                ${sevas.map((s) => `<li class="sc-chip">${esc(s)}</li>`).join('')}
+              </ul>
+            </article>`;
+        }).join('');
         listEl.hidden = false;
       }
 
@@ -322,18 +324,9 @@ const endpoint = site.forms.sevaConfirmations || '';
     box-shadow: 0 8px 20px rgba(110, 20, 20, 0.05);
   }
   .sc-name {
-    margin: 0 0 0.8rem;
+    margin: 0 0 0.7rem;
     font-size: 1.15rem;
     color: var(--maroon);
-  }
-  .sc-groups { display: flex; flex-direction: column; gap: 0.8rem; }
-  .sc-group { display: flex; flex-direction: column; gap: 0.4rem; }
-  .sc-cat {
-    font-size: 0.72rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    font-weight: 700;
-    color: var(--saffron-dark);
   }
   .sc-sevas {
     list-style: none;
