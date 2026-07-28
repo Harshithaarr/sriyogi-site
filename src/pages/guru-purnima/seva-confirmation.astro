@@ -98,7 +98,7 @@ const endpoint = site.forms.sevaConfirmations || '';
       const searchEl = document.getElementById('sc-search');
       const retryBtn = document.querySelector('[data-retry]');
 
-      let groups = [];   // [{ name, key, cats: [{ category, items: [] }] }]
+      let sections = [];   // [{ label, devotees: [{ name, key, items: [] }] }]
 
       // Friendly names for the raw response-sheet titles.
       const CATEGORY_LABELS = {
@@ -106,6 +106,8 @@ const endpoint = site.forms.sevaConfirmations || '';
         '2026 GP Bimba Samarpana Seva': 'Bimba Samarpana',
         'MantraSaadhan_GP_2026': 'Mantra Saadhana',
       };
+      // Display order of the three seva sections on the page.
+      const SECTION_ORDER = ['Sacred Sevas', 'Bimba Samarpana', 'Mantra Saadhana'];
 
       const norm = (s) => String(s || '').trim().toLowerCase().replace(/\s+/g, ' ');
       const hasLetter = (s) => /\p{L}/u.test(s);
@@ -154,43 +156,56 @@ const endpoint = site.forms.sevaConfirmations || '';
         });
       }
 
-      function buildGroups(records) {
-        const map = new Map();
+      // Group registrations into the three seva sections, and within each
+      // section by devotee (merging repeat rows for the same person).
+      function buildSections(records) {
+        const byCat = new Map();   // label -> Map(nameKey -> { name, key, items:Set })
         for (const rec of records || []) {
           const name = String(rec.name || '').trim();
           if (name.length < 2 || !hasLetter(name)) continue;   // skip junk rows
-          const key = norm(name);
-          if (!map.has(key)) map.set(key, { name, key, cats: new Map() });
-          const cats = map.get(key).cats;
           const { category, items } = parseSeva(rec.seva);
-          if (!cats.has(category)) cats.set(category, new Set());
-          items.forEach((it) => cats.get(category).add(it));
+          if (!byCat.has(category)) byCat.set(category, new Map());
+          const people = byCat.get(category);
+          const key = norm(name);
+          if (!people.has(key)) people.set(key, { name, key, items: new Set() });
+          items.forEach((it) => people.get(key).items.add(it));
         }
-        return [...map.values()]
-          .map((g) => ({
-            name: g.name,
-            key: g.key,
-            cats: [...g.cats.entries()]
-              .map(([category, set]) => ({ category, items: [...set].sort() }))
-              .sort((a, b) => a.category.localeCompare(b.category)),
-          }))
-          .sort((a, b) => a.name.localeCompare(b.name));
+        const order = [
+          ...SECTION_ORDER,
+          ...[...byCat.keys()].filter((c) => !SECTION_ORDER.includes(c)),
+        ];
+        return order
+          .filter((label) => byCat.has(label))
+          .map((label) => ({
+            label,
+            devotees: [...byCat.get(label).values()]
+              .map((d) => ({ name: d.name, key: d.key, items: [...d.items].sort() }))
+              .sort((a, b) => a.name.localeCompare(b.name)),
+          }));
       }
 
       function render(query) {
         const q = norm(query);
-        const matches = q ? groups.filter((g) => g.key.includes(q)) : groups;
-
         show(noResultEl, false);
 
-        if (groups.length === 0) {
+        const allNames = new Set();
+        sections.forEach((s) => s.devotees.forEach((d) => allNames.add(d.key)));
+        if (allNames.size === 0) {
           listEl.hidden = true;
           statusEl.textContent = '';
           show(emptyEl, true);
           return;
         }
 
-        if (matches.length === 0) {
+        // Search filters across every section, just as before.
+        const filtered = sections.map((s) => ({
+          label: s.label,
+          devotees: q ? s.devotees.filter((d) => d.key.includes(q)) : s.devotees,
+        }));
+        const matchNames = new Set();
+        filtered.forEach((s) => s.devotees.forEach((d) => matchNames.add(d.key)));
+
+        if (q && matchNames.size === 0) {
           listEl.hidden = true;
           statusEl.textContent = `No match for “${query.trim()}”.`;
           show(noResultEl, true);
@@ -198,27 +213,29 @@ const endpoint = site.forms.sevaConfirmations || '';
         }
 
         statusEl.textContent = q
-          ? `Showing ${matches.length} of ${groups.length} devotee${groups.length === 1 ? '' : 's'}`
-          : `${groups.length} devotee${groups.length === 1 ? '' : 's'} registered`;
+          ? `Showing ${matchNames.size} devotee${matchNames.size === 1 ? '' : 's'} matching “${query.trim()}”`
+          : `${allNames.size} devotees registered`;
 
-        listEl.innerHTML = matches.map((g) => {
-          // Flatten to a single list of sevas. Categories with sub-items
-          // contribute their items; a category with none (e.g. Mantra
-          // Saadhana) contributes its own name.
-          const chips = [];
-          for (const c of g.cats) {
-            if (c.items.length) chips.push(...c.items);
-            else chips.push(c.category);
-          }
-          const sevas = [...new Set(chips)].sort();
-          return `
-            <article class="sc-card">
-              <h3 class="sc-name">${esc(g.name)}</h3>
-              <ul class="sc-sevas">
-                ${sevas.map((s) => `<li class="sc-chip">${esc(s)}</li>`).join('')}
-              </ul>
-            </article>`;
-        }).join('');
+        listEl.innerHTML = filtered
+          .filter((s) => s.devotees.length)
+          .map((s) => `
+            <section class="sc-section">
+              <div class="sc-section-head">
+                <h2 class="sc-section-title">${esc(s.label)}</h2>
+                <span class="sc-section-count">${s.devotees.length}</span>
+              </div>
+              <div class="sc-cards">
+                ${s.devotees.map((d) => `
+                  <article class="sc-card">
+                    <h3 class="sc-name">${esc(d.name)}</h3>
+                    ${d.items.length
+                      ? `<ul class="sc-sevas">${d.items.map((it) => `<li class="sc-chip">${esc(it)}</li>`).join('')}</ul>`
+                      : ''}
+                  </article>
+                `).join('')}
+              </div>
+            </section>
+          `).join('');
         listEl.hidden = false;
       }
 
@@ -229,7 +246,7 @@ const endpoint = site.forms.sevaConfirmations || '';
         listEl.hidden = true;
         try {
           const data = await fetchData();
-          groups = buildGroups(data.records);
+          sections = buildSections(data.records);
           show(loadingEl, false);
           render(searchEl.value);
           if (data.updated) {
@@ -310,8 +327,36 @@ const endpoint = site.forms.sevaConfirmations || '';
     min-height: 1.2em;
   }
 
-  /* List */
-  .sc-list {
+  /* List — three stacked seva sections */
+  .sc-list { display: flex; flex-direction: column; gap: 2.75rem; }
+  .sc-section-head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.1rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 2px solid color-mix(in srgb, var(--gold) 42%, transparent);
+  }
+  .sc-section-title {
+    margin: 0;
+    color: var(--maroon);
+    font-size: 1.4rem;
+  }
+  .sc-section-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.9rem;
+    height: 1.9rem;
+    padding: 0 0.55rem;
+    border-radius: 999px;
+    background: var(--maroon);
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .sc-cards {
     display: grid;
     gap: 1rem;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -328,6 +373,7 @@ const endpoint = site.forms.sevaConfirmations || '';
     font-size: 1.15rem;
     color: var(--maroon);
   }
+  .sc-name:last-child { margin-bottom: 0; }   /* cards with no chips (Mantra Saadhana) */
   .sc-sevas {
     list-style: none;
     margin: 0;
