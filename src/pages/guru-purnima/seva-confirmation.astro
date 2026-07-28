@@ -1,0 +1,376 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { site } from '../../data/site.js';
+
+const endpoint = site.forms.sevaConfirmations || '';
+---
+
+<BaseLayout
+  title="Seva Registration Confirmation"
+  description="Confirm your Guru Purnima seva registration. Search your name to see the seva(s) you registered for."
+>
+  <section class="section sc-head">
+    <div class="container text-center">
+      <span class="eyebrow">Guru Purnima</span>
+      <h1>Seva Registration Confirmation</h1>
+      <hr class="divider divider--center" />
+      <p class="lead" style="max-width:720px;margin:0 auto;">
+        Every devotee who has registered for a seva appears below. Type your name
+        in the search box to confirm the seva(s) you have opted for. 🙏
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="container sc-wrap">
+
+      {endpoint ? (
+        <>
+          <div class="sc-searchbar">
+            <label for="sc-search" class="sc-search-label">Search your name</label>
+            <div class="sc-search-inner">
+              <span class="sc-search-icon" aria-hidden="true">🔍</span>
+              <input
+                id="sc-search"
+                type="search"
+                class="sc-search-input"
+                placeholder="Type your name…"
+                autocomplete="off"
+                enterkeyhint="search"
+              />
+            </div>
+            <p class="sc-status" data-status aria-live="polite"></p>
+          </div>
+
+          <div class="sc-list" data-list hidden></div>
+
+          <div class="sc-state" data-loading>
+            <div class="sc-spinner" aria-hidden="true"></div>
+            <p>Loading the seva registration list…</p>
+          </div>
+
+          <div class="sc-state" data-empty hidden>
+            <p>No registrations to show yet. Please check back soon.</p>
+          </div>
+
+          <div class="sc-state" data-noresult hidden>
+            <p>No match found for that name.</p>
+            <p class="muted">
+              Please check the spelling, or try just your first name. If you
+              registered and still don't see your name, message us on WhatsApp at{' '}
+              <a href={`https://wa.me/${site.contact.whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noopener">{site.contact.whatsapp}</a>.
+            </p>
+          </div>
+
+          <div class="sc-state sc-state--error" data-error hidden>
+            <p>We couldn't load the list just now.</p>
+            <button type="button" class="btn btn--ghost" data-retry>Try again</button>
+          </div>
+
+          <p class="sc-note" data-updated hidden></p>
+        </>
+      ) : (
+        <div class="sc-state sc-state--error">
+          <p><strong>The confirmation list isn't connected yet.</strong></p>
+          <p class="muted">
+            Deploy the seva script and paste its URL into
+            <code>src/data/site.js</code> (<code>forms.sevaConfirmations</code>) —
+            see <code>SEVA-CONFIRMATIONS-SETUP.md</code>.
+          </p>
+        </div>
+      )}
+
+      <p class="text-center" style="margin-top:2.5rem;">
+        <a href="/guru-purnima/#sevas" class="btn btn--ghost">Register for a seva</a>
+      </p>
+    </div>
+  </section>
+
+  {endpoint && (
+    <script define:vars={{ endpoint }}>
+      const listEl = document.querySelector('[data-list]');
+      const statusEl = document.querySelector('[data-status]');
+      const loadingEl = document.querySelector('[data-loading]');
+      const emptyEl = document.querySelector('[data-empty]');
+      const noResultEl = document.querySelector('[data-noresult]');
+      const errorEl = document.querySelector('[data-error]');
+      const updatedEl = document.querySelector('[data-updated]');
+      const searchEl = document.getElementById('sc-search');
+      const retryBtn = document.querySelector('[data-retry]');
+
+      let groups = [];   // [{ name, key, cats: [{ category, items: [] }] }]
+
+      // Friendly names for the raw response-sheet titles.
+      const CATEGORY_LABELS = {
+        '2026 GP Seva List': 'Sacred Sevas',
+        '2026 GP Bimba Samarpana Seva': 'Bimba Samarpana',
+        'MantraSaadhan_GP_2026': 'Mantra Saadhana',
+      };
+
+      const norm = (s) => String(s || '').trim().toLowerCase().replace(/\s+/g, ' ');
+      const hasLetter = (s) => /\p{L}/u.test(s);
+
+      // Splits "<Category> — sel1, sel2" into a friendly category + item list.
+      function parseSeva(seva) {
+        const parts = String(seva || '').split(' — ');
+        const rawCat = (parts[0] || '').trim();
+        const category = CATEGORY_LABELS[rawCat] || rawCat;
+        const rest = parts.slice(1).join(' — ').trim();
+        const items = rest ? rest.split(',').map((s) => s.trim()).filter(Boolean) : [];
+        return { category, items };
+      }
+      const esc = (s) => String(s).replace(/[&<>"']/g, (c) => (
+        { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+      ));
+
+      function show(el, on) { if (el) el.hidden = !on; }
+
+      // JSONP loader — avoids all cross-origin issues with Apps Script.
+      function fetchData() {
+        return new Promise((resolve, reject) => {
+          const cbName = '__sevaConf_' + Math.floor(performance.now() * 1000);
+          const script = document.createElement('script');
+          const done = (fn) => { delete window[cbName]; script.remove(); clearTimeout(timer); fn(); };
+          const timer = setTimeout(() => done(() => reject(new Error('timeout'))), 15000);
+          window[cbName] = (data) => done(() => resolve(data));
+          script.onerror = () => done(() => reject(new Error('network')));
+          const sep = endpoint.includes('?') ? '&' : '?';
+          script.src = endpoint + sep + 'callback=' + cbName + '&t=' + Date.now();
+          document.head.appendChild(script);
+        });
+      }
+
+      function buildGroups(records) {
+        const map = new Map();
+        for (const rec of records || []) {
+          const name = String(rec.name || '').trim();
+          if (name.length < 2 || !hasLetter(name)) continue;   // skip junk rows
+          const key = norm(name);
+          if (!map.has(key)) map.set(key, { name, key, cats: new Map() });
+          const cats = map.get(key).cats;
+          const { category, items } = parseSeva(rec.seva);
+          if (!cats.has(category)) cats.set(category, new Set());
+          items.forEach((it) => cats.get(category).add(it));
+        }
+        return [...map.values()]
+          .map((g) => ({
+            name: g.name,
+            key: g.key,
+            cats: [...g.cats.entries()]
+              .map(([category, set]) => ({ category, items: [...set].sort() }))
+              .sort((a, b) => a.category.localeCompare(b.category)),
+          }))
+          .sort((a, b) => a.name.localeCompare(b.name));
+      }
+
+      function render(query) {
+        const q = norm(query);
+        const matches = q ? groups.filter((g) => g.key.includes(q)) : groups;
+
+        show(noResultEl, false);
+
+        if (groups.length === 0) {
+          listEl.hidden = true;
+          statusEl.textContent = '';
+          show(emptyEl, true);
+          return;
+        }
+
+        if (matches.length === 0) {
+          listEl.hidden = true;
+          statusEl.textContent = `No match for “${query.trim()}”.`;
+          show(noResultEl, true);
+          return;
+        }
+
+        statusEl.textContent = q
+          ? `Showing ${matches.length} of ${groups.length} devotee${groups.length === 1 ? '' : 's'}`
+          : `${groups.length} devotee${groups.length === 1 ? '' : 's'} registered`;
+
+        listEl.innerHTML = matches.map((g) => `
+          <article class="sc-card">
+            <h3 class="sc-name">${esc(g.name)}</h3>
+            <div class="sc-groups">
+              ${g.cats.map((c) => c.items.length
+                ? `<div class="sc-group">
+                     <span class="sc-cat">${esc(c.category)}</span>
+                     <ul class="sc-sevas">${c.items.map((it) => `<li class="sc-chip">${esc(it)}</li>`).join('')}</ul>
+                   </div>`
+                : `<div class="sc-group">
+                     <ul class="sc-sevas"><li class="sc-chip">${esc(c.category)}</li></ul>
+                   </div>`
+              ).join('')}
+            </div>
+          </article>
+        `).join('');
+        listEl.hidden = false;
+      }
+
+      async function load() {
+        show(errorEl, false);
+        show(emptyEl, false);
+        show(loadingEl, true);
+        listEl.hidden = true;
+        try {
+          const data = await fetchData();
+          groups = buildGroups(data.records);
+          show(loadingEl, false);
+          render(searchEl.value);
+          if (data.updated) {
+            const d = new Date(data.updated);
+            updatedEl.textContent = 'List is live — updates as new registrations come in.';
+            show(updatedEl, true);
+          }
+        } catch (err) {
+          show(loadingEl, false);
+          show(errorEl, true);
+        }
+      }
+
+      let t;
+      searchEl.addEventListener('input', () => {
+        clearTimeout(t);
+        t = setTimeout(() => render(searchEl.value), 120);
+      });
+      if (retryBtn) retryBtn.addEventListener('click', load);
+
+      load();
+    </script>
+  )}
+</BaseLayout>
+
+<style>
+  .sc-head { padding-bottom: 1.5rem; }
+  .sc-wrap { max-width: 860px; }
+
+  /* Search bar */
+  .sc-searchbar { margin-bottom: 2rem; }
+  .sc-search-label {
+    display: block;
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--saffron-dark);
+    margin-bottom: 0.6rem;
+    text-align: center;
+  }
+  .sc-search-inner {
+    position: relative;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+  .sc-search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    opacity: 0.7;
+    pointer-events: none;
+  }
+  .sc-search-input {
+    width: 100%;
+    padding: 0.9rem 1rem 0.9rem 2.6rem;
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    color: var(--ink);
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    box-shadow: 0 6px 18px rgba(110, 20, 20, 0.06);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .sc-search-input:focus {
+    outline: none;
+    border-color: var(--saffron);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--saffron) 22%, transparent);
+  }
+  .sc-status {
+    text-align: center;
+    margin: 0.9rem 0 0;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    min-height: 1.2em;
+  }
+
+  /* List */
+  .sc-list {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  }
+  .sc-card {
+    background: linear-gradient(135deg, #ffffff 0%, var(--cream) 100%);
+    border: 1px solid color-mix(in srgb, var(--gold) 28%, var(--line));
+    border-radius: 14px;
+    padding: 1.1rem 1.3rem;
+    box-shadow: 0 8px 20px rgba(110, 20, 20, 0.05);
+  }
+  .sc-name {
+    margin: 0 0 0.8rem;
+    font-size: 1.15rem;
+    color: var(--maroon);
+  }
+  .sc-groups { display: flex; flex-direction: column; gap: 0.8rem; }
+  .sc-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .sc-cat {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--saffron-dark);
+  }
+  .sc-sevas {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+  .sc-chip {
+    font-size: 0.85rem;
+    line-height: 1.35;
+    padding: 0.35rem 0.75rem;
+    background: var(--cream-2);
+    border: 1px solid color-mix(in srgb, var(--saffron) 35%, transparent);
+    border-radius: 999px;
+    color: var(--maroon);
+  }
+
+  /* States */
+  .sc-state {
+    text-align: center;
+    padding: 2.5rem 1rem;
+    color: var(--ink-soft);
+  }
+  .sc-state--error { color: var(--maroon); }
+  .sc-state code {
+    background: var(--cream-2);
+    padding: 0.1rem 0.4rem;
+    border-radius: 5px;
+    font-size: 0.9em;
+  }
+  .sc-state .btn { margin-top: 1rem; }
+  .sc-spinner {
+    width: 34px;
+    height: 34px;
+    margin: 0 auto 1rem;
+    border: 3px solid var(--line);
+    border-top-color: var(--saffron);
+    border-radius: 50%;
+    animation: sc-spin 0.8s linear infinite;
+  }
+  @keyframes sc-spin { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) {
+    .sc-spinner { animation-duration: 2.4s; }
+  }
+
+  .sc-note {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+  }
+</style>

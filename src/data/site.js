@@ -21,6 +21,11 @@ export const site = {
     guruPadukapuja: 'https://forms.gle/hP3bMxBhyazFrSYa8',
     sacredSevas: 'https://forms.gle/4GbQs3wKA8gFP7rV7',
     bimbaSamarpana: 'https://forms.gle/Zh6bE2pvdURm97SV7',
+    // Read-only Apps Script web-app that returns the combined seva
+    // registration list (name + seva) for the confirmation page. Paste the
+    // /exec URL here after deploying SevaConfirmations.gs — see
+    // SEVA-CONFIRMATIONS-SETUP.md. Leave '' and the page shows a setup notice.
+    sevaConfirmations: 'https://script.google.com/macros/s/AKfycbyZgLPbA_T9dOaunRKn_ucwlDblpcNb_3WcxYY1tkNGWVTLhC7l43VuFi3x6DIrmv0/exec',
   },
 
   // Featured event banner shown near the top of the home page.
