@@ -214,6 +214,7 @@ export const nav = [
   { label: 'Seva', href: '/seva/' },
   { label: 'Testimonials', href: '/testimonials/' },
   { label: 'News', href: '/news/' },
+  { label: 'Media', href: '/media/' },
 ];
 
 // ── Footer-only links (legal pages)

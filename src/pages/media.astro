@@ -1,0 +1,333 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+
+// ── MEDIA EXPOSURE ──────────────────────────────────────────────────────
+// Press coverage of the Mahapeetham and of Sri Yogi.
+//
+// TO ADD A PRINT CLIPPING: drop the scan in public/media/ and copy a block
+// below. `thumb` is what the card shows; `full` is what opens when clicked
+// (for a PDF, point `full` at the .pdf and `thumb` at a page image).
+// TO ADD AN ONLINE ARTICLE: copy a block in `online` — no image needed.
+// `date` must be YYYY-MM-DD. Newest first is handled automatically.
+
+const print = [
+  {
+    outlet: 'Kannada Prabha',
+    edition: 'Uttara Kannada Edition · Page 3',
+    date: '2026-07-31',
+    headline: 'ಸ್ವಯಂ ಸಾಕ್ಷಾತ್ಕಾರದ ಹಾದಿಯಲ್ಲಿ ಮುನ್ನಡೆವಲ್ಲಿ ಗುರುವಿನ ಪಾತ್ರ ಅನನ್ಯ',
+    summary:
+      'Guru Purnima Mahotsava coverage — the Guru’s unique role in guiding a seeker along the path of self-realisation.',
+    thumb: '/media/kannada-prabha-2026-07-31.jpg',
+    full: '/media/kannada-prabha-2026-07-31.jpg',
+  },
+  {
+    outlet: 'Ee Sanje',
+    edition: 'Bengaluru Edition · Page 2',
+    date: '2026-07-29',
+    headline: 'ಗುರುಪೂರ್ಣಿಮೆ ಮಹೋತ್ಸವ — ಕುಚಲಾಂಬ ಕಲ್ಯಾಣ ಮಂಟಪ, ಜಯನಗರ',
+    summary:
+      'Hundreds of devotees take part in the Guru Purnima Mahotsava held in the presence of Sri Yogi Swamiji at Jayanagar, Bengaluru.',
+    thumb: '/media/ee-sanje-2026-07-29.jpg',
+    full: '/media/ee-sanje-2026-07-29.jpg',
+  },
+  {
+    outlet: 'Kannada Prabha',
+    edition: 'Uttara Kannada Edition · Page 1',
+    date: '2026-07-29',
+    headline: 'ಯೋಗೀಶ್ವರ ಸ್ವಾಮಿ ಮಹಾಪೀಠದಿಂದ ಗುರುಪೂರ್ಣಿಮಾ ಕಾರ್ಯಕ್ರಮ ಇಂದು',
+    summary:
+      'Front-page announcement of the Guru Purnima Mahotsava at Kuchalamba Kalyana Mahal, Jayanagar — around 1,500 attending.',
+    thumb: '/media/kannada-prabha-2026-07-29.jpg',
+    full: '/media/kannada-prabha-2026-07-29.jpg',
+  },
+  {
+    outlet: 'Kannada daily · Bengaluru',
+    edition: 'Guru Purnima announcement',
+    date: '2026-07-29',
+    headline: 'ಇಂದು ಯೋಗೀಶ್ವರಸ್ವಾಮಿ ಮಹಾಪೀಠ ವತಿಯಿಂದ ಗುರುಪೂರ್ಣಿಮೆ',
+    summary:
+      'Same-day notice of the Mahotsava beginning at 7 a.m. in the divine presence of Paramahamsa Parivrajakacharya Sri Yogishwara Swamiji.',
+    thumb: '/media/guru-purnima-preview-2026-07-29.jpg',
+    full: '/media/guru-purnima-preview-2026-07-29.jpg',
+  },
+  {
+    outlet: 'Sanje Samaya',
+    edition: 'Volume 17 · Issue 177 · Page 1 (PDF)',
+    date: '2026-07-25',
+    headline:
+      'ಶ್ರೀ ಸಹಸ್ರಾರ ಯೋಗೀಶ್ವರ ಸ್ವಾಮಿ ಮಹಾಪೀಠದಿಂದ ಬೆಂಗಳೂರಿನಲ್ಲಿ ರಾಷ್ಟ್ರೀಯ ಸನ್ಮಾನ ಸಮಾರಂಭದೊಂದಿಗೆ ಗುರು ಪೂರ್ಣಿಮೆ 2026 ಆಚರಣೆ',
+    summary:
+      'A full account of the Mahapeetham’s work — scholarships, free online yoga and meditation, medical aid and weekly annadana — ahead of Guru Purnima 2026 and the national felicitation ceremony.',
+    thumb: '/media/sanje-samaya-2026-07-25-thumb.jpg',
+    full: '/media/sanje-samaya-2026-07-25.pdf',
+    isPdf: true,
+    wide: true,
+  },
+  {
+    outlet: 'Sanje Express',
+    edition: 'Volume 14 · Issue 324 · Page 6 (PDF)',
+    date: '2026-05-08',
+    headline: 'ಎಲ್ಲರಲ್ಲೂ ಅಪ್ರತಿಮ ಸಾಧನೆಗೈಯುವ ಶಕ್ತಿ ಅಡಗಿದೆ: ಶ್ರಿಯೋಗಿ ಸ್ವಾಮೀಜಿ',
+    summary:
+      'Coverage of the book launch at Indiranagar, with former ISRO chairman Kiran Kumar on how spiritual attainment and science converge.',
+    thumb: '/media/sanje-express-2026-05-08-thumb.jpg',
+    full: '/media/sanje-express-2026-05-08.pdf',
+    isPdf: true,
+    wide: true,
+  },
+  {
+    outlet: 'Vishwavani',
+    edition: 'Book launch report',
+    date: '2026-05-08',
+    headline: 'ದ ವಾಂಡರರ್ ಹೂ ಓನ್ಸ್ ದ ವರ್ಲ್ಡ್ ಕೃತಿ ಅನಾವರಣ',
+    summary:
+      'The unveiling of The Wanderer Who Owns the World at Atta Galatta, with Vishweshwar Hegde Kageri and A. S. Kiran Kumar.',
+    thumb: '/media/vishwavani-2026-05-08.jpg',
+    full: '/media/vishwavani-2026-05-08.jpg',
+  },
+  {
+    outlet: 'The New Indian Express',
+    edition: 'Bengaluru · Express News Service',
+    date: '2026-05-08',
+    headline: 'Kiran Kumar launches Sri Yogi’s book',
+    summary:
+      'Former ISRO chairman A. S. Kiran Kumar releases The Wanderer Who Owns the World, published by Penguin Ananda.',
+    thumb: '/media/new-indian-express-2026-05-08.jpg',
+    full: '/media/new-indian-express-2026-05-08.jpg',
+  },
+  {
+    outlet: 'Regional daily · Gadag',
+    edition: 'Gadag',
+    date: '2026-03-20',
+    headline: 'ಶ್ರೀಗಳ ದರ್ಶನ ಹಾಗೂ ಆಶೀರ್ವಾದ ಪಡೆಯಲು ಭಕ್ತಾದಿಗಳಿಗೆ ಅವಕಾಶ',
+    summary:
+      'Notice of Sri Yogi Swamiji’s visit to Sri Veeranarayana Temple, Gadag on 22 March — darshan and blessings from 11 a.m. to 12.30 p.m.',
+    thumb: '/media/gadag-darshan-2026-03-20-thumb.jpg',
+    full: '/media/gadag-darshan-2026-03-20.jpg',
+  },
+];
+
+const online = [
+  {
+    outlet: 'INBC News',
+    date: '2026-05-08',
+    headline:
+      'The launch ceremony of The Wanderer Who Owns the World, authored by His Holiness Sri Sri Sri Yogeeshwara Swamiji',
+    summary:
+      'A full report of the launch ceremony, held with great spiritual and intellectual depth.',
+    url: 'https://inbcnews902405387.wordpress.com/2026/05/08/the-launch-ceremony-of-the-wanderer-who-owns-the-world-authored-by-his-holiness-srimath-paramahamsa-parivrajakacharya-sri-sri-sri-yogeeshwara-swamiji-was-held-with-great-spiritual-and-intellec/',
+  },
+  {
+    outlet: 'Praja Neralu',
+    date: '2026-05-07',
+    headline: 'ಎಲ್ಲರಲ್ಲೂ ಅಪ್ರತಿಮ ಸಾಧನೆಗೈಯುವ ಶಕ್ತಿ ಅಡಗಿದೆ: ಶ್ರಿಯೋಗಿ ಸ್ವಾಮೀಜಿ',
+    summary:
+      'Every person holds within them the power to achieve the extraordinary — Sri Yogi Swamiji at the book launch.',
+    url: 'https://prajaneralu.com/shreeyogi-swamiji-has-the-power-to-achieve-unparalleled-achievement-in-everyone/',
+    also: [
+      { label: 'Praja Neralu on YouTube', url: 'http://youtube.com/post/Ugkx8vmdwQ6szwNHYG9cvjZjKhtxMlkSEm7a?si=oTMPQOVD4ArKVPB6' },
+      { label: 'Praja Neralu on WhatsApp', url: 'https://chat.whatsapp.com/EMArAsInnT9Dofm3APHSmM?mode=gi_t' },
+    ],
+  },
+  {
+    outlet: 'Public Report 24×7',
+    date: '2026-05-07',
+    headline: 'ಎಲ್ಲರಲ್ಲೂ ಅಪ್ರತಿಮ ಸಾಧನೆಗೈಯುವ ಶಕ್ತಿ ಅಡಗಿದೆ: ಶ್ರಿಯೋಗಿ ಸ್ವಾಮೀಜಿ',
+    summary: 'Report on the launch of The Wanderer Who Owns the World in Bengaluru.',
+    url: 'https://publicreport24x7.blogspot.com/2026/05/blog-post_7.html',
+  },
+];
+
+const byDateDesc = (a, b) => new Date(b.date) - new Date(a.date);
+const printItems = [...print].sort(byDateDesc);
+const onlineItems = [...online].sort(byDateDesc);
+
+const fmt = (d) =>
+  new Date(d).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+<BaseLayout
+  title="Media Exposure"
+  description="Press coverage of Sri Sahasrara Yogishwara Swami Mahapeetham and Sri Yogi — newspaper clippings, book-launch reports and online features."
+>
+  <PageHeader
+    eyebrow="In the Press"
+    title="Media Exposure"
+    lead="Newspaper clippings, book-launch reports and online features covering the Mahapeetham and Sri Yogi."
+  />
+
+  <section class="section">
+    <div class="container">
+      <h2 class="group-title">In Print</h2>
+      <p class="group-note muted">Tap any clipping to open the full page.</p>
+
+      <div class="media-grid">
+        {printItems.map((m) => (
+          <article class="media-card">
+            <a href={m.full} target="_blank" rel="noopener" class:list={['media-thumb', m.wide && 'media-thumb--wide']}>
+              <img src={m.thumb} alt={`${m.outlet}, ${fmt(m.date)} — ${m.headline}`} loading="lazy" />
+              {m.isPdf && <span class="badge">PDF</span>}
+            </a>
+            <div class="media-body">
+              <div class="media-meta">
+                <span class="outlet">{m.outlet}</span>
+                <time datetime={m.date}>{fmt(m.date)}</time>
+              </div>
+              {m.edition && <p class="edition">{m.edition}</p>}
+              <h3>{m.headline}</h3>
+              <p class="muted">{m.summary}</p>
+              <a href={m.full} target="_blank" rel="noopener" class="media-link">
+                {m.isPdf ? 'Open full paper (PDF) →' : 'View clipping →'}
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <h2 class="group-title group-title--spaced">Online</h2>
+
+      <div class="online-list">
+        {onlineItems.map((m) => (
+          <article class="online-item">
+            <time datetime={m.date}>{fmt(m.date)}</time>
+            <div>
+              <span class="outlet">{m.outlet}</span>
+              <h3>{m.headline}</h3>
+              <p class="muted">{m.summary}</p>
+              <a href={m.url} target="_blank" rel="noopener" class="media-link">Read the article →</a>
+              {m.also && (
+                <p class="also">
+                  {m.also.map((a, i) => (
+                    <>
+                      {i > 0 && <span class="sep">·</span>}
+                      <a href={a.url} target="_blank" rel="noopener">{a.label}</a>
+                    </>
+                  ))}
+                </p>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .group-title {
+    color: var(--maroon);
+    font-size: 1.9rem;
+    margin-bottom: 0.3rem;
+  }
+  .group-title--spaced { margin-top: 3.5rem; }
+  .group-note { font-size: 0.9rem; margin-bottom: 1.6rem; }
+
+  /* ── Print clippings ─────────────────────────────────────────────── */
+  .media-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.6rem;
+  }
+  .media-card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .media-card:hover { transform: translateY(-3px); box-shadow: 0 16px 36px rgba(20, 18, 16, 0.16); }
+
+  .media-thumb {
+    position: relative;
+    display: block;
+    background: var(--cream-2);
+    border-bottom: 1px solid var(--line);
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+  }
+  .media-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;   /* mastheads and headlines stay visible */
+    display: block;
+  }
+  /* Full-page scans cropped to a wide article strip — show the whole strip
+     rather than cropping the headline off at the sides. */
+  .media-thumb--wide img { object-fit: contain; object-position: center; padding: 0.5rem; }
+  .badge {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    background: var(--maroon);
+    color: var(--gold);
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 0.22rem 0.5rem;
+    border-radius: 5px;
+  }
+
+  .media-body { padding: 1.1rem 1.2rem 1.3rem; display: flex; flex-direction: column; flex: 1; }
+  .media-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.4rem;
+    margin-bottom: 0.15rem;
+  }
+  .outlet {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--saffron-dark);
+  }
+  .media-meta time, .online-item time {
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+  .edition {
+    font-family: var(--font-body);
+    font-size: 0.76rem;
+    color: var(--ink-soft);
+    margin-bottom: 0.5rem;
+  }
+  .media-card h3 { color: var(--maroon); font-size: 1.1rem; line-height: 1.35; margin-bottom: 0.45rem; }
+  .media-card .muted { font-size: 0.9rem; margin-bottom: 0.9rem; }
+  .media-link { font-weight: 600; font-size: 0.88rem; margin-top: auto; }
+
+  /* ── Online coverage ─────────────────────────────────────────────── */
+  .online-list { max-width: 860px; display: grid; gap: 0; }
+  .online-item {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 1.5rem;
+    padding: 1.6rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .online-item:first-child { padding-top: 0.4rem; }
+  .online-item time { padding-top: 0.25rem; }
+  .online-item .outlet { display: block; margin-bottom: 0.25rem; }
+  .online-item h3 { color: var(--maroon); font-size: 1.2rem; margin-bottom: 0.4rem; }
+  .online-item .muted { font-size: 0.93rem; margin-bottom: 0.6rem; }
+  .also { font-size: 0.84rem; margin-top: 0.5rem; }
+  .also .sep { margin: 0 0.5rem; color: var(--ink-soft); }
+
+  @media (max-width: 600px) {
+    .online-item { grid-template-columns: 1fr; gap: 0.35rem; }
+    .online-item time { padding-top: 0; }
+    .group-title { font-size: 1.6rem; }
+  }
+</style>
