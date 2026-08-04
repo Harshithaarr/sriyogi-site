@@ -4,13 +4,17 @@ const { pathname } = Astro.url;
 const isActive = (href) => href === '/' ? pathname === '/' : pathname.startsWith(href);
 ---
 
+{/* The toggle sits outside <header> so the scrim below can be a sibling of
+    it. The header sets backdrop-filter, which would otherwise trap a
+    position:fixed scrim inside the header's own box. */}
+<input type="checkbox" id="nav-toggle" class="nav-toggle" hidden />
+
 <header class="site-header">
   <div class="container header-inner">
     <a href="/" class="brand" aria-label={site.name}>
       <img src={site.logo} alt={site.name} class="brand-logo" width="1563" height="920" fetchpriority="high" />
     </a>
 
-    <input type="checkbox" id="nav-toggle" class="nav-toggle" hidden />
     <label for="nav-toggle" class="nav-burger" aria-label="Toggle menu">
       <span></span><span></span><span></span>
     </label>
@@ -22,6 +26,9 @@ const isActive = (href) => href === '/' ? pathname === '/' : pathname.startsWith
     </nav>
   </div>
 </header>
+
+{/* Tapping anywhere outside the open menu closes it. */}
+<label for="nav-toggle" class="nav-scrim" aria-hidden="true"></label>
 
 <style>
   .site-header {
@@ -88,22 +95,56 @@ const isActive = (href) => href === '/' ? pathname === '/' : pathname.startsWith
   .nav-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 0.4rem; }
   .nav-burger span { width: 26px; height: 2.5px; background: var(--gold); border-radius: 2px; }
 
+  /* Scrim: only active while the menu is open. */
+  .nav-scrim { display: none; }
+
   @media (max-width: 1080px) {
     .nav-burger { display: flex; }
+
+    /* Two columns keep all items on one screen — no scrolling needed.
+       max-height + overscroll-behavior are a safety net for short screens
+       (landscape phones), so the menu scrolls itself instead of the page. */
     .site-nav {
       display: none;
       position: absolute;
       left: 0; right: 0;
       top: 100%;
-      flex-direction: column;
-      flex-wrap: wrap;
-      gap: 0;
-      background: rgba(28, 25, 22, 0.98);
+      grid-template-columns: 1fr 1fr;
+      column-gap: 1.1rem;
+      row-gap: 0;
+      background: rgba(28, 25, 22, 0.985);
       border-bottom: 1px solid rgba(203, 162, 86, 0.28);
-      padding: 0.5rem 1.25rem 1rem;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+      padding: 0.4rem 1.25rem 0.9rem;
+      max-height: calc(100dvh - 5.5rem);
+      overflow-y: auto;
+      overscroll-behavior: contain;
     }
-    .nav-toggle:checked ~ .site-nav { display: flex; }
-    .site-nav a { padding: 0.7rem 0.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+    .nav-toggle:checked ~ .site-header .site-nav { display: grid; }
+
+    .site-nav a {
+      padding: 0.78rem 0.25rem;
+      font-size: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 0;
+    }
     .site-nav a::after { display: none; }
+
+    /* Sits under the header (z-index 50) so the burger stays tappable,
+       and over the page so content behind is dimmed and untappable. */
+    .nav-toggle:checked ~ .nav-scrim {
+      display: block;
+      position: fixed;
+      inset: 0;
+      z-index: 40;
+      background: rgba(0, 0, 0, 0.5);
+      cursor: default;
+    }
+  }
+
+  /* Single column only where two would be cramped. */
+  @media (max-width: 360px) {
+    .site-nav { grid-template-columns: 1fr; }
+    .site-nav a { padding: 0.62rem 0.25rem; }
   }
 </style>

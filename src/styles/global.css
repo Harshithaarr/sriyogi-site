@@ -62,6 +62,14 @@ a:hover { text-decoration: underline; }
 
 img { max-width: 100%; height: auto; display: block; }
 
+/* While the mobile menu is open, freeze the page behind it. Lives here
+   rather than in Header.astro because Astro scopes component styles and
+   `html`/`body` sit outside the component. */
+html:has(.nav-toggle:checked),
+body:has(.nav-toggle:checked) {
+  overflow: hidden;
+}
+
 .container {
   width: 100%;
   max-width: var(--maxw);
