@@ -279,7 +279,10 @@ const fmt = (d) =>
         <button type="button" class="c-btn c-btn--next" data-dir="1" aria-label="More awardees" hidden>›</button>
       </div>
 
-      <p class="carousel-hint muted">Swipe, or use the arrows, to see every recipient.</p>
+      <p class="carousel-hint muted">
+        Swipe, or use the arrows, to see every recipient.
+        <button type="button" class="c-pause" aria-pressed="false" hidden>Pause</button>
+      </p>
     </div>
   </section>
 
@@ -288,24 +291,87 @@ const fmt = (d) =>
   <script>
     document.querySelectorAll('.carousel').forEach((c) => {
       const track = c.querySelector('.awards-track');
+      const prev = c.querySelector('.c-btn--prev');
+      const next = c.querySelector('.c-btn--next');
+      const pauseBtn = c.parentElement.querySelector('.c-pause');
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const STEP_MS = 4500;
+      const RESUME_MS = 9000;
+
       const step = () => {
         const card = track.querySelector('.award-card');
         return card ? card.getBoundingClientRect().width + 20 : track.clientWidth;
       };
-      c.querySelectorAll('.c-btn').forEach((b) => {
+      const maxScroll = () => track.scrollWidth - track.clientWidth - 2;
+
+      // Arrows: revealed here so they are never dead controls without JS.
+      [prev, next].forEach((b) => {
         b.hidden = false;
         b.addEventListener('click', () => {
           track.scrollBy({ left: Number(b.dataset.dir) * step(), behavior: 'smooth' });
         });
       });
+
       const sync = () => {
-        const max = track.scrollWidth - track.clientWidth - 2;
-        c.querySelector('.c-btn--prev').disabled = track.scrollLeft <= 2;
-        c.querySelector('.c-btn--next').disabled = track.scrollLeft >= max;
+        prev.disabled = track.scrollLeft <= 2;
+        next.disabled = track.scrollLeft >= maxScroll();
       };
       track.addEventListener('scroll', sync, { passive: true });
       window.addEventListener('resize', sync);
       sync();
+
+      // ── Autoscroll ────────────────────────────────────────────────────
+      // Runs only while the carousel is on screen, the visitor is not
+      // interacting with it, and motion is not reduced. `paused` is the
+      // visitor's explicit choice and always wins.
+      let timer = null;
+      let resume = null;
+      let onScreen = false;
+      let paused = reduce.matches;
+
+      const advance = () => {
+        if (track.scrollLeft >= maxScroll()) track.scrollTo({ left: 0, behavior: 'smooth' });
+        else track.scrollBy({ left: step(), behavior: 'smooth' });
+      };
+      const stop = () => { clearInterval(timer); timer = null; };
+      const start = () => {
+        stop();
+        if (!paused && onScreen && !reduce.matches) timer = setInterval(advance, STEP_MS);
+      };
+      // A touch or drag pauses, then hands control back after a quiet spell.
+      const nudge = () => {
+        stop();
+        clearTimeout(resume);
+        resume = setTimeout(start, RESUME_MS);
+      };
+
+      c.addEventListener('pointerenter', stop);
+      c.addEventListener('pointerleave', start);
+      c.addEventListener('focusin', stop);
+      c.addEventListener('focusout', start);
+      ['wheel', 'touchstart', 'pointerdown', 'keydown'].forEach((e) =>
+        track.addEventListener(e, nudge, { passive: true })
+      );
+
+      pauseBtn.hidden = false;
+      pauseBtn.addEventListener('click', () => {
+        paused = !paused;
+        pauseBtn.textContent = paused ? 'Play' : 'Pause';
+        pauseBtn.setAttribute('aria-pressed', String(paused));
+        paused ? stop() : start();
+      });
+      if (paused) {
+        pauseBtn.textContent = 'Play';
+        pauseBtn.setAttribute('aria-pressed', 'true');
+      }
+
+      new IntersectionObserver(
+        ([entry]) => { onScreen = entry.isIntersecting; onScreen ? start() : stop(); },
+        { threshold: 0.25 }
+      ).observe(c);
+
+      reduce.addEventListener('change', () => { paused = reduce.matches; start(); });
+      document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
     });
   </script>
 </BaseLayout>
@@ -446,6 +512,19 @@ const fmt = (d) =>
   .c-btn--next { right: -14px; }
 
   .carousel-hint { text-align: center; font-size: 0.82rem; margin-top: 0.2rem; }
+  .c-pause {
+    margin-left: 0.6rem;
+    padding: 0.2rem 0.7rem;
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--maroon);
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  .c-pause:hover { border-color: var(--saffron); color: var(--saffron-dark); }
 
   @media (max-width: 700px) {
     .c-btn { display: none; }          /* swipe is the natural gesture here */
