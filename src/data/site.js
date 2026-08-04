@@ -32,12 +32,12 @@ export const site = {
   // Set show:false to hide it once the event is over.
   featuredEvent: {
     show: true,
-    tag: 'Upcoming Event',
+    tag: 'Recently Celebrated',
     title: 'Guru Purnima 2026',
     date: 'Wednesday, 29 July 2026',
-    blurb: 'A sacred day of gratitude — darshan, discourse & the blessings of the Guru. Register to attend.',
+    blurb: 'Thousands gathered at Jayanagar, Bengaluru for a day of gratitude — darshan, discourse and the blessings of the Guru.',
     href: '/guru-purnima/',
-    cta: 'View Details & Register',
+    cta: 'See the Celebration',
   },
 
   // Razorpay Payment Page / Payment Button links, one per offering.
@@ -106,9 +106,21 @@ export const bookEndorsements = [
 // `name` may be empty for editorial reviews (figcaption is then hidden).
 export const bookReviews = [
   {
-    source: 'Editorial Review',
+    source: 'Retd. Principal, KVSR College',
     title: 'A Rare Literary & Spiritual Achievement',
     quote: 'Not merely a book but a profound spiritual journey across 9 sections and 66 chapters. It does not merely inform the intellect; it inspires transformation — a companion for life’s journey, a mirror for self-reflection, and a timeless guide for spiritual awakening. “To own the world, carry nothing. To find yourself, seek sincerely.”',
+    name: 'Prof. Anil Vaidya',
+  },
+  {
+    source: 'Professor in Internal Medicine & Consultant Physician',
+    title: 'Medical Science Bridged with Metaphysics',
+    quote: 'The most wonderful book ever to be published. It leads you into a trance of awakening, thrills you with the amazing depth of knowledge hidden in its pages and literally transforms your life! This book is unique inasmuch it has bridged medical science with metaphysics and spirituality in its purest form without any religious implications, so that every human being on earth can benefit individually and collectively through it.',
+    name: 'Dr Sanjay Neeralagi',
+  },
+  {
+    source: 'The New Indian Express',
+    title: 'Ground-Breaking in the Current Spiritual World',
+    quote: 'Published by Penguin Ananda, the book touted as one of the ground breaking one in the current spiritual world as the author, with as vibrant background as an architect and aviation expert, delved into the intricacies of the essence of the spirituality.',
     name: '',
   },
   {
