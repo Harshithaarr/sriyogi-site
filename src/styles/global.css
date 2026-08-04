@@ -188,6 +188,11 @@ img { max-width: 100%; height: auto; display: block; }
 .review-card h3 { color: var(--maroon); font-size: 1.12rem; margin: 0 0 0.6rem; }
 .review-card blockquote { margin: 0 0 0.9rem; color: var(--ink-soft); font-style: italic; line-height: 1.55; }
 .review-card figcaption { font-weight: 600; color: var(--saffron-dark); }
+/* "Read the full review" link, shown when a review has a hosted PDF. */
+.review-card__full {
+  display: inline-block; margin-top: 0.7rem;
+  font-size: 0.85rem; font-weight: 600;
+}
 
 /* Featured endorsement (e.g. a dignitary) */
 .endorsement {

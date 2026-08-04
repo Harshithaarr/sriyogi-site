@@ -179,6 +179,11 @@ const comparativeTitles = 'Braiding Sweetgrass by Robin Wall Kimmerer · The Pro
             <h3>{r.title}</h3>
             <blockquote>{r.quote}</blockquote>
             {r.name && <figcaption>— {r.name}</figcaption>}
+            {r.pdf && (
+              <a href={r.pdf} target="_blank" rel="noopener" class="review-card__full">
+                Read the full review (PDF) →
+              </a>
+            )}
           </figure>
         ))}
       </div>

@@ -110,6 +110,9 @@ export const bookReviews = [
     title: 'A Rare Literary & Spiritual Achievement',
     quote: 'Not merely a book but a profound spiritual journey across 9 sections and 66 chapters. It does not merely inform the intellect; it inspires transformation — a companion for life’s journey, a mirror for self-reflection, and a timeless guide for spiritual awakening. “To own the world, carry nothing. To find yourself, seek sincerely.”',
     name: 'Prof. Anil Vaidya',
+    // Full 3-page review, hosted on this site. Shows a "Read the full
+    // review" link on the card. Add `pdf` to any review to do the same.
+    pdf: '/reviews/the-wanderer-review-prof-anil-vaidya.pdf',
   },
   {
     source: 'Professor in Internal Medicine & Consultant Physician',
