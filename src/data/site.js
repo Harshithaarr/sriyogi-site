@@ -223,7 +223,6 @@ export const nav = [
   { label: 'Book', href: '/book/' },
   { label: 'Branches', href: '/branches/' },
   { label: 'Courses', href: '/courses/' },
-  { label: 'Offerings', href: '/offerings/' },
   { label: 'Our Team', href: '/team/' },
   { label: 'Objective', href: '/objective/' },
   { label: 'Seva', href: '/seva/' },
