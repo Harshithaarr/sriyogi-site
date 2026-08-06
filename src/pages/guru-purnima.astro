@@ -1,4 +1,6 @@
 ---
+import fs from 'node:fs';
+import path from 'node:path';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 
@@ -194,6 +196,39 @@ const awards = [
   },
 ];
 
+// ── DISTINGUISHED GUESTS ────────────────────────────────────────────────
+// Photographs are picked up automatically at build time from
+// public/images/guru-purnima/guests/<slug>/ — drop images into a guest's
+// folder and they appear, in filename order. No code change needed.
+// A guest with no photographs yet is simply skipped.
+const GUEST_DIR = 'public/images/guru-purnima/guests';
+
+const guestList = [
+  { slug: 'justice-hanchate-sanjeevkumar', name: 'Justice Hanchate Sanjeevkumar', role: 'High Court Judge' },
+  { slug: 'k-prashant-kumar', name: 'Sri K. Prashant Kumar', role: 'Deputy Director, Information & Broadcasting, Government of India' },
+  { slug: 'gr-reddy', name: 'Sri G. R. Reddy', role: 'Former Income Tax Commissioner' },
+  { slug: 'sudheer-hegde', name: 'Sri Sudheer Hegde', role: 'Deputy Superintendent of Police' },
+  { slug: 'padma-vasanthi', name: 'Smt. Padma Vasanthi', role: 'Kannada Actress' },
+  { slug: 'shilpa-iyer', name: 'Smt. Shilpa Iyer', role: 'Kannada Actress' },
+];
+
+const guests = guestList
+  .map((g) => {
+    const dir = path.join(process.cwd(), GUEST_DIR, g.slug);
+    let photos = [];
+    try {
+      photos = fs
+        .readdirSync(dir)
+        .filter((f) => /\.(jpe?g|png|webp)$/i.test(f))
+        .sort()
+        .map((f) => `/images/guru-purnima/guests/${g.slug}/${f}`);
+    } catch {
+      photos = [];
+    }
+    return { ...g, photos };
+  })
+  .filter((g) => g.photos.length > 0);
+
 const sorted = [...posts].sort((a, b) => new Date(b.date) - new Date(a.date));
 const fmt = (d) =>
   new Date(d).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -241,6 +276,43 @@ const fmt = (d) =>
 
     </div>
   </section>
+
+  {guests.length > 0 && (
+    <section class="section" id="guests">
+      <div class="container">
+        <div class="awards-head">
+          <span class="eyebrow">In Attendance</span>
+          <h2>Distinguished Guests</h2>
+          <p class="muted awards-lead">
+            Dignitaries who joined the Mahotsava in the divine presence of Sri Yogi.
+          </p>
+        </div>
+
+        <div class="guest-list">
+          {guests.map((g) => (
+            <article class="guest">
+              <div class="guest-id">
+                <h3>{g.name}</h3>
+                <p class="guest-role">{g.role}</p>
+              </div>
+              <ul class="guest-photos">
+                {g.photos.map((src, i) => (
+                  <li>
+                    <img
+                      src={src}
+                      alt={`${g.name} at the Guru Purnima Mahotsava`}
+                      loading="lazy"
+                      class:list={[i === 0 && 'is-lead']}
+                    />
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
 
   <section class="section section--tint" id="awards">
     <div class="container">
@@ -424,6 +496,37 @@ const fmt = (d) =>
     padding-top: 1.4rem;
     border-top: 1px solid var(--line);
     font-size: 0.9rem;
+  }
+
+  /* ── Distinguished guests ────────────────────────────────────────── */
+  .guest-list { display: grid; gap: 3rem; max-width: 960px; margin: 0 auto; }
+  .guest-id { margin-bottom: 0.9rem; }
+  .guest-id h3 { color: var(--maroon); font-size: 1.4rem; margin-bottom: 0.15rem; }
+  .guest-role {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    color: var(--saffron-dark);
+    font-weight: 600;
+  }
+  /* The first photograph leads at full width; the rest form a strip. */
+  .guest-photos { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); }
+  .guest-photos li { margin: 0; }
+  .guest-photos li:first-child { grid-column: 1 / -1; }
+  .guest-photos img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+  }
+  .guest-photos img.is-lead { aspect-ratio: 16 / 9; }
+  @media (max-width: 600px) {
+    .guest-id h3 { font-size: 1.2rem; }
+    .guest-photos { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
   }
 
   /* ── Awards carousel ─────────────────────────────────────────────── */
