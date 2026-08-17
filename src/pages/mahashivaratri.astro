@@ -1,0 +1,72 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+
+// ── MAHASHIVARATRI GALLERY ───────────────────────────────────────────────
+// Photographs are picked up automatically at build time from
+// public/images/mahashivaratri-2026/ — drop images in and they appear here,
+// in filename order. No code change needed.
+const GALLERY_DIR = 'public/images/mahashivaratri-2026';
+
+let gallery = [];
+try {
+  gallery = fs
+    .readdirSync(path.join(process.cwd(), GALLERY_DIR))
+    .filter((f) => /\.(jpe?g|png|webp)$/i.test(f))
+    .sort()
+    .map((f) => `/images/mahashivaratri-2026/${f}`);
+} catch {
+  gallery = [];
+}
+---
+
+<BaseLayout
+  title="Mahashivaratri"
+  description="Photographs from the Mahashivaratri celebrations in the divine presence of Sri Yogi."
+>
+  <PageHeader
+    eyebrow="Celebrations"
+    title="Mahashivaratri"
+    lead="Photographs from the Mahashivaratri celebrations, in the divine presence of Sri Yogi."
+  />
+
+  {gallery.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <ul class="gallery-grid">
+          {gallery.map((src) => (
+            <li>
+              <img src={src} alt="Mahashivaratri celebrations" loading="lazy" />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+</BaseLayout>
+
+<style>
+  .gallery-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+  .gallery-grid li { margin: 0; }
+  .gallery-grid img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+  }
+  @media (max-width: 600px) {
+    .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+  }
+</style>

@@ -30,8 +30,135 @@ const posts = [
   },
 ];
 
+// ── PARAMAHAMSA AWARDS 2025 ──────────────────────────────────────────────
+// A separate, earlier Mahotsava (Guru Purnima 2025) — shown in the
+// "Previous Guru Purnima Mahotsavas" archive section, not the current one.
+const awards2025 = [
+  {
+    award: 'Paramahamsa Arjuna Award',
+    name: 'Smt. Preetha Kumari C',
+    photo: '/images/guru-purnima/awards/preetha-kumari-c.jpg',
+    citation:
+      'In recognition of her Unwavering Dedication to Society and the Guru, reflected in her Tireless and Selfless Service. Her Steadfast Commitment to living the Guru’s Teachings, along with her Remarkable Contributions to both Professional and Personal spheres, exemplifies true Devotion — honouring her invaluable Service to the Sri Sahasrara Yogishwara Swami Mahapeetam and the Guru Parampara.',
+  },
+  {
+    award: 'Paramahamsa Bhishma Award',
+    name: 'Smt. Mangalagouri Satish Bhat',
+    photo: '/images/guru-purnima/awards/mangalagouri-satish-bhat.jpg',
+    citation:
+      'In recognition of her Outstanding Contributions to Humanitarian Causes and her Unwavering Dedication to the Guru Parampara. Through her actions, she reflects the Timeless Values of Kindness, Humility, and Spiritual Commitment, serving as a Beacon of Hope and Inspiration. Her Consistent Support to the Guru’s Mission and her role in uplifting communities highlight her as a true example of Seva, Devotion, and Leadership rooted in Dharma.',
+  },
+  {
+    award: 'Paramahamsa Brihaspati Award',
+    name: 'Sri Sunku Narendranath',
+    photo: '/images/guru-purnima/awards/sunku-narendranath.jpg',
+    citation:
+      'In recognition of His Excellency’s Dedication to Humanitarian Service, marked by Compassion, Selflessness, and a Deep Devotion to the Guru Parampara, reflected in both Principled Living and Dedicated Service, embodying a life guided by Wisdom, Integrity, and Spiritual Purpose. Alongside his service, he has demonstrated Exceptional Business Proficiency, seamlessly integrating Professional Excellence with Ethical Values — his journey standing as an Inspiring Example of Purposeful Living.',
+  },
+  {
+    award: 'Paramahamsa Dronacharya Award',
+    name: 'Kum. Soudhamini M. V.',
+    photo: '/images/guru-purnima/awards/soudhamini-m-v.jpg',
+    citation:
+      'In honour of Her Excellency’s Unwavering Dedication and Selfless Commitment to teaching Ashtanga Yoga, and offering Free Instruction and Special Spiritual Sessions for those in need. Through her Patient Guidance, she has shared Profound Knowledge with thousands of students, demonstrating Exceptional Mastery of her Discipline and Curriculum. Her Deep Devotion to the Guru Parampara and her Sincere Embodiment of its teachings — in both Thought and Action — reflect a life grounded in Service, Wisdom, and Spiritual Integrity.',
+  },
+  {
+    award: 'Paramahamsa Sushruta Award',
+    name: 'Dr. Sanjay Neeralagi',
+    photo: '/images/guru-purnima/awards/sanjay-neeralagi.jpg',
+    citation:
+      'In recognition of His Excellency’s Outstanding Contributions to Western Medicine over the past three and a half decades, along with his Extensive Writings and Humanitarian Efforts. His Remarkable Dedication to Patient Care, his Impactful Teaching of Medical Students, and his Commitment to Education, Social Values, and the Well-Being of Marginalised Communities are truly commendable. His Biographical Work, “The Walk Within Fire”, chronicling the life of His Holiness, has inspired and transformed thousands, leaving a lasting impact on society.',
+  },
+  {
+    award: 'Paramahamsa Nandikeshvara Award',
+    name: 'Kum. Shilpa G.S',
+    photo: '/images/guru-purnima/awards/shilpa-g-s.jpg',
+    citation:
+      'In recognition of her Dedication to the Guru and Society, and her Excellence in both Academic and Professional spheres. Her Innovative use of Social Media as a platform for Seva and Spiritual Outreach has significantly enriched the Sri Sahasrara Yogishwara Swami Mahapeetam. Her Selfless Efforts in spreading His Holiness’ teachings online serve as a shining example of Devotion in the Digital Age.',
+  },
+  {
+    award: 'Paramahamsa Prahlada Award',
+    name: 'Sri M. Ramaprasad',
+    photo: '/images/guru-purnima/awards/m-ramaprasad.jpg',
+    citation:
+      'In recognition of His Excellency’s Unwavering Dedication to serving society and his Deep Spiritual Commitment. As a Distinguished Chartered Accountant, his Profound Knowledge, Expertise in Income Tax Law and Auditing, and Selfless Guidance have made a Significant Impact on both the Professional and Spiritual communities. Renowned for his Service to the Guru Parampara, his journey reflects a powerful blend of Professional Excellence and Spiritual Enlightenment, inspiring others on the path of Service and Consciousness.',
+  },
+  {
+    award: 'Paramahamsa Balarama Award',
+    name: 'Sri Sujith Narayanan',
+    photo: '/images/guru-purnima/awards/sujith-narayanan.jpg',
+    citation:
+      'In recognition of his Remarkable Unwavering Determination, Spiritual Growth, and Selfless Dedication to the Guru. His Tireless Efforts and Round-the-Clock Service have greatly contributed to the Growth of the Sri Sahasrara Yogishwara Swami Mahapeetam. As PRO for the state of Kerala, his work has been Exemplary, and his Contributions to Sri Amman are truly Outstanding — a Compassionate and Committed Individual who remains a Steadfast Pillar of Support to the entire community.',
+  },
+  {
+    award: 'Paramahamsa Balarama Award',
+    name: 'Sri Vishweshwar Hegde',
+    photo: '/images/guru-purnima/awards/vishweshwar-hegde.jpg',
+    citation:
+      'In recognition of his Remarkable Unwavering Determination, Spiritual Growth, and Selfless Dedication to the Guru. His Tireless, Round-the-Clock Service and Steadfast Contributions to the Sri Sahasrara Yogishwara Swami Mahapeetam have played a Vital Role in uplifting the organization and its members. His Compassion, Humility, and Constant Support make him a true Pillar of Strength within the community.',
+  },
+  {
+    award: 'Paramahamsa Brihaspati Award',
+    name: 'Smt. Godha K.P.',
+    photo: '/images/guru-purnima/awards/godha-k-p.jpg',
+    citation:
+      'In recognition of Her Excellency’s Unwavering Commitment to Humanitarian Service, marked by Compassion, Selflessness, and a Sincere Dedication to uplifting those in need. Her Exemplary Devotion to the Guru Parampara and the embodiment of its teachings in both Thought and Action reflect a life rooted in Service, Wisdom, and Spiritual Integrity, continuing to inspire countless individuals on the path of Service and Devotion.',
+  },
+  {
+    award: 'Paramahamsa Saraswathi Award',
+    name: 'Smt. Anusha M',
+    photo: '/images/guru-purnima/awards/anusha-m.jpg',
+    citation:
+      'In recognition of her Exclusive Artistry, celebrated for its Intricate Craftsmanship and Profound Cultural Significance. Through her Art, she has become a Torchbearer of Cultural Heritage, inspiring others to Value and Preserve Timeless Artistic Expressions. Her Dedication, Creativity, and Attention to Detail stand as a testament to the Transformative Power of Art in enriching lives and uplifting communities.',
+  },
+  {
+    award: 'Paramahamsa Dhanvantari Award',
+    name: 'Dr. K.S. Devendra Gupta',
+    photo: '/images/guru-purnima/awards/k-s-devendra-gupta.jpg',
+    citation:
+      'In honour of His Excellency’s Selfless Dedication in providing Highly Effective Treatments to thousands of patients monthly and Pioneering and Implementing Research. His Commitment extends to Mentoring Fellow Doctors and Inspiring Students, his Service continuing Tirelessly and Unwaveringly. His Devotion to Healing and Knowledge has had a Profound Effect on both the Medical Community and Society at large, standing as a shining example of Compassion, Excellence, and Lifelong Service in the field of Medicine.',
+  },
+  {
+    award: 'Paramahamsa Agastya Award',
+    name: 'Sri Vaidya Pangala Muralidhar Bhat',
+    photo: '/images/guru-purnima/awards/pangala-muralidhar-bhat.jpg',
+    citation:
+      'In recognition of his Remarkable Selfless Dedication to the field of Ayurveda, through the Invention of Highly Effective Ayurvedic Medicines that have benefitted thousands across India. A Distinguished Practitioner with qualifications in BAMS, MD (Kaya Chikitsa), his Contributions extend beyond Medicine to include Active Involvement in Charitable Organizations and Devoted Service to the Guru Parampara, exemplifying a rare blend of Medical Innovation, Compassion, and Spiritual Commitment.',
+  },
+  {
+    award: 'Paramahamsa Abhimanyu Award',
+    name: 'Sri Sudheer Mahadeva Hegde',
+    photo: '/images/guru-purnima/awards/sudheer-mahadeva-hegde.jpg',
+    citation:
+      'In recognition of his Remarkable Steadfast Dedication to Police Service, marked by Humanity, Integrity, and Transparency. As Deputy Superintendent of Police at the Karnataka State Human Rights Commission, Bengaluru, his Exemplary Conduct and Leadership reflect his Unwavering Commitment to Justice and Public Service, standing as an Inspiring Model of Ethical and Compassionate Law Enforcement.',
+  },
+  {
+    award: 'Paramahamsa Valmiki Award',
+    name: 'Dr. Hithalli Suryanarayana Nagendra Bhat',
+    photo: '/images/guru-purnima/awards/hithalli-suryanarayana-nagendra-bhat.jpg',
+    citation:
+      'In recognition of His Excellency’s Distinguished Contributions as a Vedic Scholar and Prolific Writer. His Extensive Work celebrates Indian Culture, Values, and Humanitarian Ideals, highlighting the richness of India’s Heritage through Traditions, Philosophies, and Social Values. His Advocacy for Social Justice and Education reflects a Deep Commitment to Positive Societal Transformation and Cultural Pride.',
+  },
+  {
+    award: 'Paramahamsa Ekalavya Award',
+    name: 'Kum. Nidhi C',
+    note: 'Award received by her father',
+    photo: '/images/guru-purnima/awards/nidhi-c.jpg',
+    citation:
+      'In recognition of her Exceptional Academic Achievement, having secured 96.17% in the Karnataka PUC Board Examination (2024–2025). Her Dedication, Discipline, and Hard Work serve as an Inspiration to her Peers. Her Respectful Conduct towards the Guru and her Parents reflects Strong Moral Character and Values, making her a true Role Model for Holistic Growth.',
+  },
+  {
+    award: 'Paramahamsa Ekalavya Award',
+    name: 'Kum. S. Sirisha',
+    photo: '/images/guru-purnima/awards/s-sirisha.jpg',
+    citation:
+      'In recognition of her Exceptional Academic Achievement, securing 98.17% in the Karnataka PUC Board Examination (2024–2025), honouring her Outstanding Performance, Unwavering Dedication to her Studies, and Commitment to Excellence. Her Deep Respect for the Guru and her Parents, along with her Sincere Interest in Sanatana Dharma, further reflect her Strong Values and Holistic Growth.',
+  },
+];
+
 // ── PARAMAHAMSA AWARDS ──────────────────────────────────────────────────
-// Conferred at the Guru Purnima Mahotsava. Order here = order on the page.
+// Conferred at the current Guru Purnima Mahotsava (2026). Order here = order
+// on the page.
 //
 // TO ADD AN AWARDEE: put the photograph in
 // public/images/guru-purnima/awards/ and copy a block below. `citation` is
@@ -196,6 +323,25 @@ const awards = [
   },
 ];
 
+// ── EVENT GALLERY (Guru Purnima 2025) ───────────────────────────────────
+// General (unattributed) photographs from the 2025 Mahotsava — procession,
+// homa, performances, and so on — shown in the "Previous Guru Purnima
+// Mahotsavas" archive section, not the current one. Drop images into
+// public/images/guru-purnima/gallery-2025/ and they appear here
+// automatically, in filename order. No code change needed.
+const GALLERY_DIR = 'public/images/guru-purnima/gallery-2025';
+
+let gallery = [];
+try {
+  gallery = fs
+    .readdirSync(path.join(process.cwd(), GALLERY_DIR))
+    .filter((f) => /\.(jpe?g|png|webp)$/i.test(f))
+    .sort()
+    .map((f) => `/images/guru-purnima/gallery-2025/${f}`);
+} catch {
+  gallery = [];
+}
+
 // ── DISTINGUISHED GUESTS ────────────────────────────────────────────────
 // Photographs are picked up automatically at build time from
 // public/images/guru-purnima/guests/<slug>/ — drop images into a guest's
@@ -354,6 +500,65 @@ const fmt = (d) =>
     </div>
   </section>
 
+  {/* Archive of earlier Mahotsavas. Guru Purnima 2025 is the first entry;
+      a future year gets its own gallery/awards2026-style pair alongside it. */}
+  <section class="section" id="archive">
+    <div class="container">
+      <div class="awards-head">
+        <span class="eyebrow">Archive</span>
+        <h2>Previous Guru Purnima Mahotsavas</h2>
+        <p class="muted awards-lead">
+          Photographs and honoured recipients from past Mahotsavas.
+        </p>
+      </div>
+
+      {gallery.length > 0 && (
+        <>
+          <h3 class="archive-subhead">Guru Purnima 2025 — Gallery</h3>
+          <ul class="gallery-grid">
+            {gallery.map((src) => (
+              <li>
+                <img src={src} alt="Guru Purnima Mahotsava 2025" loading="lazy" />
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+
+      {awards2025.length > 0 && (
+        <>
+          <h3 class="archive-subhead">Guru Purnima 2025 — Paramahamsa Awards</h3>
+          <div class="carousel">
+            <button type="button" class="c-btn c-btn--prev" data-dir="-1" aria-label="Previous awardees" hidden>‹</button>
+
+            <ul class="awards-track" tabindex="0" aria-label="2025 award recipients">
+              {awards2025.map((a) => (
+                <li class="award-card">
+                  <div class="award-photo">
+                    <img src={a.photo} alt={`${a.name} receiving the ${a.award}`} loading="lazy" width="1300" height="865" />
+                  </div>
+                  <div class="award-body">
+                    <span class="award-name">{a.award}</span>
+                    <h3>{a.name}</h3>
+                    {a.note && <p class="award-note">{a.note}</p>}
+                    <p class="muted">{a.citation}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+
+            <button type="button" class="c-btn c-btn--next" data-dir="1" aria-label="More awardees" hidden>›</button>
+          </div>
+
+          <p class="carousel-hint muted">
+            Swipe, or use the arrows, to see every recipient.
+            <button type="button" class="c-pause" aria-pressed="false" hidden>Pause</button>
+          </p>
+        </>
+      )}
+    </div>
+  </section>
+
   {/* Arrows are revealed only once this runs, so they are never dead controls.
       Without JS the track is still a normal horizontally scrollable list. */}
   <script>
@@ -496,6 +701,38 @@ const fmt = (d) =>
     padding-top: 1.4rem;
     border-top: 1px solid var(--line);
     font-size: 0.9rem;
+  }
+
+  /* ── Archive (previous Mahotsavas) ───────────────────────────────── */
+  .archive-subhead {
+    color: var(--maroon);
+    font-size: 1.3rem;
+    text-align: center;
+    margin: 2.8rem 0 1.4rem;
+  }
+  #archive .carousel { margin-top: 0; }
+
+  /* ── Event gallery ───────────────────────────────────────────────── */
+  .gallery-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+  .gallery-grid li { margin: 0; }
+  .gallery-grid img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+  }
+  @media (max-width: 600px) {
+    .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
   }
 
   /* ── Distinguished guests ────────────────────────────────────────── */

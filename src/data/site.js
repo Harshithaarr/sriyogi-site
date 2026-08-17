@@ -219,6 +219,7 @@ export const biographyEndorsements = [
 export const nav = [
   { label: 'Home', href: '/' },
   { label: 'Guru Purnima', href: '/guru-purnima/' },
+  { label: 'Mahashivaratri', href: '/mahashivaratri/' },
   { label: 'About Sri Yogi', href: '/about/' },
   { label: 'Book', href: '/book/' },
   { label: 'Branches', href: '/branches/' },
